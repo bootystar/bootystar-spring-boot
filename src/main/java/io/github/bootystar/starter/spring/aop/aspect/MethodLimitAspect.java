@@ -38,14 +38,16 @@ public class MethodLimitAspect {
         MethodLimitHandler limitHandler = limitHandler(annotation.limitHandler());
         String springExpression = annotation.value();
         String signature = signatureHandler.signature(method, joinPoint.getArgs(), springExpression);
+        boolean b = limitHandler.tryLock(timeout, signature);
         try {
-            boolean b = limitHandler.tryLock(timeout, signature);
             if (!b) {
                 throw new MethodLimitException(message);
             }
             return joinPoint.proceed();
         } finally {
-            limitHandler.unLock(signature);
+            if (b) {
+                limitHandler.unLock(signature);
+            }
         }
     }
 
@@ -69,12 +71,12 @@ public class MethodLimitAspect {
         return LIMIT_HANDLER_MAP.get(signatureHandler);
     }
 
-    public void setSignatureHandler(Class<? extends MethodSignatureHandler> signatureHandler, MethodSignatureHandler methodSignatureHandler) {
-        SIGNATURE_HANDLER_MAP.put(signatureHandler, methodSignatureHandler);
+    public void setSignatureHandler(Class<? extends MethodSignatureHandler> clazz, MethodSignatureHandler methodSignatureHandler) {
+        SIGNATURE_HANDLER_MAP.put(clazz, methodSignatureHandler);
     }
 
-    public void setLimitHandler(Class<? extends MethodLimitHandler> limitHandler, MethodLimitHandler methodLimitHandler) {
-        LIMIT_HANDLER_MAP.put(limitHandler, methodLimitHandler);
+    public void setLimitHandler(Class<? extends MethodLimitHandler> clazz, MethodLimitHandler methodLimitHandler) {
+        LIMIT_HANDLER_MAP.put(clazz, methodLimitHandler);
     }
 
 }
