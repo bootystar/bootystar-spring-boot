@@ -1,9 +1,7 @@
 package io.github.bootystar.starter.spring.aop.aspect;
 
 import io.github.bootystar.starter.spring.aop.annotation.MethodLimit;
-import io.github.bootystar.starter.spring.aop.exception.MethodLimitException;
 import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
-import io.github.bootystar.starter.spring.aop.handler.MethodSignatureHandler;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Aspect
 public class MethodLimitAspect {
-    private final Map<Class<?>, MethodSignatureHandler> SIGNATURE_HANDLER_MAP = new ConcurrentHashMap<>();
     private final Map<Class<?>, MethodLimitHandler> LIMIT_HANDLER_MAP = new ConcurrentHashMap<>();
 
     @Pointcut("@annotation(io.github.bootystar.starter.spring.aop.annotation.MethodLimit)")
@@ -32,16 +29,13 @@ public class MethodLimitAspect {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
         MethodLimit annotation = method.getAnnotation(MethodLimit.class);
-        int timeout = annotation.timeout();
-        String message = annotation.message();
-        MethodSignatureHandler signatureHandler = signatureHandler(annotation.signatureHandler());
-        MethodLimitHandler limitHandler = limitHandler(annotation.limitHandler());
+        MethodLimitHandler limitHandler = limitHandler(annotation.handler());
         String springExpression = annotation.value();
-        String signature = signatureHandler.signature(method, joinPoint.getArgs(), springExpression);
-        boolean b = limitHandler.tryLock(timeout, signature);
+        String signature = limitHandler.signature(method, joinPoint.getArgs(), springExpression);
+        boolean b = limitHandler.tryLock(signature);
         try {
             if (!b) {
-                throw new MethodLimitException(message);
+                return limitHandler.timeoutFallback(signature);
             }
             return joinPoint.proceed();
         } finally {
@@ -49,16 +43,6 @@ public class MethodLimitAspect {
                 limitHandler.unLock(signature);
             }
         }
-    }
-
-    @SneakyThrows
-    private MethodSignatureHandler signatureHandler(Class<? extends MethodSignatureHandler> signatureHandler) {
-        MethodSignatureHandler methodSignatureHandler = SIGNATURE_HANDLER_MAP.get(signatureHandler);
-        if (methodSignatureHandler != null) {
-            return methodSignatureHandler;
-        }
-        SIGNATURE_HANDLER_MAP.put(signatureHandler, signatureHandler.getConstructor().newInstance());
-        return SIGNATURE_HANDLER_MAP.get(signatureHandler);
     }
 
     @SneakyThrows
@@ -71,11 +55,7 @@ public class MethodLimitAspect {
         return LIMIT_HANDLER_MAP.get(signatureHandler);
     }
 
-    public void setSignatureHandler(Class<? extends MethodSignatureHandler> clazz, MethodSignatureHandler methodSignatureHandler) {
-        SIGNATURE_HANDLER_MAP.put(clazz, methodSignatureHandler);
-    }
-
-    public void setLimitHandler(Class<? extends MethodLimitHandler> clazz, MethodLimitHandler methodLimitHandler) {
+    public void allocateLimitHandler(Class<? extends MethodLimitHandler> clazz, MethodLimitHandler methodLimitHandler) {
         LIMIT_HANDLER_MAP.put(clazz, methodLimitHandler);
     }
 
