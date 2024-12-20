@@ -42,5 +42,5 @@ public interface MethodLimitHandler {
      * @return {@link Object }
      * @author bootystar
      */
-    Object timeoutFallback(String signature);
+    Object fallback(String signature);
 }

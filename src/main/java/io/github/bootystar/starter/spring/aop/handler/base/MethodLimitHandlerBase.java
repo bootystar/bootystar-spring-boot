@@ -40,7 +40,7 @@ public abstract class MethodLimitHandlerBase implements MethodLimitHandler {
     }
 
     @Override
-    public Object timeoutFallback(String signature) {
+    public Object fallback(String signature) {
         throw new MethodLimitException("processing, please try again later");
     }
 }

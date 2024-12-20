@@ -35,7 +35,7 @@ public class MethodLimitAspect {
         boolean b = limitHandler.tryLock(signature);
         try {
             if (!b) {
-                return limitHandler.timeoutFallback(signature);
+                return limitHandler.fallback(signature);
             }
             return joinPoint.proceed();
         } finally {
