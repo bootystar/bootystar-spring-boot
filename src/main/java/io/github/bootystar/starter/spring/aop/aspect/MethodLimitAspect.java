@@ -20,7 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Aspect
 public class MethodLimitAspect {
-    private final Map<Class<?>, MethodSignatureHandler> map = new ConcurrentHashMap<>();
+    private final Map<Class<?>, MethodSignatureHandler> SIGNATURE_HANDLER_MAP = new ConcurrentHashMap<>();
+    private final Map<Class<?>, MethodLimitHandler> LIMIT_HANDLER_MAP = new ConcurrentHashMap<>();
 
     @Pointcut("@annotation(io.github.bootystar.starter.spring.aop.annotation.MethodLimit)")
     public void pointcut() {
@@ -50,12 +51,30 @@ public class MethodLimitAspect {
 
     @SneakyThrows
     private MethodSignatureHandler signatureHandler(Class<? extends MethodSignatureHandler> signatureHandler) {
-        return signatureHandler.newInstance();
+        MethodSignatureHandler methodSignatureHandler = SIGNATURE_HANDLER_MAP.get(signatureHandler);
+        if (methodSignatureHandler != null) {
+            return methodSignatureHandler;
+        }
+        SIGNATURE_HANDLER_MAP.put(signatureHandler, signatureHandler.getConstructor().newInstance());
+        return SIGNATURE_HANDLER_MAP.get(signatureHandler);
     }
 
     @SneakyThrows
     private MethodLimitHandler limitHandler(Class<? extends MethodLimitHandler> signatureHandler) {
-        return signatureHandler.newInstance();
+        MethodLimitHandler methodSignatureHandler = LIMIT_HANDLER_MAP.get(signatureHandler);
+        if (methodSignatureHandler != null) {
+            return methodSignatureHandler;
+        }
+        LIMIT_HANDLER_MAP.put(signatureHandler, signatureHandler.getConstructor().newInstance());
+        return LIMIT_HANDLER_MAP.get(signatureHandler);
+    }
+
+    public void setSignatureHandler(Class<? extends MethodSignatureHandler> signatureHandler, MethodSignatureHandler methodSignatureHandler) {
+        SIGNATURE_HANDLER_MAP.put(signatureHandler, methodSignatureHandler);
+    }
+
+    public void setLimitHandler(Class<? extends MethodLimitHandler> limitHandler, MethodLimitHandler methodLimitHandler) {
+        LIMIT_HANDLER_MAP.put(limitHandler, methodLimitHandler);
     }
 
 }

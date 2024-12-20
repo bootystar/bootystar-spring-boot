@@ -44,7 +44,7 @@ public @interface MethodLimit {
      * @return {@link Class }<{@link ? } {@link extends } {@link MethodSignatureHandler }>
      * @author bootystar
      */
-    Class<? extends MethodSignatureHandler> signatureHandler() default MethodSignatureHandlerImpl.class;
+    Class<? extends MethodSignatureHandler> signatureHandler() default MethodSignatureHandler.class;
 
     /**
      * 限流处理器
@@ -52,6 +52,6 @@ public @interface MethodLimit {
      * @return {@link Class }<{@link ? } {@link extends } {@link MethodLimitHandler }>
      * @author bootystar
      */
-    Class<? extends MethodLimitHandler> limitHandler() default MethodLimitHandlerImpl.class;
+    Class<? extends MethodLimitHandler> limitHandler() default MethodLimitHandler.class;
 
 }

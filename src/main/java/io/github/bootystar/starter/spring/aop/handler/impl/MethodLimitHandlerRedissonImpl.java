@@ -1,10 +1,9 @@
 package io.github.bootystar.starter.spring.aop.handler.impl;
 
-import io.github.bootystar.starter.spring.aop.exception.MethodLimitException;
 import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
 import lombok.SneakyThrows;
+import org.redisson.api.RedissonClient;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,8 +11,13 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author bootystar
  */
-public class MethodLimitHandlerImpl implements MethodLimitHandler {
-    private final ConcurrentHashMap<String, Lock> LOCK_MAP = new ConcurrentHashMap<>();
+public class MethodLimitHandlerRedissonImpl implements MethodLimitHandler {
+
+    private final RedissonClient redissonClient;
+
+    public MethodLimitHandlerRedissonImpl(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
+    }
 
     @Override
     @SneakyThrows
@@ -28,18 +32,11 @@ public class MethodLimitHandlerImpl implements MethodLimitHandler {
     @Override
     public void unLock(String signature) {
         getLock(signature).unlock();
-        LOCK_MAP.remove(signature);
     }
 
 
     private Lock getLock(String signature) {
-        Lock lock = LOCK_MAP.get(signature);
-        if (lock != null) {
-            return lock;
-        }
-        lock = new ReentrantLock();
-        LOCK_MAP.putIfAbsent(signature, lock);
-        return LOCK_MAP.get(signature);
+        return redissonClient.getLock(signature);
     }
 
 
