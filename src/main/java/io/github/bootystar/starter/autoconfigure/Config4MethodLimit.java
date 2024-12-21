@@ -16,7 +16,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 
 /**
- * // todo 延迟该类配置, 其他在redis配置完成之后生效
  * @author bootystar
  */
 @Slf4j
