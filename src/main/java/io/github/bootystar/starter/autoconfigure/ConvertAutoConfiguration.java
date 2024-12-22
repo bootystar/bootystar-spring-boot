@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass(org.springframework.core.convert.converter.Converter.class)
-public class Config4Converter {
+public class ConvertAutoConfiguration {
 
     private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";

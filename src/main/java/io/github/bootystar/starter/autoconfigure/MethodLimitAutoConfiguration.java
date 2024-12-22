@@ -19,9 +19,9 @@ import org.springframework.context.annotation.Bean;
  * @author bootystar
  */
 @Slf4j
-@ConditionalOnClass({AopAutoConfiguration.class, Advice.class})
+@ConditionalOnClass({Advice.class})
 @AutoConfiguration(after = AopAutoConfiguration.class)
-public class Config4MethodLimit implements ApplicationContextAware {
+public class MethodLimitAutoConfiguration implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override

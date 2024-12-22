@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
@@ -25,8 +24,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  */
 @Slf4j
 @ConditionalOnClass({RedisOperations.class,ObjectMapper.class})
-@AutoConfiguration(before = {RedisAutoConfiguration.class})
-public class Config4Redis {
+@AutoConfiguration(before = {org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration.class})
+public class RedisAutoConfiguration {
 
     @Bean
     public RedisSerializer<Object> redisSerializer() {

@@ -1,6 +1,5 @@
 package io.github.bootystar.starter.autoconfigure;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +13,13 @@ import org.springframework.context.annotation.Bean;
  * @author bootystar
  */
 @Slf4j
-@ConditionalOnClass({MybatisPlusAutoConfiguration.class, MybatisPlusInterceptor.class})
-@AutoConfiguration(after = MybatisPlusAutoConfiguration.class)
-public class Config4MybatisPlus {
+@ConditionalOnClass({com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class, MybatisPlusInterceptor.class})
+@AutoConfiguration(after = com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
+public class MybatisPlusAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-    @ConditionalOnBean(MybatisPlusAutoConfiguration.class)
+    @ConditionalOnBean(com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 //        interceptor.addInnerInterceptor(new DbInterceptor());
