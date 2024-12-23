@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.jackson.anno;
+package io.github.bootystar.starter.jackson.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

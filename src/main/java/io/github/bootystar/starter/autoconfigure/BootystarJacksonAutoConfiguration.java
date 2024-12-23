@@ -26,10 +26,16 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
+/**
+ * bootystar jackson自动配置
+ *
+ * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
+ * @author bootystar
+ */
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
-public class JacksonAutoConfiguration {
+public class BootystarJacksonAutoConfiguration {
 
     private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
@@ -41,14 +47,15 @@ public class JacksonAutoConfiguration {
     /**
      * jackson2对象映射器生成器定制器配置
      * <p>
-     * 以下为相关的配置
-     * <p>
      * servlet中jackson的配置{@link org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration}
      * 实际在配置源码在同包下的JacksonHttpMessageConvertersConfiguration(非public类)
      * 其使用Import导入了配置
      * <p>
      * webflux中jackson的配置{@link org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration }
      * 在WebFluxAutoConfiguration中导入了CodecsAutoConfiguration
+     *
+     * @see org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+     * @see org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration
      *
      * @author bootystar
      */

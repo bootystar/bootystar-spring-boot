@@ -9,12 +9,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 
 /**
+ * bootystar转换器自动配置
+ *
  * @author bootystar
  */
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass(org.springframework.core.convert.converter.Converter.class)
-public class ConvertAutoConfiguration {
+public class BootystarConverterAutoConfiguration {
 
     private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";

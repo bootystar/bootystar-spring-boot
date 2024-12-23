@@ -4,15 +4,17 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 /**
+ * bootystar自动配置
+ *
  * @author bootystar
  */
 @AutoConfiguration
 @Import({
-        ConvertAutoConfiguration.class,
-        JacksonAutoConfiguration.class,
-        MethodLimitAutoConfiguration.class,
-        MybatisPlusAutoConfiguration.class,
-        RedisAutoConfiguration.class
+        BootystarConverterAutoConfiguration.class,
+        BootystarJacksonAutoConfiguration.class,
+        BootystarAopAutoConfiguration.class,
+        BootystarMybatisPlusAutoConfiguration.class,
+        BootystarRedisAutoConfiguration.class
 })
 public class BootystarAutoConfiguration {
 }

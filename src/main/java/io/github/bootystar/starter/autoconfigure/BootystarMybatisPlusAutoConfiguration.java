@@ -2,20 +2,24 @@ package io.github.bootystar.starter.autoconfigure;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
+ * bootystar mybatis plus自动配置
+ * @see com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
  * @author bootystar
  */
 @Slf4j
 @ConditionalOnClass({com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class, MybatisPlusInterceptor.class})
 @AutoConfiguration(after = com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
-public class MybatisPlusAutoConfiguration {
+public class BootystarMybatisPlusAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
@@ -23,10 +27,10 @@ public class MybatisPlusAutoConfiguration {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 //        interceptor.addInnerInterceptor(new DbInterceptor());
-        log.debug("MybatisPlusInterceptor Configured");
         optimisticLockerInnerInterceptor(interceptor);
         paginationInnerInterceptor(interceptor);
         blockAttackInnerInterceptor(interceptor);
+        log.debug("MybatisPlusInterceptor Configured");
         return interceptor;
     }
 
@@ -37,7 +41,7 @@ public class MybatisPlusAutoConfiguration {
             interceptor.addInnerInterceptor((InnerInterceptor) instance);
             log.debug("OptimisticLockerInnerInterceptor Configured");
         }catch (Exception e) {
-            log.debug("OptimisticLockerInnerInterceptor not found, skip");
+            log.debug("OptimisticLockerInnerInterceptor not found, skipped");
         }
     }
 
@@ -48,7 +52,7 @@ public class MybatisPlusAutoConfiguration {
             interceptor.addInnerInterceptor((InnerInterceptor) instance);
             log.debug("PaginationInnerInterceptor Configured");
         }catch (Exception e) {
-            log.debug("PaginationInnerInterceptor not found, skip");
+            log.debug("PaginationInnerInterceptor not found, skipped");
         }
     }
 
@@ -59,7 +63,7 @@ public class MybatisPlusAutoConfiguration {
             interceptor.addInnerInterceptor((InnerInterceptor) instance);
             log.debug("BlockAttackInnerInterceptor Configured");
         }catch (Exception e) {
-            log.debug("BlockAttackInnerInterceptor not found, skip");
+            log.debug("BlockAttackInnerInterceptor not found, skipped");
         }
     }
 
