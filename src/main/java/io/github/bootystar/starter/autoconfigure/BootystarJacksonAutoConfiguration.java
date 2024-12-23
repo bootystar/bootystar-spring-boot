@@ -9,13 +9,20 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import io.github.bootystar.starter.constants.DateConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.math.BigInteger;
@@ -24,6 +31,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -36,13 +44,6 @@ import java.util.TimeZone;
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
 public class BootystarJacksonAutoConfiguration {
-
-    private static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-
-    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-
-    private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
-
 
     /**
      * jackson2对象映射器生成器定制器配置
@@ -61,10 +62,10 @@ public class BootystarJacksonAutoConfiguration {
      */
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(Jackson2ObjectMapperBuilder.class)
-    @AutoConfigureBefore(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
     static class Jackson2ObjectMapperBuilderCustomizerConfiguration {
 
         @Bean
+        @Order(-1)
         public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
@@ -76,7 +77,7 @@ public class BootystarJacksonAutoConfiguration {
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的格式
-                        .dateFormat(new SimpleDateFormat(DEFAULT_DATETIME_PATTERN))
+                        .dateFormat(DateConst.SDF_DATE_TIME)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
                         .timeZone(TimeZone.getTimeZone("GMT+8"))
 //                    // null 不参与序列化
@@ -89,17 +90,43 @@ public class BootystarJacksonAutoConfiguration {
                 builder.serializerByType(Long.TYPE, ToStringSerializer.instance);
 
                 // 配置 Jackson 反序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN)));
-                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
-                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
+                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateConst.DTF_LOCAL_DATE_TIME));
+                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateConst.DTF_LOCAL_DATE));
+                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateConst.DTF_LOCAL_TIME));
 
                 // 配置 Jackson 序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN)));
-                builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
-                builder.serializers(new LocalTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
+                builder.serializers(new LocalDateTimeSerializer(DateConst.DTF_LOCAL_DATE_TIME));
+                builder.serializers(new LocalDateSerializer(DateConst.DTF_LOCAL_DATE));
+                builder.serializers(new LocalTimeSerializer(DateConst.DTF_LOCAL_TIME));
             };
         }
     }
+
+
+//    @Configuration(proxyBeanMethods = false)
+//    @ConditionalOnClass(Jackson2ObjectMapperBuilder.class)
+//    @AutoConfigureBefore(org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.class)
+//    static class JacksonObjectMapperBuilderConfiguration {
+//
+//        @Bean
+//        @Scope("prototype")
+//        @ConditionalOnMissingBean
+//        Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder(ApplicationContext applicationContext, List<Jackson2ObjectMapperBuilderCustomizer> customizers) {
+//            Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+//            builder.applicationContext(applicationContext);
+//            Jackson2ObjectMapperBuilderCustomizer customizer = new Jackson2ObjectMapperBuilderCustomizerConfiguration().jackson2ObjectMapperBuilderCustomizer();
+//            customizer.customize(builder);
+//            customize(builder, customizers);
+//            log.debug("Jackson2ObjectMapperBuilder Configured");
+//            return builder;
+//        }
+//
+//        private void customize(Jackson2ObjectMapperBuilder builder, List<Jackson2ObjectMapperBuilderCustomizer> customizers) {
+//            for (Jackson2ObjectMapperBuilderCustomizer customizer : customizers) {
+//				customizer.customize(builder);
+//			}
+//		}
+//	}
 
     /* =====servlet中jackson的配置源码=====
     @Configuration(proxyBeanMethods = false)

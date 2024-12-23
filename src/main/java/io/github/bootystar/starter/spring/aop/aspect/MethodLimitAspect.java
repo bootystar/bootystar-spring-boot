@@ -1,6 +1,6 @@
 package io.github.bootystar.starter.spring.aop.aspect;
 
-import io.github.bootystar.starter.spring.aop.annotation.MethodLimit;
+import io.github.bootystar.starter.spring.annotation.MethodLimit;
 import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MethodLimitAspect {
     private final Map<Class<?>, MethodLimitHandler> LIMIT_HANDLER_MAP = new ConcurrentHashMap<>();
 
-    @Pointcut("@annotation(io.github.bootystar.starter.spring.aop.annotation.MethodLimit)")
+    @Pointcut("@annotation(io.github.bootystar.starter.spring.annotation.MethodLimit)")
     public void pointcut() {
     }
 
