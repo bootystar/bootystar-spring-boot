@@ -16,7 +16,7 @@ public abstract class DateConst {
     public static final String  DATE_EXPRESSION="yyyy-MM-dd";
     public static final String  TIME_EXPRESSION="HH:mm:ss";
 
-    public static final ZoneId ZONE_ID = ZoneId.systemDefault();
+//    public static final ZoneId ZONE_ID = ZoneId.systemDefault();
     public static final SimpleDateFormat SDF_DATE_TIME=new SimpleDateFormat(DATE_TIME_EXPRESSION);
     public static final DateTimeFormatter DTF_LOCAL_DATE_TIME = DateTimeFormatter.ofPattern(DATE_TIME_EXPRESSION);
     public static final DateTimeFormatter DTF_LOCAL_DATE = DateTimeFormatter.ofPattern(DATE_EXPRESSION);

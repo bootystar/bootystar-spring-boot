@@ -65,7 +65,7 @@ public class BootystarJacksonAutoConfiguration {
     static class Jackson2ObjectMapperBuilderCustomizerConfiguration {
 
         @Bean
-        @Order(-1)
+        @Order(-1)// 使Jackson2ObjectMapperBuilder在获取Jackson2ObjectMapperBuilderCustomizer时, 获取该配置先于StandardJackson2ObjectMapperBuilderCustomizer
         public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
