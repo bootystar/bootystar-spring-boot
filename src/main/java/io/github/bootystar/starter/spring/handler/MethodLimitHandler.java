@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.spring.aop.handler;
+package io.github.bootystar.starter.spring.handler;
 
 import java.lang.reflect.Method;
 

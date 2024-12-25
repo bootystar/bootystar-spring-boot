@@ -1,6 +1,6 @@
 package io.github.bootystar.starter.spring.annotation;
 
-import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 
 import java.lang.annotation.*;
 

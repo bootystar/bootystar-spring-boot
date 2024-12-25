@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.spring.exception;
+package io.github.bootystar.starter.exception;
 
 /**
  * @author bootystar

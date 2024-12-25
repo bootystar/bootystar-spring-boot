@@ -1,6 +1,6 @@
-package io.github.bootystar.starter.spring.aop.handler.impl;
+package io.github.bootystar.starter.spring.handler.impl;
 
-import io.github.bootystar.starter.spring.aop.handler.base.MethodLimitHandlerBase;
+import io.github.bootystar.starter.spring.handler.base.MethodLimitHandlerBase;
 import lombok.SneakyThrows;
 import org.redisson.api.RedissonClient;
 

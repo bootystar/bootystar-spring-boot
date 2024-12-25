@@ -1,23 +1,19 @@
 package io.github.bootystar.starter.autoconfigure;
 
-import io.github.bootystar.starter.spring.aop.aspect.MethodLimitAspect;
-import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
-import io.github.bootystar.starter.spring.aop.handler.impl.MethodLimitHandlerRedissonImpl;
-import io.github.bootystar.starter.spring.aop.handler.impl.MethodLimitHandlerReentrantLockImpl;
+import io.github.bootystar.starter.spring.aspect.MethodLimitAspect;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
+import io.github.bootystar.starter.spring.handler.impl.MethodLimitHandlerRedissonImpl;
+import io.github.bootystar.starter.spring.handler.impl.MethodLimitHandlerReentrantLockImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Advice;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * bootystar aop自动配置

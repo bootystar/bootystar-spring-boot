@@ -1,7 +1,7 @@
-package io.github.bootystar.starter.spring.aop.handler.base;
+package io.github.bootystar.starter.spring.handler.base;
 
-import io.github.bootystar.starter.spring.exception.MethodLimitException;
-import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
+import io.github.bootystar.starter.exception.MethodLimitException;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;

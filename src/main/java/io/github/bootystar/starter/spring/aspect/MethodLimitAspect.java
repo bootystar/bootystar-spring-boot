@@ -1,7 +1,7 @@
-package io.github.bootystar.starter.spring.aop.aspect;
+package io.github.bootystar.starter.spring.aspect;
 
 import io.github.bootystar.starter.spring.annotation.MethodLimit;
-import io.github.bootystar.starter.spring.aop.handler.MethodLimitHandler;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

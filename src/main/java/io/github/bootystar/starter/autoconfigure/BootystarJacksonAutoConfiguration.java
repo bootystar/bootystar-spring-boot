@@ -9,29 +9,20 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import io.github.bootystar.starter.constants.DateConst;
+import io.github.bootystar.starter.helper.DateHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -77,7 +68,7 @@ public class BootystarJacksonAutoConfiguration {
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的格式
-                        .dateFormat(DateConst.SDF_DATE_TIME)
+                        .dateFormat(DateHelper.newSimpleDateFormat())
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
                         .timeZone(TimeZone.getTimeZone("GMT+8"))
 //                    // null 不参与序列化
@@ -90,14 +81,14 @@ public class BootystarJacksonAutoConfiguration {
                 builder.serializerByType(Long.TYPE, ToStringSerializer.instance);
 
                 // 配置 Jackson 反序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateConst.DTF_LOCAL_DATE_TIME));
-                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateConst.DTF_LOCAL_DATE));
-                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateConst.DTF_LOCAL_TIME));
+                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateHelper.DTF_LOCAL_DATE_TIME));
+                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateHelper.DTF_LOCAL_DATE));
+                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateHelper.DTF_LOCAL_TIME));
 
                 // 配置 Jackson 序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.serializers(new LocalDateTimeSerializer(DateConst.DTF_LOCAL_DATE_TIME));
-                builder.serializers(new LocalDateSerializer(DateConst.DTF_LOCAL_DATE));
-                builder.serializers(new LocalTimeSerializer(DateConst.DTF_LOCAL_TIME));
+                builder.serializers(new LocalDateTimeSerializer(DateHelper.DTF_LOCAL_DATE_TIME));
+                builder.serializers(new LocalDateSerializer(DateHelper.DTF_LOCAL_DATE));
+                builder.serializers(new LocalTimeSerializer(DateHelper.DTF_LOCAL_TIME));
             };
         }
     }
