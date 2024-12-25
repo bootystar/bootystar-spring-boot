@@ -1,0 +1,41 @@
+{
+  "properties": [
+    {
+      "name": "booty.databind.long-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize long to string"
+    },
+    {
+      "name": "booty.databind.double-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize long to string"
+    },
+    {
+      "name": "booty.databind.time-pack-support",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "open auto create TimePackSupport"
+    },
+    {
+      "name": "booty.databind.time-format",
+      "type": "java.lang.String",
+      "defaultValue": "HH:mm:ss",
+      "description": "format for LocalTime"
+    },
+    {
+      "name": "booty.databind.date-format",
+      "type": "java.lang.String",
+      "defaultValue": "yyyy-MM-dd",
+      "description": "format for LocalDate"
+    },
+    {
+      "name": "booty.databind.date-time-format",
+      "type": "java.lang.String",
+      "defaultValue": "yyyy-MM-dd HH:mm:ss",
+      "description": "format for LocalDateTime"
+    }
+
+  ]
+}
