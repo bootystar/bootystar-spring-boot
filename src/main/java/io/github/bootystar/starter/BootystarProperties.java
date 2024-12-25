@@ -9,10 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "bootystar")
 public class BootystarProperties {
-
-    static class Date {
-        private boolean enable;
-        private String format;
-    }
-
+    private String timeFormat = "HH:mm:ss";
+    private String dateFormat = "yyyy-MM-dd";
+    private String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 }

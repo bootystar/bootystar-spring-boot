@@ -1,5 +1,6 @@
 package io.github.bootystar.starter.autoconfigure;
 
+import io.github.bootystar.starter.prop.AopProperties;
 import io.github.bootystar.starter.spring.aspect.MethodLimitAspect;
 import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 import io.github.bootystar.starter.spring.handler.impl.MethodLimitHandlerRedissonImpl;
@@ -11,18 +12,23 @@ import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 
 /**
  * bootystar aop自动配置
- * @see org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
+ *
  * @author bootystar
+ * @see org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
  */
 @Slf4j
-@ConditionalOnClass({Advice.class})
 @AutoConfiguration(after = {AopAutoConfiguration.class})
+@EnableConfigurationProperties(AopProperties.class)
+@ConditionalOnClass({Advice.class})
+@ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true")
 public class BootystarAopAutoConfiguration implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -34,9 +40,9 @@ public class BootystarAopAutoConfiguration implements ApplicationContextAware {
     /**
      * 方法限流切面
      *
-     * @see org.redisson.spring.starter.RedissonAutoConfiguration
      * @return {@link MethodLimitAspect }
      * @author bootystar
+     * @see org.redisson.spring.starter.RedissonAutoConfiguration
      */
     @Bean
     public MethodLimitAspect methodLimitAspect() {
