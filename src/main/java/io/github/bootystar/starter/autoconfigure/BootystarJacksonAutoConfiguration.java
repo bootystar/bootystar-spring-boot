@@ -71,27 +71,6 @@ public class BootystarJacksonAutoConfiguration {
                 String timeZoneId = properties.getTimeZone();
 //                ZoneId zoneId = ZoneId.of(timeZoneId);
                 TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
-                /*
-                	String dateFormat = this.jacksonProperties.getDateFormat();
-                    if (dateFormat != null) {
-                        try {
-                            Class<?> dateFormatClass = ClassUtils.forName(dateFormat, null);
-                            builder.dateFormat((DateFormat) BeanUtils.instantiateClass(dateFormatClass));
-                        }
-                        catch (ClassNotFoundException ex) {
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
-                            // Since Jackson 2.6.3 we always need to set a TimeZone (see
-                            // gh-4170). If none in our properties fallback to the Jackson's
-                            // default
-                            TimeZone timeZone = this.jacksonProperties.getTimeZone();
-                            if (timeZone == null) {
-                                timeZone = new ObjectMapper().getSerializationConfig().getTimeZone();
-                            }
-                            simpleDateFormat.setTimeZone(timeZone);
-                            builder.dateFormat(simpleDateFormat);
-                        }
-                    }
-                 */
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateTimeFormat);
                 simpleDateFormat.setTimeZone(timeZone);
                 builder
