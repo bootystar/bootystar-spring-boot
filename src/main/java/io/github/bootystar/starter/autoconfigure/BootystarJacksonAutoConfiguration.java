@@ -101,7 +101,7 @@ public class BootystarJacksonAutoConfiguration {
                         .failOnUnknownProperties(false)
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 todo 处SimpleDateFormat的线程安全问题是否需要处理
+                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 ps: SimpleDateFormat的线程安全问题是否需要处理
                         .dateFormat(simpleDateFormat)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
                         .timeZone(timeZone)
