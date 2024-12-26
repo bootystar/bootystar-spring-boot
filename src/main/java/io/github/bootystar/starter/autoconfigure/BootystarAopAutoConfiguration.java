@@ -26,9 +26,9 @@ import org.springframework.context.annotation.Bean;
  */
 @Slf4j
 @AutoConfiguration(after = {AopAutoConfiguration.class})
-@EnableConfigurationProperties(AopProperties.class)
 @ConditionalOnClass({Advice.class})
-@ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true")
+@EnableConfigurationProperties(AopProperties.class)
+@ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class BootystarAopAutoConfiguration implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 

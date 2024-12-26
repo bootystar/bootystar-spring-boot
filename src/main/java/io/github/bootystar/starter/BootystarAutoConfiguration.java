@@ -5,7 +5,6 @@ import io.github.bootystar.starter.autoconfigure.BootystarConverterAutoConfigura
 import io.github.bootystar.starter.autoconfigure.BootystarJacksonAutoConfiguration;
 import io.github.bootystar.starter.autoconfigure.BootystarMybatisPlusAutoConfiguration;
 import io.github.bootystar.starter.autoconfigure.BootystarRedisAutoConfiguration;
-import io.github.bootystar.starter.prop.DatabindProp;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
@@ -23,7 +22,7 @@ import org.springframework.context.annotation.Import;
         BootystarMybatisPlusAutoConfiguration.class,
         BootystarRedisAutoConfiguration.class
 })
-@EnableConfigurationProperties({BootystarProperties.class, DatabindProp.class})
+@EnableConfigurationProperties({BootystarProperties.class})
 public class BootystarAutoConfiguration {
 
 }
