@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
@@ -51,6 +52,7 @@ public class BootystarJacksonAutoConfiguration {
      *
      * @see org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
      * @see org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration
+     * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.Jackson2ObjectMapperBuilderCustomizerConfiguration#standardJacksonObjectMapperBuilderCustomizer
      *
      * @author bootystar
      */
@@ -66,7 +68,32 @@ public class BootystarJacksonAutoConfiguration {
                 String dateTimeFormat = properties.getDateTimeFormat();
                 String dateFormat = properties.getDateFormat();
                 String timeFormat = properties.getTimeFormat();
-                String timeZone = properties.getTimeZone();
+                String timeZoneId = properties.getTimeZone();
+//                ZoneId zoneId = ZoneId.of(timeZoneId);
+                TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+                /*
+                	String dateFormat = this.jacksonProperties.getDateFormat();
+                    if (dateFormat != null) {
+                        try {
+                            Class<?> dateFormatClass = ClassUtils.forName(dateFormat, null);
+                            builder.dateFormat((DateFormat) BeanUtils.instantiateClass(dateFormatClass));
+                        }
+                        catch (ClassNotFoundException ex) {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+                            // Since Jackson 2.6.3 we always need to set a TimeZone (see
+                            // gh-4170). If none in our properties fallback to the Jackson's
+                            // default
+                            TimeZone timeZone = this.jacksonProperties.getTimeZone();
+                            if (timeZone == null) {
+                                timeZone = new ObjectMapper().getSerializationConfig().getTimeZone();
+                            }
+                            simpleDateFormat.setTimeZone(timeZone);
+                            builder.dateFormat(simpleDateFormat);
+                        }
+                    }
+                 */
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateTimeFormat);
+                simpleDateFormat.setTimeZone(timeZone);
                 builder
                         // 序列化时，对象为 null，是否抛异常
                         .failOnEmptyBeans(false)
@@ -74,10 +101,10 @@ public class BootystarJacksonAutoConfiguration {
                         .failOnUnknownProperties(false)
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 todo 处理SimpleDateFormat的线程安全问题
-                        .dateFormat(new SimpleDateFormat(dateTimeFormat))
+                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 todo 处SimpleDateFormat的线程安全问题是否需要处理
+                        .dateFormat(simpleDateFormat)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
-                        .timeZone(TimeZone.getTimeZone(timeZone))
+                        .timeZone(timeZone)
 //                    // null 不参与序列化
 //                    .serializationInclusion(JsonInclude.Include.NON_NULL)
                 ;
