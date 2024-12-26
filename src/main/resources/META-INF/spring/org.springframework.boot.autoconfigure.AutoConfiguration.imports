@@ -1,1 +1,6 @@
 io.github.bootystar.starter.BootystarAutoConfiguration
+io.github.bootystar.starter.autoconfigure.BootystarAopAutoConfiguration
+io.github.bootystar.starter.autoconfigure.BootystarConverterAutoConfiguration
+io.github.bootystar.starter.autoconfigure.BootystarJacksonAutoConfiguration
+io.github.bootystar.starter.autoconfigure.BootystarMybatisPlusAutoConfiguration
+io.github.bootystar.starter.autoconfigure.BootystarRedisAutoConfiguration
