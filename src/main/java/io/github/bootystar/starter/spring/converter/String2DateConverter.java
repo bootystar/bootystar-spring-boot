@@ -1,10 +1,10 @@
 package io.github.bootystar.starter.spring.converter;
 
-import io.github.bootystar.starter.helper.DateHelper;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
-
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -12,11 +12,21 @@ import java.util.Date;
  * @since 2023/10/27
  */
 public class String2DateConverter implements Converter<String, Date> {
+    private final ZoneId zoneId;
+    private final DateTimeFormatter formatter;
+
+    public String2DateConverter(String pattern, String zoneId) {
+        this.zoneId = ZoneId.of(zoneId);
+        this.formatter = DateTimeFormatter.ofPattern(pattern);
+    }
 
     @Override
     @SneakyThrows
     public Date convert(String source) {
-        return DateHelper.string2Date(source);
+        if (source.isEmpty()) {
+            return null;
+        }
+        return Date.from(LocalDateTime.parse(source,formatter).atZone(zoneId).toInstant());
     }
 
 }

@@ -32,25 +32,25 @@ import org.springframework.core.convert.converter.GenericConverter;
 public class BootystarConverterAutoConfiguration{
 
     @Bean
-    public String2DateConverter string2DateConverter(BootystarProperties bootystarProperties) {
+    public String2DateConverter string2DateConverter(BootystarProperties properties) {
         log.debug("String2DateConverter Configured");
-        return new String2DateConverter();
+        return new String2DateConverter(properties.getDateTimeFormat());
     }
 
     @Bean
-    public String2LocalDateTimeConverter string2LocalDateTimeConverter(BootystarProperties bootystarProperties) {
+    public String2LocalDateTimeConverter string2LocalDateTimeConverter(BootystarProperties properties) {
         log.debug("String2LocalDateTimeConverter Configured");
-        return new String2LocalDateTimeConverter();
+        return new String2LocalDateTimeConverter(properties.getDateTimeFormat());
     }
 
     @Bean
-    public String2LocalDateConverter string2LocalDateConverter(BootystarProperties bootystarProperties) {
+    public String2LocalDateConverter string2LocalDateConverter(BootystarProperties properties) {
         log.debug("String2LocalDateConverter configured");
-        return new String2LocalDateConverter();
+        return new String2LocalDateConverter(properties.getDateFormat());
     }
 
     @Bean
-    public String2LocalTimeConverter string2LocalTimeConverter(BootystarProperties bootystarProperties) {
+    public String2LocalTimeConverter string2LocalTimeConverter(BootystarProperties properties) {
         log.debug("String2LocalTimeConverter Configured");
         return new String2LocalTimeConverter();
     }

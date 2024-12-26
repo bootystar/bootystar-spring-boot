@@ -12,8 +12,17 @@ import java.time.format.DateTimeFormatter;
  */
 public class String2LocalDateConverter implements Converter<String, LocalDate> {
 
+    private final DateTimeFormatter formatter;
+
+    public String2LocalDateConverter(String pattern) {
+        this.formatter = DateTimeFormatter.ofPattern(pattern);
+    }
+
     @Override
     public LocalDate convert(String source) {
-        return DateHelper.string2LocalDate(source);
+        if (source.isEmpty()) {
+            return null;
+        }
+        return LocalDate.parse(source, formatter);
     }
 }
