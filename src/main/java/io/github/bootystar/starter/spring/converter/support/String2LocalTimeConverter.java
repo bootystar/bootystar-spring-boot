@@ -1,18 +1,14 @@
-package io.github.bootystar.starter.spring.converter;
+package io.github.bootystar.starter.spring.converter.support;
 
-import io.github.bootystar.starter.helper.DateHelper;
-import org.springframework.core.convert.converter.Converter;
+import io.github.bootystar.starter.spring.converter.DateTimeConverter;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
  * @author bootystar
- * @since 2023/10/27
  */
-public class String2LocalTimeConverter implements Converter<String, LocalTime> {
-
+public class String2LocalTimeConverter implements DateTimeConverter<String, LocalTime> {
     private final DateTimeFormatter formatter;
 
     public String2LocalTimeConverter(String pattern) {

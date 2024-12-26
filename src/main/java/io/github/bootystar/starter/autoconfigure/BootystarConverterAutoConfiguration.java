@@ -1,22 +1,14 @@
 package io.github.bootystar.starter.autoconfigure;
 
 import io.github.bootystar.starter.BootystarProperties;
-import io.github.bootystar.starter.prop.AopProperties;
 import io.github.bootystar.starter.prop.ConverterProperties;
-import io.github.bootystar.starter.spring.converter.String2DateConverter;
-import io.github.bootystar.starter.spring.converter.String2LocalDateConverter;
-import io.github.bootystar.starter.spring.converter.String2LocalDateTimeConverter;
-import io.github.bootystar.starter.spring.converter.String2LocalTimeConverter;
+import io.github.bootystar.starter.spring.converter.support.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.convert.converter.GenericConverter;
 
 
 /**
@@ -25,7 +17,7 @@ import org.springframework.core.convert.converter.GenericConverter;
  * @author bootystar
  */
 @Slf4j
-@AutoConfiguration()
+@AutoConfiguration
 @ConditionalOnClass(org.springframework.core.convert.converter.Converter.class)
 @EnableConfigurationProperties(ConverterProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.converter", name = "enabled", havingValue = "true", matchIfMissing = true)
@@ -34,7 +26,7 @@ public class BootystarConverterAutoConfiguration{
     @Bean
     public String2DateConverter string2DateConverter(BootystarProperties properties) {
         log.debug("String2DateConverter Configured");
-        return new String2DateConverter(properties.getDateTimeFormat());
+        return new String2DateConverter(properties.getDateTimeFormat(),properties.getTimeZone());
     }
 
     @Bean
@@ -52,7 +44,25 @@ public class BootystarConverterAutoConfiguration{
     @Bean
     public String2LocalTimeConverter string2LocalTimeConverter(BootystarProperties properties) {
         log.debug("String2LocalTimeConverter Configured");
-        return new String2LocalTimeConverter();
+        return new String2LocalTimeConverter(properties.getTimeFormat());
+    }
+
+    @Bean
+    public String2SqlDateConverter string2SqlDateConverter(BootystarProperties properties) {
+        log.debug("String2SqlDateConverter Configured");
+        return new String2SqlDateConverter(properties.getDateFormat());
+    }
+
+    @Bean
+    public String2SqlTimeConverter string2SqlTimeConverter(BootystarProperties properties) {
+        log.debug("String2SqlTimeConverter Configured");
+        return new String2SqlTimeConverter(properties.getTimeFormat());
+    }
+
+    @Bean
+    public String2SqlTimestampConverter string2SqlTimestampConverter(BootystarProperties properties) {
+        log.debug("String2SqlTimestampConverter Configured");
+        return new String2SqlTimestampConverter(properties.getDateTimeFormat());
     }
 
 
@@ -60,6 +70,8 @@ public class BootystarConverterAutoConfiguration{
 //    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 //        // Converter兼容@DateTimeFormat 原converter优先级低下使用配置开关处
         /*
+
+        {@link org.springframework.core.convert.support.GenericConversionService}
         源码调用链
         GenericConversionService.java:190 根据原始类型和目标类型获取converter
         GenericConversionService.java:255 创建ConverterCacheKey, 从缓存中获取, 有则返回
@@ -85,7 +97,15 @@ public class BootystarConverterAutoConfiguration{
             所以一旦存在自定义的converter, 先调用的一定是自定义的converter,
             不会再调用SpringBoot自动配置的注解处理器org.springframework.format.support.FormattingConversionService$AnnotationParserConverter
             同理, 若降低了自定义配置的优先级, 找到了SpringBoot自动配置的converter则不会再调用自定义的converter,
-            因机制为单次converter调用, 多converter无法做到兼容@DateTimeFormat
+            因机制为单次converter调用, 多converter无法做到兼容@DateTimeFormat,
+            只能通过实现ConditionalConverter接口, 在match方法中判断无注解时启用自己的converter, 有注解时跳过
+                if (!(converter instanceof ConditionalGenericConverter) ||
+						((ConditionalGenericConverter) converter).matches(sourceType, targetType)) {
+					return converter;
+				}
+
+            GenericConversionService.java:340  私有类ConverterAdapter, 可以将Converter适配为ConditionalGenericConverter
+
         */
 ////        FormatterRegistry bean = applicationContext.getBean(FormatterRegistry.class);
 ////        bean.addConverter(new String2LocalTimeConverter());

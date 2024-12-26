@@ -2,6 +2,7 @@ package io.github.bootystar.starter.autoconfigure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -9,7 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import io.github.bootystar.starter.helper.DateHelper;
+import io.github.bootystar.starter.BootystarProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -20,9 +21,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
 /**
@@ -57,9 +60,13 @@ public class BootystarJacksonAutoConfiguration {
 
         @Bean
         @Order(-1)// 使Jackson2ObjectMapperBuilder在获取Jackson2ObjectMapperBuilderCustomizer时, 获取该配置先于StandardJackson2ObjectMapperBuilderCustomizer
-        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties properties) {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
+                String dateTimeFormat = properties.getDateTimeFormat();
+                String dateFormat = properties.getDateFormat();
+                String timeFormat = properties.getTimeFormat();
+                String timeZone = properties.getTimeZone();
                 builder
                         // 序列化时，对象为 null，是否抛异常
                         .failOnEmptyBeans(false)
@@ -67,28 +74,32 @@ public class BootystarJacksonAutoConfiguration {
                         .failOnUnknownProperties(false)
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式
-                        .dateFormat(DateHelper.newSimpleDateFormat())
+                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 todo 处理SimpleDateFormat的线程安全问题
+                        .dateFormat(new SimpleDateFormat(dateTimeFormat))
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
-                        .timeZone(TimeZone.getTimeZone("GMT+8"))
+                        .timeZone(TimeZone.getTimeZone(timeZone))
 //                    // null 不参与序列化
 //                    .serializationInclusion(JsonInclude.Include.NON_NULL)
                 ;
-
                 // Jackson 序列化 long类型为String，解决后端返回的Long类型在前端精度丢失的问题
                 builder.serializerByType(BigInteger.class, ToStringSerializer.instance);
                 builder.serializerByType(Long.class, ToStringSerializer.instance);
                 builder.serializerByType(Long.TYPE, ToStringSerializer.instance);
 
+                // 序列化器
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
+
                 // 配置 Jackson 反序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateHelper.DTF_LOCAL_DATE_TIME));
-                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateHelper.DTF_LOCAL_DATE));
-                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateHelper.DTF_LOCAL_TIME));
+                builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+                builder.deserializerByType(LocalDate.class, new LocalDateDeserializer(dateFormatter));
+                builder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(timeFormatter));
 
                 // 配置 Jackson 序列化 LocalDateTime、LocalDate、LocalTime 时使用的格式
-                builder.serializers(new LocalDateTimeSerializer(DateHelper.DTF_LOCAL_DATE_TIME));
-                builder.serializers(new LocalDateSerializer(DateHelper.DTF_LOCAL_DATE));
-                builder.serializers(new LocalTimeSerializer(DateHelper.DTF_LOCAL_TIME));
+                builder.serializers(new LocalDateTimeSerializer(dateTimeFormatter));
+                builder.serializers(new LocalDateSerializer(dateFormatter));
+                builder.serializers(new LocalTimeSerializer(timeFormatter));
             };
         }
     }
