@@ -1,6 +1,6 @@
 package io.github.bootystar.starter.spring.handler.impl;
 
-import io.github.bootystar.starter.spring.handler.base.MethodLimitHandlerBase;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 import lombok.SneakyThrows;
 import org.redisson.api.RedissonClient;
 
@@ -9,9 +9,10 @@ import java.util.concurrent.locks.Lock;
 /**
  * @author bootystar
  */
-public class MethodLimitHandlerRedissonImpl extends MethodLimitHandlerBase {
+public class RedissonMethodLimitHandler implements MethodLimitHandler {
     private final RedissonClient redissonClient;
-    public MethodLimitHandlerRedissonImpl(RedissonClient redissonClient) {
+
+    public RedissonMethodLimitHandler(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 

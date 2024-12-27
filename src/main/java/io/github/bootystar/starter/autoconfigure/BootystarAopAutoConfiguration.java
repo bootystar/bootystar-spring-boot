@@ -3,8 +3,8 @@ package io.github.bootystar.starter.autoconfigure;
 import io.github.bootystar.starter.prop.AopProperties;
 import io.github.bootystar.starter.spring.aspect.MethodLimitAspect;
 import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
-import io.github.bootystar.starter.spring.handler.impl.MethodLimitHandlerRedissonImpl;
-import io.github.bootystar.starter.spring.handler.impl.MethodLimitHandlerReentrantLockImpl;
+import io.github.bootystar.starter.spring.handler.impl.RedissonMethodLimitHandler;
+import io.github.bootystar.starter.spring.handler.impl.ReentrantLockMethodLimitHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Advice;
 import org.redisson.api.RedissonClient;
@@ -50,11 +50,11 @@ public class BootystarAopAutoConfiguration implements ApplicationContextAware {
         try {
             Class<?> clazz = Class.forName("org.redisson.api.RedissonClient");
             Object bean = applicationContext.getBean(clazz);
-            MethodLimitHandlerRedissonImpl redissonHandler = new MethodLimitHandlerRedissonImpl((RedissonClient) bean);
+            RedissonMethodLimitHandler redissonHandler = new RedissonMethodLimitHandler((RedissonClient) bean);
             methodLimitAspect.allocateLimitHandler(MethodLimitHandler.class, redissonHandler);
             log.debug("MethodLimitHandlerRedissonImpl Configured");
         } catch (Exception e) {
-            methodLimitAspect.allocateLimitHandler(MethodLimitHandler.class, new MethodLimitHandlerReentrantLockImpl());
+            methodLimitAspect.allocateLimitHandler(MethodLimitHandler.class, new ReentrantLockMethodLimitHandler());
             log.debug("MethodLimitHandlerReentrantLockImpl Configured");
         }
         return methodLimitAspect;

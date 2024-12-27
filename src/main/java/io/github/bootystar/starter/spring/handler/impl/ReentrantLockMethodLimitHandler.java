@@ -1,6 +1,6 @@
 package io.github.bootystar.starter.spring.handler.impl;
 
-import io.github.bootystar.starter.spring.handler.base.MethodLimitHandlerBase;
+import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
 import lombok.SneakyThrows;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author bootystar
  */
-public class MethodLimitHandlerReentrantLockImpl extends MethodLimitHandlerBase {
+public class ReentrantLockMethodLimitHandler implements MethodLimitHandler {
     private final ConcurrentHashMap<String, ReentrantLock> LOCK_MAP = new ConcurrentHashMap<>();
     private final ReentrantLock LOCK = new ReentrantLock();
 
@@ -30,7 +30,7 @@ public class MethodLimitHandlerReentrantLockImpl extends MethodLimitHandlerBase 
         try {
             ReentrantLock lock = getLock(signature);
             lock.unlock();
-            if (!lock.isLocked()){
+            if (!lock.isLocked()) {
                 LOCK_MAP.remove(signature);
             }
         } finally {

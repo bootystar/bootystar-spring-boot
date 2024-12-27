@@ -1,7 +1,6 @@
-package io.github.bootystar.starter.spring.handler.base;
+package io.github.bootystar.starter.spring.handler.impl;
 
-import io.github.bootystar.starter.exception.MethodLimitException;
-import io.github.bootystar.starter.spring.handler.MethodLimitHandler;
+import io.github.bootystar.starter.spring.handler.MethodSignatureHandler;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
@@ -13,7 +12,7 @@ import java.lang.reflect.Method;
 /**
  * @author bootystar
  */
-public abstract class MethodLimitHandlerBase implements MethodLimitHandler {
+public  class SpelMethodSignatureHandler implements MethodSignatureHandler {
     private final String prefix = getClass().getSimpleName() + "-";
     private final ExpressionParser parser = new SpelExpressionParser();
     private final ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
@@ -39,8 +38,4 @@ public abstract class MethodLimitHandlerBase implements MethodLimitHandler {
         return prefix + genericString + parser.parseExpression(expression).getValue(new MethodBasedEvaluationContext(null, method, args, pnd));
     }
 
-    @Override
-    public Object fallback(String signature) {
-        throw new MethodLimitException("processing, please try again later");
-    }
 }
