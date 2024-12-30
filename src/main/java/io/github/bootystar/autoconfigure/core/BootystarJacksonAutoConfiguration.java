@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -65,7 +66,7 @@ public class BootystarJacksonAutoConfiguration {
 
         @Bean
         @Order(-1)// 使Jackson2ObjectMapperBuilder在获取Jackson2ObjectMapperBuilderCustomizer时, 获取该配置先于StandardJackson2ObjectMapperBuilderCustomizer
-        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties properties) {
+        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties properties, JacksonProperties jacksonProperties) {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
                 String dateTimeFormat = properties.getDateTimeFormat();
@@ -83,17 +84,36 @@ public class BootystarJacksonAutoConfiguration {
                         .failOnUnknownProperties(false)
                         // 禁止将 java.util.Date、Calendar 序列化为数字(时间戳)
                         .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式 ps: SimpleDateFormat的线程安全问题是否需要处理
+                        // 设置 java.util.Date, Calendar 序列化、反序列化的格式
                         .dateFormat(simpleDateFormat)
                         // 设置 java.util.Date, Calendar 序列化、反序列化的时区
                         .timeZone(timeZone)
 //                    // null 不参与序列化
 //                    .serializationInclusion(JsonInclude.Include.NON_NULL)
                 ;
-                // Jackson 序列化 long类型为String，解决后端返回的Long类型在前端精度丢失的问题
-                builder.serializerByType(BigInteger.class, ToStringSerializer.instance);
-                builder.serializerByType(Long.class, ToStringSerializer.instance);
-                builder.serializerByType(Long.TYPE, ToStringSerializer.instance);
+                /*
+                Jackson 序列化, 解决后端返回的数字类型在前端精度丢失的问题
+                JS 遵循 IEEE 754 规范, 能精准表示的最大整数是 Math.pow(2, 53)，十进制即 9007199254740992，任何大于9007199254740992都会出现精度丢失的问题
+                也可使用全局配置项
+                spring:
+                  jackson:
+                    generator:
+                      write_numbers_as_strings: true #序列化的时候，将数值类型全部转换成字符串返回
+                 */
+                if (jacksonProperties.isLongToString()){
+                    builder.serializerByType(Long.class, ToStringSerializer.instance);
+                    builder.serializerByType(Long.TYPE, ToStringSerializer.instance);
+                }
+                if (jacksonProperties.isDoubleToString()){
+                    builder.serializerByType(Double.class, ToStringSerializer.instance);
+                    builder.serializerByType(Double.TYPE, ToStringSerializer.instance);
+                }
+                if (jacksonProperties.isBigIntegerToString()){
+                    builder.serializerByType(BigInteger.class, ToStringSerializer.instance);
+                }
+                if (jacksonProperties.isBigDecimalToString()){
+                    builder.serializerByType(BigDecimal.class, ToStringSerializer.instance);
+                }
 
                 // 序列化器
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
@@ -143,7 +163,7 @@ public class BootystarJacksonAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(ObjectMapper.class)
     @ConditionalOnBean(ObjectMapper.class)
-    @ConditionalOnProperty(name = HttpMessageConvertersAutoConfiguration.PREFERRED_MAPPER_PROPERTY,
+//    @ConditionalOnProperty(name = HttpMessageConvertersAutoConfiguration.PREFERRED_MAPPER_PROPERTY,
             havingValue = "jackson", matchIfMissing = true)
     static class MappingJackson2HttpMessageConverterConfiguration {
 

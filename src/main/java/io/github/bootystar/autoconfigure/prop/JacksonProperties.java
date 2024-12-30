@@ -10,4 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "bootystar.jackson")
 public class JacksonProperties {
     private boolean enabled = true;
+    private boolean longToString = true;
+    private boolean doubleToString = true;
+    private boolean bigIntegerToString = true;
+    private boolean bigDecimalToString = true;
 }
