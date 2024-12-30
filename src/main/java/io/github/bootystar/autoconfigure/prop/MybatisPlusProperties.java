@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author bootystar
  */
 @Data
-@ConfigurationProperties(prefix = "bootystar.jackson")
+@ConfigurationProperties(prefix = "bootystar.mybatis-plus")
 public class MybatisPlusProperties {
     private boolean enabled = true;
 }
