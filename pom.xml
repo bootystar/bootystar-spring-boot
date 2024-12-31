@@ -8,8 +8,8 @@
         <groupId>io.github.bootystar</groupId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>bootystar-spring-boot-autoconfigure</artifactId>
-    <description>custom springboot autoconfigure</description>
+    <artifactId>bootystar-spring-boot-starter</artifactId>
+    <description>custom springboot starter</description>
     <version>0.0.1-SNAPSHOT</version>
 
 
@@ -20,11 +20,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <url>https://github.com/bootystar/bootystar-spring-boot-autoconfigure</url>
+    <url>https://github.com/bootystar/bootystar-spring-boot-starter</url>
     <scm>
-        <connection>scm:git@github.com:bootystar/bootystar-spring-boot-autoconfigure.git</connection>
-        <developerConnection>scm:git@github.com:bootystar/bootystar-spring-boot-autoconfigure.git</developerConnection>
-        <url>https://github.com/bootystar/bootystar-spring-boot-autoconfigure</url>
+        <connection>scm:git@github.com:bootystar/bootystar-spring-boot-starter.git</connection>
+        <developerConnection>scm:git@github.com:bootystar/bootystar-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/bootystar/bootystar-spring-boot-starter</url>
     </scm>
 
     <properties>
