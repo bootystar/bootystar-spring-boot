@@ -23,6 +23,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 /**
  * bootystar redis自动配置
  * @see org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+ * @see org.redisson.spring.starter.RedissonAutoConfiguration
  * @author bootystar
  */
 @Slf4j

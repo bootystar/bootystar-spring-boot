@@ -21,12 +21,12 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnClass(org.springframework.core.convert.converter.Converter.class)
 @EnableConfigurationProperties(ConverterProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.converter", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarConverterAutoConfiguration{
+public class BootystarConverterAutoConfiguration {
 
     @Bean
     public String2DateConverter string2DateConverter(BootystarProperties properties) {
         log.debug("String2DateConverter Configured");
-        return new String2DateConverter(properties.getDateTimeFormat(),properties.getTimeZone());
+        return new String2DateConverter(properties.getDateTimeFormat(), properties.getTimeZone());
     }
 
     @Bean

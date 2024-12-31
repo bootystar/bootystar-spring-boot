@@ -29,13 +29,7 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnClass({Advice.class})
 @EnableConfigurationProperties(AopProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarAopAutoConfiguration implements ApplicationContextAware {
-    private ApplicationContext applicationContext;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
+public class BootystarAopAutoConfiguration {
 
     /**
      * 方法限流切面
@@ -45,7 +39,7 @@ public class BootystarAopAutoConfiguration implements ApplicationContextAware {
      * @see org.redisson.spring.starter.RedissonAutoConfiguration
      */
     @Bean
-    public MethodLimitAspect methodLimitAspect() {
+    public MethodLimitAspect methodLimitAspect(ApplicationContext applicationContext) {
         MethodLimitAspect methodLimitAspect = new MethodLimitAspect();
         try {
             Class<?> clazz = Class.forName("org.redisson.api.RedissonClient");
