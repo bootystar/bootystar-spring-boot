@@ -9,14 +9,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import io.github.bootystar.autoconfigure.BootystarProperties;
-import io.github.bootystar.autoconfigure.prop.JacksonProperties;
+import io.github.bootystar.autoconfigure.prop.BootystarProperties;
+import io.github.bootystar.autoconfigure.prop.support.JacksonProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -40,7 +39,6 @@ import java.util.TimeZone;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
-@EnableConfigurationProperties(JacksonProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.jackson", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class BootystarJacksonAutoConfiguration {
 
@@ -66,7 +64,7 @@ public class BootystarJacksonAutoConfiguration {
 
         @Bean
         @Order(-1)// 使Jackson2ObjectMapperBuilder在获取Jackson2ObjectMapperBuilderCustomizer时, 获取该配置先于StandardJackson2ObjectMapperBuilderCustomizer
-        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties properties, JacksonProperties jacksonProperties) {
+        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties properties) {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
                 String dateTimeFormat = properties.getDateTimeFormat();
@@ -100,6 +98,7 @@ public class BootystarJacksonAutoConfiguration {
                     generator:
                       write_numbers_as_strings: true #序列化的时候，将数值类型全部转换成字符串返回
                  */
+                JacksonProperties jacksonProperties = properties.getJackson();
                 if (jacksonProperties.isLongToString()){
                     builder.serializerByType(Long.class, ToStringSerializer.instance);
                     builder.serializerByType(Long.TYPE, ToStringSerializer.instance);

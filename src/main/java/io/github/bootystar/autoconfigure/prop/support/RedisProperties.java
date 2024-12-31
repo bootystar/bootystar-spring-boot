@@ -1,4 +1,4 @@
-package io.github.bootystar.autoconfigure.prop;
+package io.github.bootystar.autoconfigure.prop.support;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author bootystar
  */
 @Data
-@ConfigurationProperties(prefix = "bootystar.converter")
-public class ConverterProperties {
+public class RedisProperties {
     private boolean enabled = true;
 }

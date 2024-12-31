@@ -2,14 +2,12 @@ package io.github.bootystar.autoconfigure.core;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
-import io.github.bootystar.autoconfigure.prop.MybatisPlusProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -20,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @ConditionalOnClass({com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class, MybatisPlusInterceptor.class})
 @AutoConfiguration(after = com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
-@EnableConfigurationProperties(MybatisPlusProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.mybatis-plus", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class BootystarMybatisPlusAutoConfiguration {
 

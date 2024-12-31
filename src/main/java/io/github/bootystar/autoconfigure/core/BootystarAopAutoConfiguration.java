@@ -1,6 +1,5 @@
 package io.github.bootystar.autoconfigure.core;
 
-import io.github.bootystar.autoconfigure.prop.AopProperties;
 import io.github.bootystar.autoconfigure.spring.aspect.MethodLimitAspect;
 import io.github.bootystar.autoconfigure.spring.handler.MethodLimitHandler;
 import io.github.bootystar.autoconfigure.spring.handler.impl.RedissonMethodLimitHandler;
@@ -8,14 +7,11 @@ import io.github.bootystar.autoconfigure.spring.handler.impl.ReentrantLockMethod
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Advice;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -27,7 +23,6 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @AutoConfiguration(after = {AopAutoConfiguration.class})
 @ConditionalOnClass({Advice.class})
-@EnableConfigurationProperties(AopProperties.class)
 @ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class BootystarAopAutoConfiguration {
 
