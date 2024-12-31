@@ -3,7 +3,6 @@ package io.github.bootystar.starter.autoconfigure.suppoert;
 import io.github.bootystar.starter.prop.BootystarProperties;
 import io.github.bootystar.starter.spring.converter.support.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
