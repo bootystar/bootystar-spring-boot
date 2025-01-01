@@ -1,12 +1,22 @@
 package io.github.bootystar.starter.autoconfigure;
 
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.DeferredImportSelector;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 import java.util.Collection;
 
@@ -45,6 +55,25 @@ import java.util.Collection;
  * <p>
  * 在run()方法中, 进入try{}catch(){}块, 开始创建容器
  * 在run()方法中, 调用{@link SpringApplication#prepareEnvironment(SpringApplicationRunListeners, DefaultBootstrapContext, ApplicationArguments)} 准备创建容器
+ * 在run()方法中, 调用{@link SpringApplication#printBanner(ConfigurableEnvironment)} 打印banner
+ * 在run()方法中, 调用{@link SpringApplication#createApplicationContext()} 创建ApplicationContext容器,并setApplicationStartup(this.applicationStartup);
+ * 在run()方法中, 调用{@link SpringApplication#prepareContext(DefaultBootstrapContext, ConfigurableApplicationContext, ConfigurableEnvironment, SpringApplicationRunListeners, ApplicationArguments, Banner)} 准备容器运行环境
+ * 在run()-prepareContext()方法中,设置环境{@link ConfigurableApplicationContext#setEnvironment(ConfigurableEnvironment)}
+ * 在run()-prepareContext()方法中,设置后置处理器{@link SpringApplication#postProcessApplicationContext(ConfigurableApplicationContext)}
+ * 在run()-prepareContext()-postProcessApplicationContext()方法中,获取BeanFactory并设置用于类型转化的服务{@link ConfigurableBeanFactory#setConversionService(ConversionService)}
+ * 在run()-prepareContext()方法中,添加初始化器{@link SpringApplication#addInitializers(ApplicationContextInitializer[])}
+ * 在run()-prepareContext()方法中,向监听器发送容器准备事件listeners.contextPrepared(context);
+ * 在run()-prepareContext()方法中,关闭DefaultBootstrapContext{@link DefaultBootstrapContext#close(ConfigurableApplicationContext)}
+ * 在run()-prepareContext()方法中,打印启动信息和配置文件信息{@link SpringApplication#logStartupInfo(boolean)} {@link SpringApplication#logStartupProfileInfo(ConfigurableApplicationContext)}
+ * 在run()-prepareContext()方法中,获取bean工厂{@link ConfigurableApplicationContext#getBeanFactory()}, 并调用bean工厂的{@link ConfigurableListableBeanFactory#registerSingleton(String, Object)}注册单例bean
+ * 在run()-prepareContext()方法中,注册单例bean时,若为懒加载, 通过{@link ConfigurableApplicationContext#addBeanFactoryPostProcessor(BeanFactoryPostProcessor)}将{@link LazyInitializationBeanFactoryPostProcessor}注册到容器中
+ * 在run()-prepareContext()方法中,通过{@link ConfigurableApplicationContext#addBeanFactoryPostProcessor(BeanFactoryPostProcessor)}将{@link SpringApplication.PropertySourceOrderingBeanFactoryPostProcessor}注册到容器中
+ * 在run()-prepareContext()方法中,通过{@link SpringApplication#getAllSources()} 获取资源文件
+ * 在run()-prepareContext()方法中,通过{@link SpringApplication#load(ApplicationContext, Object[])} 加载资源文件
+ * 在run()-prepareContext()方法中,发送容器已加载的事件listeners.contextLoaded(context);
+ * 在run()方法中,使用{@link SpringApplication#refreshContext(ConfigurableApplicationContext)},注册ShutdownHook, 之后调用{@link ConfigurableApplicationContext#refresh()}方法刷新容器
+ * ---------核心:{@link AbstractApplicationContext#refresh()}------------------
+ *
  * todo 继续追踪源码
  *
  *
@@ -57,10 +86,6 @@ import java.util.Collection;
  * @see AutoConfigurationImportSelector.AutoConfigurationGroup#getAutoConfigurationEntry(AnnotationMetadata) 获取所有自动配置类
  * @see AutoConfigurationImportSelector.AutoConfigurationGroup#getCandidateConfigurations(AnnotationMetadata, AnnotationAttributes) 先获取所有非spring官方的自动配置类, 按jar包定义的顺序排序, 再获取spring的自动配置类
  * @see AutoConfigurationImportSelector.AutoConfigurationGroup#selectImports()  处理配置类, 重新排序配置类的先后顺序, 按实现的order顺序排序(未指定时均为0), 若相同, 则按上一步的获取顺序返回
- * @see AutoConfigurationImportSelector.AutoConfigurationGroup
- * @see AutoConfigurationImportSelector.AutoConfigurationGroup
- * @see AutoConfigurationImportSelector.AutoConfigurationGroup
- * @see AutoConfigurationImportSelector.AutoConfigurationGroup#selectImports(AnnotationMetadata)
  * @author bootystar
  */
 public class SourceHunter {

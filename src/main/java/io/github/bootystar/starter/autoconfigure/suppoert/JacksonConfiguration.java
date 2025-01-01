@@ -30,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 
 /**
- * bootystar jackson自动配置
+ * jackson配置
  *
  * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
  * @author bootystar
@@ -39,7 +39,7 @@ import java.util.TimeZone;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ObjectMapper.class)
 @ConditionalOnProperty(prefix = "bootystar.jackson", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarJacksonAutoConfiguration {
+public class JacksonConfiguration {
 
     /**
      * jackson2对象映射器生成器定制器配置

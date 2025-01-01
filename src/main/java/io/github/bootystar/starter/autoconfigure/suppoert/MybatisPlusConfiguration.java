@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * bootystar mybatis plus自动配置
+ * mybatis plus配置
  * @see com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
  * @author bootystar
  */
@@ -20,11 +20,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({BaseMapper.class, MybatisPlusInterceptor.class})
 @ConditionalOnProperty(prefix = "bootystar.mybatis-plus", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarMybatisPlusAutoConfiguration {
+public class MybatisPlusConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-    @ConditionalOnBean(com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
+//    @ConditionalOnBean(com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 //        interceptor.addInnerInterceptor(new DbInterceptor());

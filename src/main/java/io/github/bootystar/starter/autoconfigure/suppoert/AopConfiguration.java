@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * bootystar aop自动配置
+ * aop配置
  *
  * @author bootystar
  * @see org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({Advice.class})
 @ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarAopAutoConfiguration {
+public class AopConfiguration {
 
     /**
      * 方法限流切面

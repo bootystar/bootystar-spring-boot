@@ -18,17 +18,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
- * bootystar redis自动配置
+ * redis配置
  * @see org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
- * @see org.redisson.spring.starter.RedissonAutoConfiguration
  * @author bootystar
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({RedisOperations.class,Jackson2ObjectMapperBuilder.class})
 @ConditionalOnProperty(prefix = "bootystar.redis", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarRedisAutoConfiguration {
-
+public class RedisConfiguration {
 
     @Bean
     public RedisSerializer<Object> redisSerializer(Jackson2ObjectMapperBuilder builder) {

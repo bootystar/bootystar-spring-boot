@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
 
 
 /**
- * bootystar转换器自动配置
+ * 转换器配置
  *
  * @author bootystar
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(prefix = "bootystar.converter", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class BootystarConverterAutoConfiguration {
+public class ConverterConfiguration {
 
     @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-date", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
