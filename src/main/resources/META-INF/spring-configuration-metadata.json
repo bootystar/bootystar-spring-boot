@@ -1,6 +1,11 @@
 {
   "properties": [
     {
+      "name": "bootystar",
+      "type": "io.github.bootystar.starter.prop.BootystarProperties",
+      "description": "bootystar's properties"
+    },
+    {
       "name": "bootystar.time-format",
       "type": "java.lang.String",
       "defaultValue": "HH:mm:ss",
@@ -25,6 +30,11 @@
       "description": "timeZone for Date"
     },
     {
+      "name": "bootystar.aop",
+      "type": "io.github.bootystar.starter.prop.support.AopProperties",
+      "description": "aop properties"
+    },
+    {
       "name": "bootystar.aop.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
@@ -34,7 +44,49 @@
       "name": "bootystar.converter.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "enable converter autoconfig"
+      "description": "whether enable converters"
+    },
+    {
+      "name": "bootystar.converter.string-to-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-date-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-timestamp",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "whether enable converter"
     },
     {
       "name": "bootystar.jackson.enabled",
