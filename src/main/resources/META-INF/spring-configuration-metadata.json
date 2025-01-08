@@ -1,40 +1,82 @@
 {
   "properties": [
     {
-      "name": "booty.databind.long-to-string",
-      "type": "java.lang.Boolean",
-      "defaultValue": "true",
-      "description": "jackson serialize long to string"
-    },
-    {
-      "name": "booty.databind.double-to-string",
-      "type": "java.lang.Boolean",
-      "defaultValue": "true",
-      "description": "jackson serialize long to string"
-    },
-    {
-      "name": "booty.databind.time-pack-support",
-      "type": "java.lang.Boolean",
-      "defaultValue": "true",
-      "description": "open auto create TimePackSupport"
-    },
-    {
-      "name": "booty.databind.time-format",
+      "name": "bootystar.time-format",
       "type": "java.lang.String",
       "defaultValue": "HH:mm:ss",
       "description": "format for LocalTime"
     },
     {
-      "name": "booty.databind.date-format",
+      "name": "bootystar.date-format",
       "type": "java.lang.String",
       "defaultValue": "yyyy-MM-dd",
       "description": "format for LocalDate"
     },
     {
-      "name": "booty.databind.date-time-format",
+      "name": "bootystar.date-time-format",
       "type": "java.lang.String",
       "defaultValue": "yyyy-MM-dd HH:mm:ss",
-      "description": "format for LocalDateTime"
+      "description": "format for LocalDateTime and Date"
+    },
+    {
+      "name": "bootystar.time-zone",
+      "type": "java.lang.String",
+      "defaultValue": "GMT+8",
+      "description": "timeZone for Date"
+    },
+    {
+      "name": "bootystar.aop.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "enable aop autoconfig"
+    },
+    {
+      "name": "bootystar.converter.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "enable converter autoconfig"
+    },
+    {
+      "name": "bootystar.jackson.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "enable jackson autoconfig"
+    },
+    {
+      "name": "bootystar.jackson.long-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize"
+    },
+    {
+      "name": "bootystar.jackson.double-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize"
+    },
+    {
+      "name": "bootystar.jackson.big-integer-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize"
+    },
+    {
+      "name": "bootystar.jackson.big-decimal-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "jackson serialize"
+    },
+    {
+      "name": "bootystar.mybatis-plus.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "enable mybatis-plus autoconfig"
+    },
+    {
+      "name": "bootystar.redis.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "enable redis autoconfig"
     }
 
   ]
