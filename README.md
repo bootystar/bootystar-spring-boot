@@ -36,7 +36,7 @@ bootystar:
     big-decimal-to-string: true
     big-integer-to-string: true
 ```
-可配置项见:[BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java)
+可配置项:[BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java)
 
 ## JSON注解加密/解密/脱敏
 * 注解:[JsonMask.java](src/main/java/io/github/bootystar/starter/jackson/annotation/JsonMask.java)
