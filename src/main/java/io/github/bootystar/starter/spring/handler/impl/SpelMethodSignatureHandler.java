@@ -18,7 +18,7 @@ public  class SpelMethodSignatureHandler implements MethodSignatureHandler {
     private final ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
 
     @Override
-    public String signature(Method method, Object[] args, String expression) {
+    public String signature(Object target, Method method, Object[] args, String expression) {
         String genericString = method.toGenericString();
         if (args == null || args.length == 0) {
             return prefix + genericString;
@@ -35,7 +35,7 @@ public  class SpelMethodSignatureHandler implements MethodSignatureHandler {
             }
             return prefix + genericString + sb;
         }
-        return prefix + genericString + parser.parseExpression(expression).getValue(new MethodBasedEvaluationContext(null, method, args, pnd));
+        return prefix + genericString + parser.parseExpression(expression).getValue(new MethodBasedEvaluationContext(target, method, args, pnd));
     }
 
 }
