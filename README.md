@@ -1,6 +1,6 @@
 # bootystar-spring-boot-starter
 
-* aop方法注解限流
+* 注解方法限流
 * spring参数转化解析器(时间/日期/高精度数字)
 * json序列化/反序列化
 * json字段注解加解密
@@ -62,6 +62,7 @@ private LocalDate date3;
 
 ## 方法限流
 * 注解: [MethodLimit.java](src/main/java/io/github/bootystar/starter/spring/annotation/MethodLimit.java)
+* 基于`spring`和`aop`, 被限流方法所在类需要为`spring`管理的`bean`, 并引入了`aop`相关依赖
 * 支持根据方法参数限流
 * 支持配置消息提示, 默认达到限流时抛出[MethodLimitException.java](src/main/java/io/github/bootystar/starter/exception/MethodLimitException.java)异常
 * 支持自定义限流逻辑
