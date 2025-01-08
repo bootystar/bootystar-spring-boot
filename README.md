@@ -30,9 +30,6 @@ bootystar:
     string-to-local-date: true
     string-to-local-date-time: true
     string-to-local-time: true
-    string-to-sql-date: true
-    string-to-sql-time: true
-    string-to-sql-timestamp: true
   jackson:
     enabled: true
     long-to-string: true
