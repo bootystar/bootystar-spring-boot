@@ -1,9 +1,8 @@
-
 # bootystar-spring-boot-starter
 
-* aop方法限流(注解)
-* 转化解析器(时间/日期/高精度数字)
-* json转化配置
+* aop方法注解限流
+* spring参数转化解析器(时间/日期/高精度数字)
+* json序列化/反序列化
 * json字段注解加解密
 * mybatis-plus防全表更新/分页/防注入插件
 * redis序列化/反序列化
@@ -17,8 +16,7 @@
 </dependency>
 ```
 
-## 配置属性
-### 可通过属性定制功能并控制开关
+## 通过属性定制功能并控制开关
 在`application.yml`中配置
 ```yaml
 bootystar:
@@ -41,7 +39,7 @@ bootystar:
     big-decimal-to-string: true
     big-integer-to-string: true
 ```
-可配置项:[BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java)
+可配置项见:[BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java)
 
 ## JSON注解加密/解密/脱敏
 * 注解:[JsonMask.java](src/main/java/io/github/bootystar/starter/jackson/annotation/JsonMask.java)
