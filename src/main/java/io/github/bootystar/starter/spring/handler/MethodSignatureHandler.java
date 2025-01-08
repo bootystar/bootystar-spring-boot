@@ -17,6 +17,6 @@ public interface MethodSignatureHandler {
      * @return {@link String }
      * @author bootystar
      */
-    String signature(Object target, Method method , Object[] args, String expression);
+    String signature(Object target, Method method, Object[] args, String expression);
 
 }

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 /**
  * @author bootystar
  */
-public  class SpelMethodSignatureHandler implements MethodSignatureHandler {
+public class SpelMethodSignatureHandler implements MethodSignatureHandler {
     private final String prefix = getClass().getSimpleName() + "-";
     private final ExpressionParser parser = new SpelExpressionParser();
     private final ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
