@@ -38,6 +38,6 @@ public @interface MethodLimit {
      * @return {@link Class }<{@link ? } {@link extends } {@link MethodLimitHandler }>
      * @author bootystar
      */
-    Class<? extends MethodLimitHandler> limitHandler() default MethodLimitHandler.class;
+    Class<? extends MethodLimitHandler> handler() default MethodLimitHandler.class;
 
 }

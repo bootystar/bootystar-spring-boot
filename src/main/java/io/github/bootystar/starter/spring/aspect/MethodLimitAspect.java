@@ -35,7 +35,7 @@ public class MethodLimitAspect {
         MethodLimit annotation = method.getAnnotation(MethodLimit.class);
         String springExpression = annotation.value();
         String signature = signatureHandler.signature(method, joinPoint.getArgs(), springExpression);
-        MethodLimitHandler limitHandler = limitHandler(annotation.limitHandler());
+        MethodLimitHandler limitHandler = limitHandler(annotation.handler());
         boolean b = limitHandler.tryLock(signature);
         try {
             if (!b) {

@@ -79,7 +79,7 @@ public Boolean update(UpdateDTO dto, Long userId) {
     return baseService.update(dto);
 }
 
-@MethodLimit(value = "#userId", message = "请求过快, 请稍后再试", handler = CustomLimitHandler.class)
+@MethodLimit(value = "#userId", message = "请求过快, 请稍后再试", handler = CustomLimitHandler.class) // 使用userId限流, 并自定义错误信息, 限流逻辑
 public Boolean update(UpdateDTO dto, Long userId) {
     return baseService.update(dto);
 }
