@@ -9,8 +9,9 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>bootystar-spring-boot-starter</artifactId>
-    <description>custom springboot starter</description>
-    <version>0.0.1-SNAPSHOT</version>
+    <description>springboot starter</description>
+    <version>1.0.0</version>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
 
 
     <licenses>
