@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * excel配置
  * @author bootystar
  */
 @Slf4j
@@ -22,22 +23,11 @@ public class ExcelConfiguration implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         BootystarProperties properties = applicationContext.getBean(BootystarProperties.class);
-
-        String dateFormat = properties.getDateFormat();
-        String dateTimeFormat = properties.getDateTimeFormat();
-        String timeFormat = properties.getTimeFormat();
-        String timeZone = properties.getTimeZoneId();
-
         ExcelProperties excel = properties.getExcel();
         if (excel.isInitEasyExcel()) {
             try {
                 Class.forName("com.alibaba.excel.EasyExcel");
-                EasyExcelConverterRegister.registerExtraConverters(
-                        dateTimeFormat,
-                        dateFormat,
-                        timeFormat,
-                        timeZone
-                );
+                EasyExcelConverterRegister.registerConverters(properties);
                 log.debug("EasyExcelConverterRegister init success");
             } catch (ClassNotFoundException e) {
                 log.debug("not class found , EasyExcelConverterRegister won't work");
@@ -48,12 +38,7 @@ public class ExcelConfiguration implements ApplicationContextAware {
         if (excel.isInitFastExcel()) {
             try {
                 Class.forName("cn.idev.excel.FastExcel");
-                FastExcelConverterRegister.registerExtraConverters(
-                        dateTimeFormat,
-                        dateFormat,
-                        timeFormat,
-                        timeZone
-                );
+                FastExcelConverterRegister.registerConverters(properties);
                 log.debug("FastExcelConverterRegister init success");
             } catch (ClassNotFoundException e) {
                 log.debug("not class found , FastExcelConverterRegister won't work");

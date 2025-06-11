@@ -4,6 +4,8 @@ package io.github.bootystar.starter.excel.fastexcel;
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.DefaultConverterLoader;
 import io.github.bootystar.starter.excel.fastexcel.converter.*;
+import io.github.bootystar.starter.prop.BootystarProperties;
+import io.github.bootystar.starter.prop.support.ExcelProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,28 +22,47 @@ public abstract class FastExcelConverterRegister {
     private static final String ALL_METHOD = "putAllConverter";
     private static volatile boolean isRegistered = false;
 
-    public static void registerExtraConverters(String dateTimePattern, String datePattern, String timePattern, String zoneId) {
+    public static void registerConverters(BootystarProperties properties) {
         if (isRegistered) {
             return;
         }
-        addConverters(
-                new DateConverter(dateTimePattern, zoneId)
-
-                , new LocalDateTimeConverter(dateTimePattern)
-                , new LocalDateConverter(datePattern)
-                , new LocalTimeConverter(timePattern)
-                
-                , new SqlTimestampConverter(dateTimePattern)
-                , new SqlDateConverter(datePattern)
-                , new SqlTimeConverter(timePattern)
-
-                , new BooleanConverter()
-                , new FloatConverter()
-                , new DoubleConverter()
-                , new LongConverter()
-                , new BigIntergerConverter()
-                , new BigDecimalConverter()
-        );
+        ExcelProperties excelProperties = properties.getExcel();
+        if (!excelProperties.isInitFastExcel()){
+            return;
+        }
+        if (excelProperties.isBigDecimalToString()){
+            addConverters(new BigDecimalConverter());
+        }
+        if (excelProperties.isBigIntegerToString()){
+            addConverters(new BigIntergerConverter());
+        }
+        if (excelProperties.isLongToString()){
+            addConverters(new LongConverter());
+        }
+        if (excelProperties.isDoubleToString()){
+            addConverters(new DoubleConverter());
+        }
+        if (excelProperties.isSqlTimestampToString()){
+            addConverters(new SqlTimestampConverter(properties.getDateTimeFormat()));
+        }
+        if (excelProperties.isSqlDateToString()){
+            addConverters(new SqlDateConverter(properties.getDateFormat()));
+        }
+        if (excelProperties.isSqlTimeToString()){
+            addConverters(new SqlTimeConverter(properties.getTimeFormat()));
+        }
+        if (excelProperties.isLocalDateTimeToString()){
+            addConverters(new LocalDateTimeConverter(properties.getDateTimeFormat()));
+        }
+        if (excelProperties.isLocalDateToString()){
+            addConverters(new LocalDateConverter(properties.getDateFormat()));
+        }
+        if (excelProperties.isLocalTimeToString()){
+            addConverters(new LocalTimeConverter(properties.getTimeFormat()));
+        }
+        if (excelProperties.isDateToString()){
+            addConverters(new DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId()));
+        }
         isRegistered = true;
     }
 
