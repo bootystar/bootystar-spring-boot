@@ -141,6 +141,78 @@
       "type": "java.lang.Boolean",
       "defaultValue": "false",
       "description": "add extra converters for easyExcel"
+    },
+    {
+      "name": "bootystar.excel.big-decimal",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.long",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.boolean",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.float",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.double",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.sql-timestamp",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.sql-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.sql-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.local-date-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.local-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.local-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
+      "name": "bootystar.excel.date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
     }
   ]
 }

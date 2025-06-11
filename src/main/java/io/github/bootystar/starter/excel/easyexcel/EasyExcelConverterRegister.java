@@ -35,12 +35,12 @@ public abstract class EasyExcelConverterRegister {
                 , new SqlDateConverter(datePattern)
                 , new SqlTimeConverter(timePattern)
 
-//                , new BooleanConverter()
-//                , new FloatConverter()
-//                , new DoubleConverter()
-//                , new LongConverter()
-//                , new BigIntergerConverter()
-//                , new BigDecimalConverter()
+                , new BooleanConverter()
+                , new FloatConverter()
+                , new DoubleConverter()
+                , new LongConverter()
+                , new BigIntergerConverter()
+                , new BigDecimalConverter()
         );
         isRegistered = true;
     }

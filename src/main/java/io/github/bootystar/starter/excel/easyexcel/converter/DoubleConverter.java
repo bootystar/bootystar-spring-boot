@@ -7,6 +7,8 @@ import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
+import java.math.BigDecimal;
+
 
 /**
  * 双转换器
@@ -39,6 +41,6 @@ public class DoubleConverter implements Converter<Double> {
         if (value == null) {
             return new WriteCellData<>("");
         }
-        return new WriteCellData<>(String.valueOf(value));
+        return new WriteCellData<>(new BigDecimal(Double.toString(value)).toPlainString());
     }
 }
