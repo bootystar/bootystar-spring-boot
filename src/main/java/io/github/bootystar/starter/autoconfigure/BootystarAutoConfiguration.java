@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Import;
         ConverterConfiguration.class,
         JacksonConfiguration.class,
         MybatisPlusConfiguration.class,
-        RedisConfiguration.class
+        RedisConfiguration.class,
+        ExcelConfiguration.class
 })
 public class BootystarAutoConfiguration {
 

@@ -24,10 +24,10 @@
       "description": "format for LocalDateTime and Date"
     },
     {
-      "name": "bootystar.time-zone",
+      "name": "bootystar.time-zone-id",
       "type": "java.lang.String",
       "defaultValue": "GMT+8",
-      "description": "timeZone for Date"
+      "description": "timeZoneId for Date"
     },
     {
       "name": "bootystar.aop",
@@ -129,7 +129,18 @@
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "enable redis autoconfig"
+    },
+    {
+      "name": "bootystar.excel.init-fast-excel",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "add extra converters for fastExcel"
+    },
+    {
+      "name": "bootystar.excel.init-easy-excel",
+      "type": "java.lang.Boolean",
+      "defaultValue": "false",
+      "description": "add extra converters for easyExcel"
     }
-
   ]
 }

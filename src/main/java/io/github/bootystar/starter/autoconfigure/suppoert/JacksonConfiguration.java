@@ -69,7 +69,7 @@ public class JacksonConfiguration {
                 String dateTimeFormat = properties.getDateTimeFormat();
                 String dateFormat = properties.getDateFormat();
                 String timeFormat = properties.getTimeFormat();
-                String timeZoneId = properties.getTimeZone();
+                String timeZoneId = properties.getTimeZoneId();
 //                ZoneId zoneId = ZoneId.of(timeZoneId);
                 TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateTimeFormat);

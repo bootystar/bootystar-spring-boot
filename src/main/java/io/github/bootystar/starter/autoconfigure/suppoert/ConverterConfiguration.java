@@ -24,7 +24,7 @@ public class ConverterConfiguration {
         @Bean
         public String2DateConverter string2DateConverter(BootystarProperties properties) {
             log.debug("String2DateConverter Configured");
-            return new String2DateConverter(properties.getDateTimeFormat(), properties.getTimeZone());
+            return new String2DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId());
         }
     }
 
