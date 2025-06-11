@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * mybatis plus配置
- * @see com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
  * @author bootystar
  */
 @Slf4j
@@ -23,10 +22,8 @@ public class MybatisPlusConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-//    @ConditionalOnBean(com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-//        interceptor.addInnerInterceptor(new DbInterceptor());
         optimisticLockerInnerInterceptor(interceptor);
         paginationInnerInterceptor(interceptor);
         blockAttackInnerInterceptor(interceptor);

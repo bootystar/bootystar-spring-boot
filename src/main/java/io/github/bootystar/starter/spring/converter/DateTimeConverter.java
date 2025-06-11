@@ -6,9 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * 兼容性{@link DateTimeFormat}的转化器
- * <p>
- * 源码位置{@link org.springframework.core.convert.support.GenericConversionService.ConverterAdapter#matches(TypeDescriptor, TypeDescriptor)}
+ * DateTimeFormat注解的的转化器
+ * 
  *
  * @author bootystar
  */

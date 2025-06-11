@@ -20,7 +20,6 @@ public @interface MethodLimit {
      * 默认使用SpEL表达式(#参数名, #参数.属性)
      *
      * @return {@link String }
-     * @author bootystar
      */
     String value() default "";
 
@@ -28,15 +27,13 @@ public @interface MethodLimit {
      * 触发限流时抛出的异常提示信息
      *
      * @return {@link String }
-     * @author bootystar
      */
     String message() default "processing, please try again later";
 
     /**
      * 限流处理器
      *
-     * @return {@link Class }<{@link ? } {@link extends } {@link MethodLimitHandler }>
-     * @author bootystar
+     * @return {@link Class }
      */
     Class<? extends MethodLimitHandler> handler() default MethodLimitHandler.class;
 

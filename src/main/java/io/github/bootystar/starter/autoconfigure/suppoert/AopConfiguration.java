@@ -15,9 +15,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * aop配置
- *
  * @author bootystar
- * @see org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
+ * 
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
@@ -25,13 +24,6 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = "bootystar.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class AopConfiguration {
 
-    /**
-     * 方法限流切面
-     *
-     * @return {@link MethodLimitAspect }
-     * @author bootystar
-     * @see org.redisson.spring.starter.RedissonAutoConfiguration
-     */
     @Bean
     public MethodLimitAspect methodLimitAspect(ApplicationContext applicationContext) {
         MethodLimitAspect methodLimitAspect = new MethodLimitAspect();

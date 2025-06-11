@@ -19,7 +19,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
  * redis配置
- * @see org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
  * @author bootystar
  */
 @Slf4j
