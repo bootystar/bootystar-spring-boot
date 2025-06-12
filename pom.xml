@@ -6,6 +6,7 @@
     
     <name>bootystar-spring-boot-starter</name>
     <artifactId>bootystar-spring-boot-starter</artifactId>
+    <groupId>io.github.bootystar</groupId>
     <description>springboot starter</description>
     <version>1.1.0</version>
 
