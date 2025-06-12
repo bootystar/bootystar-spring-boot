@@ -143,73 +143,73 @@
       "description": "add extra converters for easyExcel"
     },
     {
-      "name": "bootystar.excel.big-decimal",
+      "name": "bootystar.excel.big-decimal-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.long",
+      "name": "bootystar.excel.long-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.boolean",
+      "name": "bootystar.excel.boolean-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.float",
+      "name": "bootystar.excel.float-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.double",
+      "name": "bootystar.excel.double-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-timestamp",
+      "name": "bootystar.excel.sql-timestamp-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-date",
+      "name": "bootystar.excel.sql-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-time",
+      "name": "bootystar.excel.sql-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-date-time",
+      "name": "bootystar.excel.local-date-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-date",
+      "name": "bootystar.excel.local-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-time",
+      "name": "bootystar.excel.local-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.date",
+      "name": "bootystar.excel.date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"

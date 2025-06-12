@@ -6,6 +6,7 @@
 * json字段注解加解密
 * mybatis-plus防全表更新/分页/防注入插件
 * redis序列化/反序列化
+* easyexcel及fastexcel添加额外转化器(时间/日期/高精度数字)
 
 ## maven依赖
 ```xml
@@ -35,6 +36,14 @@ bootystar:
     long-to-string: true
     big-decimal-to-string: true
     big-integer-to-string: true
+  excel:
+    init-fast-excel: true
+    init-easy-excel: true
+    long-to-string: true
+    big-decimal-to-string: true
+    big-integer-to-string: true
+    local-date-time-to-string: true
+
 ```
 可配置项:[BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java)
 
