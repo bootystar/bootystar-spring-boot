@@ -8,7 +8,6 @@ import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 
 /**
@@ -42,6 +41,6 @@ public class BigDecimalConverter implements Converter<BigDecimal> {
         if (value == null) {
             return new WriteCellData<>("");
         }
-        return new WriteCellData<>(String.valueOf(value));
+        return new WriteCellData<>(value.toPlainString());
     }
 }

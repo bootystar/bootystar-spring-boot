@@ -149,6 +149,12 @@
       "description": "write value as string"
     },
     {
+      "name": "bootystar.excel.big-integer-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "write value as string"
+    },
+    {
       "name": "bootystar.excel.long-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",

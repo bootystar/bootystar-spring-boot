@@ -30,18 +30,28 @@ public abstract class FastExcelConverterRegister {
         if (!excelProperties.isInitFastExcel()){
             return;
         }
+
         if (excelProperties.isBigDecimalToString()){
             addConverters(new BigDecimalConverter());
         }
         if (excelProperties.isBigIntegerToString()){
             addConverters(new BigIntergerConverter());
         }
+
         if (excelProperties.isLongToString()){
             addConverters(new LongConverter());
+        }
+        if (excelProperties.isBooleanToString()){
+            addConverters(new BooleanConverter());
+        }
+
+        if (excelProperties.isFloatToString()){
+            addConverters(new FloatConverter());
         }
         if (excelProperties.isDoubleToString()){
             addConverters(new DoubleConverter());
         }
+
         if (excelProperties.isSqlTimestampToString()){
             addConverters(new SqlTimestampConverter(properties.getDateTimeFormat()));
         }
@@ -51,6 +61,7 @@ public abstract class FastExcelConverterRegister {
         if (excelProperties.isSqlTimeToString()){
             addConverters(new SqlTimeConverter(properties.getTimeFormat()));
         }
+
         if (excelProperties.isLocalDateTimeToString()){
             addConverters(new LocalDateTimeConverter(properties.getDateTimeFormat()));
         }
@@ -60,6 +71,7 @@ public abstract class FastExcelConverterRegister {
         if (excelProperties.isLocalTimeToString()){
             addConverters(new LocalTimeConverter(properties.getTimeFormat()));
         }
+
         if (excelProperties.isDateToString()){
             addConverters(new DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId()));
         }
