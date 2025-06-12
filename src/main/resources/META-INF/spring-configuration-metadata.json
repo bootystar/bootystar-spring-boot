@@ -131,91 +131,91 @@
       "description": "enable redis autoconfig"
     },
     {
-      "name": "bootystar.excel.init-fast-excel",
+      "name": "bootystar.excel.init-fast-excel-converter",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "add extra converters for fastExcel"
     },
     {
-      "name": "bootystar.excel.init-easy-excel",
+      "name": "bootystar.excel.init-easy-excel-converter",
       "type": "java.lang.Boolean",
       "defaultValue": "false",
       "description": "add extra converters for easyExcel"
     },
     {
-      "name": "bootystar.excel.big-decimal-to-string",
+      "name": "bootystar.excel.converter.big-decimal-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.big-integer-to-string",
+      "name": "bootystar.excel.converter.big-integer-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.long-to-string",
+      "name": "bootystar.excel.converter.long-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.boolean-to-string",
+      "name": "bootystar.excel.converter.boolean-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.float-to-string",
+      "name": "bootystar.excel.converter.float-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.double-to-string",
+      "name": "bootystar.excel.converter.double-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-timestamp-to-string",
+      "name": "bootystar.excel.converter.sql-timestamp-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-date-to-string",
+      "name": "bootystar.excel.converter.sql-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.sql-time-to-string",
+      "name": "bootystar.excel.converter.sql-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-date-time-to-string",
+      "name": "bootystar.excel.converter.local-date-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-date-to-string",
+      "name": "bootystar.excel.converter.local-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.local-time-to-string",
+      "name": "bootystar.excel.converter.local-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"
     },
     {
-      "name": "bootystar.excel.date-to-string",
+      "name": "bootystar.excel.converter.date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
       "description": "write value as string"

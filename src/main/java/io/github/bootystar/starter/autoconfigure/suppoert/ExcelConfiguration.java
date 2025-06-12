@@ -24,7 +24,18 @@ public class ExcelConfiguration implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         BootystarProperties properties = applicationContext.getBean(BootystarProperties.class);
         ExcelProperties excel = properties.getExcel();
-        if (excel.isInitEasyExcel()) {
+        if (excel.isInitFastExcelConverter()) {
+            try {
+                Class.forName("cn.idev.excel.FastExcel");
+                FastExcelConverterRegister.registerConverters(properties);
+                log.debug("FastExcelConverterRegister init success");
+            } catch (ClassNotFoundException e) {
+                log.debug("not class found , FastExcelConverterRegister won't work");
+            } catch (Exception e) {
+                log.debug("FastExcelConverterRegister init failed", e);
+            }
+        }
+        if (excel.isInitEasyExcelConverter()) {
             try {
                 Class.forName("com.alibaba.excel.EasyExcel");
                 EasyExcelConverterRegister.registerConverters(properties);
@@ -35,18 +46,7 @@ public class ExcelConfiguration implements ApplicationContextAware {
                 log.debug("EasyExcelConverterRegister init failed", e);
             }
         }
-        if (excel.isInitFastExcel()) {
-            try {
-                Class.forName("cn.idev.excel.FastExcel");
-                FastExcelConverterRegister.registerConverters(properties);
-                log.debug("FastExcelConverterRegister init success");
-            } catch (ClassNotFoundException e) {
-                log.debug("not class found , FastExcelConverterRegister won't work");
-            } catch (Exception e) {
-                log.debug("FastExcelConverterRegister init failed", e);
-            }
 
-        }
     }
 
 }

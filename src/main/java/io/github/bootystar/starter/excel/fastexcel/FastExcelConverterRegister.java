@@ -3,13 +3,15 @@ package io.github.bootystar.starter.excel.fastexcel;
 
 import cn.idev.excel.converters.Converter;
 import cn.idev.excel.converters.DefaultConverterLoader;
+import io.github.bootystar.starter.excel.ConverterRegister;
 import io.github.bootystar.starter.excel.fastexcel.converter.*;
 import io.github.bootystar.starter.prop.BootystarProperties;
 import io.github.bootystar.starter.prop.support.ExcelProperties;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * easy excel转换器工具
@@ -18,104 +20,60 @@ import java.lang.reflect.Method;
  */
 @Slf4j
 public abstract class FastExcelConverterRegister {
-    private static final String WRITE_METHOD = "putWriteConverter";
-    private static final String ALL_METHOD = "putAllConverter";
-    private static volatile boolean isRegistered = false;
+
 
     public static void registerConverters(BootystarProperties properties) {
-        if (isRegistered) {
-            return;
+        ExcelProperties.ConverterProperties converterProperties = properties.getExcel().getConverter();
+        List<Converter> converters = new ArrayList<>();
+        
+        if (converterProperties.isBigDecimalToString()){
+            converters.add(new BigDecimalConverter());
         }
-        ExcelProperties excelProperties = properties.getExcel();
-        if (!excelProperties.isInitFastExcel()){
-            return;
-        }
-
-        if (excelProperties.isBigDecimalToString()){
-            addConverters(new BigDecimalConverter());
-        }
-        if (excelProperties.isBigIntegerToString()){
-            addConverters(new BigIntergerConverter());
+        if (converterProperties.isBigIntegerToString()){
+            converters.add(new BigIntergerConverter());
         }
 
-        if (excelProperties.isLongToString()){
-            addConverters(new LongConverter());
+        if (converterProperties.isLongToString()){
+            converters.add(new LongConverter());
         }
-        if (excelProperties.isBooleanToString()){
-            addConverters(new BooleanConverter());
-        }
-
-        if (excelProperties.isFloatToString()){
-            addConverters(new FloatConverter());
-        }
-        if (excelProperties.isDoubleToString()){
-            addConverters(new DoubleConverter());
+        if (converterProperties.isBooleanToString()){
+            converters.add(new BooleanConverter());
         }
 
-        if (excelProperties.isSqlTimestampToString()){
-            addConverters(new SqlTimestampConverter(properties.getDateTimeFormat()));
+        if (converterProperties.isFloatToString()){
+            converters.add(new FloatConverter());
         }
-        if (excelProperties.isSqlDateToString()){
-            addConverters(new SqlDateConverter(properties.getDateFormat()));
-        }
-        if (excelProperties.isSqlTimeToString()){
-            addConverters(new SqlTimeConverter(properties.getTimeFormat()));
+        if (converterProperties.isDoubleToString()){
+            converters.add(new DoubleConverter());
         }
 
-        if (excelProperties.isLocalDateTimeToString()){
-            addConverters(new LocalDateTimeConverter(properties.getDateTimeFormat()));
+        if (converterProperties.isSqlTimestampToString()){
+            converters.add(new SqlTimestampConverter(properties.getDateTimeFormat()));
         }
-        if (excelProperties.isLocalDateToString()){
-            addConverters(new LocalDateConverter(properties.getDateFormat()));
+        if (converterProperties.isSqlDateToString()){
+            converters.add(new SqlDateConverter(properties.getDateFormat()));
         }
-        if (excelProperties.isLocalTimeToString()){
-            addConverters(new LocalTimeConverter(properties.getTimeFormat()));
+        if (converterProperties.isSqlTimeToString()){
+            converters.add(new SqlTimeConverter(properties.getTimeFormat()));
         }
 
-        if (excelProperties.isDateToString()){
-            addConverters(new DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId()));
+        if (converterProperties.isLocalDateTimeToString()){
+            converters.add(new LocalDateTimeConverter(properties.getDateTimeFormat()));
         }
-        isRegistered = true;
+        if (converterProperties.isLocalDateToString()){
+            converters.add(new LocalDateConverter(properties.getDateFormat()));
+        }
+        if (converterProperties.isLocalTimeToString()){
+            converters.add(new LocalTimeConverter(properties.getTimeFormat()));
+        }
+
+        if (converterProperties.isDateToString()){
+            converters.add(new DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId()));
+        }
+        ConverterRegister.addConverters(DefaultConverterLoader.class, Converter.class, converters);
     }
 
-    private static Method getMethod(String writeMethod) {
-        try {
-            Class<DefaultConverterLoader> clazz = DefaultConverterLoader.class;
-            Method method = clazz.getDeclaredMethod(writeMethod, Converter.class);
-            method.setAccessible(true);
-            return method;
-        } catch (Exception e) {
-            log.debug("error", e);
-        }
-        return null;
-    }
-
-    private static Method method4Converter2write() {
-        return getMethod(WRITE_METHOD);
-    }
-
-    private static Method method4Converter2all() {
-        return getMethod(ALL_METHOD);
-    }
-
-    public static void addConverters(Object... converters) {
-        Method method = method4Converter2write();
-        Method method2 = method4Converter2all();
-        if (method == null || method2 == null) {
-            log.warn("EasyExcel add excel converter failed , export or import may produce error on special field!");
-            return;
-        }
-        try {
-            for (Object converter : converters) {
-                method.invoke(null, converter);
-                method2.invoke(null, converter);
-            }
-        } catch (IllegalAccessException e) {
-            log.warn("IllegalAccessException", e);
-        } catch (InvocationTargetException e) {
-            log.warn("InvocationTargetException", e);
-        }
-    }
+   
 
 
 }
