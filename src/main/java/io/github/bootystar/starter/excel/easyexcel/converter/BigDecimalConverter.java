@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 
 
 /**
- * 双转换器
+ * BigDecimal类型转换器
+ * 用于在Excel和Java BigDecimal类型之间进行转换
  *
  * @author bootystar
  */

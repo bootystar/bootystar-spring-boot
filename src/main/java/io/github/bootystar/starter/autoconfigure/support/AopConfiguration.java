@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.autoconfigure.suppoert;
+package io.github.bootystar.starter.autoconfigure.support;
 
 import io.github.bootystar.starter.spring.aspect.MethodLimitAspect;
 import io.github.bootystar.starter.spring.handler.MethodLimitHandler;

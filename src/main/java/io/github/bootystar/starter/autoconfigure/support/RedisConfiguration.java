@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.autoconfigure.suppoert;
+package io.github.bootystar.starter.autoconfigure.support;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;

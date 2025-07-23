@@ -9,7 +9,8 @@ import cn.idev.excel.metadata.property.ExcelContentProperty;
 
 
 /**
- * 布尔转换器
+ * Boolean类型转换器
+ * 用于在Excel和Java Boolean类型之间进行转换
  *
  * @author bootystar
  */

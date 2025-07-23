@@ -3,222 +3,222 @@
     {
       "name": "bootystar",
       "type": "io.github.bootystar.starter.prop.BootystarProperties",
-      "description": "bootystar's properties"
+      "description": "Bootystar starter properties"
     },
     {
       "name": "bootystar.time-format",
       "type": "java.lang.String",
       "defaultValue": "HH:mm:ss",
-      "description": "format for LocalTime"
+      "description": "Format for LocalTime"
     },
     {
       "name": "bootystar.date-format",
       "type": "java.lang.String",
       "defaultValue": "yyyy-MM-dd",
-      "description": "format for LocalDate"
+      "description": "Format for LocalDate"
     },
     {
       "name": "bootystar.date-time-format",
       "type": "java.lang.String",
       "defaultValue": "yyyy-MM-dd HH:mm:ss",
-      "description": "format for LocalDateTime and Date"
+      "description": "Format for LocalDateTime and Date"
     },
     {
       "name": "bootystar.time-zone-id",
       "type": "java.lang.String",
       "defaultValue": "GMT+8",
-      "description": "timeZoneId for Date"
+      "description": "Time zone ID for Date"
     },
     {
       "name": "bootystar.aop",
       "type": "io.github.bootystar.starter.prop.support.AopProperties",
-      "description": "aop properties"
+      "description": "AOP properties"
     },
     {
       "name": "bootystar.aop.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "enable aop autoconfig"
+      "description": "Enable AOP auto-configuration"
     },
     {
       "name": "bootystar.converter.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converters"
+      "description": "Enable converter auto-configuration"
     },
     {
       "name": "bootystar.converter.string-to-date",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to Date converter"
     },
     {
       "name": "bootystar.converter.string-to-local-date-time",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to LocalDateTime converter"
     },
     {
       "name": "bootystar.converter.string-to-local-date",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to LocalDate converter"
     },
     {
       "name": "bootystar.converter.string-to-local-time",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to LocalTime converter"
     },
     {
       "name": "bootystar.converter.string-to-sql-date",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to SQL Date converter"
     },
     {
       "name": "bootystar.converter.string-to-sql-time",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to SQL Time converter"
     },
     {
       "name": "bootystar.converter.string-to-sql-timestamp",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "whether enable converter"
+      "description": "Enable String to SQL Timestamp converter"
     },
     {
       "name": "bootystar.jackson.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "enable jackson autoconfig"
+      "description": "Enable Jackson auto-configuration"
     },
     {
       "name": "bootystar.jackson.long-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "jackson serialize"
+      "description": "Convert Long values to String during Jackson serialization"
     },
     {
       "name": "bootystar.jackson.double-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "jackson serialize"
+      "description": "Convert Double values to String during Jackson serialization"
     },
     {
       "name": "bootystar.jackson.big-integer-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "jackson serialize"
+      "description": "Convert BigInteger values to String during Jackson serialization"
     },
     {
       "name": "bootystar.jackson.big-decimal-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "jackson serialize"
+      "description": "Convert BigDecimal values to String during Jackson serialization"
     },
     {
       "name": "bootystar.mybatis-plus.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "enable mybatis-plus autoconfig"
+      "description": "Enable MyBatis-Plus auto-configuration"
     },
     {
       "name": "bootystar.redis.enabled",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "enable redis autoconfig"
+      "description": "Enable Redis auto-configuration"
     },
     {
       "name": "bootystar.excel.init-fast-excel-converter",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "add extra converters for fastExcel"
+      "description": "Add extra converters for FastExcel"
     },
     {
       "name": "bootystar.excel.init-easy-excel-converter",
       "type": "java.lang.Boolean",
       "defaultValue": "false",
-      "description": "add extra converters for easyExcel"
+      "description": "Add extra converters for EasyExcel"
     },
     {
       "name": "bootystar.excel.converter.big-decimal-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write BigDecimal values as string"
     },
     {
       "name": "bootystar.excel.converter.big-integer-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write BigInteger values as string"
     },
     {
       "name": "bootystar.excel.converter.long-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write Long values as string"
     },
     {
       "name": "bootystar.excel.converter.boolean-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write Boolean values as string"
     },
     {
       "name": "bootystar.excel.converter.float-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write Float values as string"
     },
     {
       "name": "bootystar.excel.converter.double-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write Double values as string"
     },
     {
       "name": "bootystar.excel.converter.sql-timestamp-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write SQL Timestamp values as string"
     },
     {
       "name": "bootystar.excel.converter.sql-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write SQL Date values as string"
     },
     {
       "name": "bootystar.excel.converter.sql-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write SQL Time values as string"
     },
     {
       "name": "bootystar.excel.converter.local-date-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write LocalDateTime values as string"
     },
     {
       "name": "bootystar.excel.converter.local-date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write LocalDate values as string"
     },
     {
       "name": "bootystar.excel.converter.local-time-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write LocalTime values as string"
     },
     {
       "name": "bootystar.excel.converter.date-to-string",
       "type": "java.lang.Boolean",
       "defaultValue": "true",
-      "description": "write value as string"
+      "description": "Write Date values as string"
     }
   ]
 }

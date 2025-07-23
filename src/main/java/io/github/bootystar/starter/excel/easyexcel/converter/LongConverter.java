@@ -9,7 +9,8 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 
 /**
- * 长转换器
+ * Long类型转换器
+ * 用于在Excel和Java Long类型之间进行转换
  *
  * @author bootystar
  */

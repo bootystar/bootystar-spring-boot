@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.autoconfigure.suppoert;
+package io.github.bootystar.starter.autoconfigure.support;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

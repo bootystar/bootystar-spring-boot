@@ -11,7 +11,8 @@ import java.math.BigInteger;
 
 
 /**
- * 双转换器
+ * BigInteger类型转换器
+ * 用于在Excel和Java BigInteger类型之间进行转换
  *
  * @author bootystar
  */

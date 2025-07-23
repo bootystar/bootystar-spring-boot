@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.autoconfigure.suppoert;
+package io.github.bootystar.starter.autoconfigure.support;
 
 import io.github.bootystar.starter.excel.easyexcel.EasyExcelConverterRegister;
 import io.github.bootystar.starter.excel.fastexcel.FastExcelConverterRegister;

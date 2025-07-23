@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.autoconfigure.suppoert;
+package io.github.bootystar.starter.autoconfigure.support;
 
 import io.github.bootystar.starter.prop.BootystarProperties;
 import io.github.bootystar.starter.spring.converter.support.*;

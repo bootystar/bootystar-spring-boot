@@ -6,8 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * DateTimeFormat注解的的转化器
- * 
+ * DateTimeFormat注解的转换器
+ * 用于处理带有@DateTimeFormat注解的日期时间转换
  *
  * @author bootystar
  */

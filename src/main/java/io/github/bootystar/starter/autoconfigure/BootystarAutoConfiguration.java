@@ -1,6 +1,6 @@
 package io.github.bootystar.starter.autoconfigure;
 
-import io.github.bootystar.starter.autoconfigure.suppoert.*;
+import io.github.bootystar.starter.autoconfigure.support.*;
 import io.github.bootystar.starter.prop.BootystarProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
