@@ -1,6 +1,5 @@
 # bootystar-spring-boot-starter
 
-[English](README_en.md) | 中文
 
 一个Spring Boot starter，为常见的开发场景提供开箱即用的配置，包括类型转换、JSON序列化/反序列化、方法限流、Excel处理等。
 
