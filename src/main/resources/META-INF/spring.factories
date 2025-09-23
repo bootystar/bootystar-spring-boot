@@ -1,6 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  io.github.bootystar.starter.autoconfigure.BootystarAutoConfiguration
-
-
-
-
