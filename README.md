@@ -75,7 +75,7 @@ bootystar:
 
 ### 1. 方法限流
 
-通过 [@MethodLimit](src/main/java/io/github/bootystar/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
+通过 [@MethodLimit](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
 
 ```java
 @MethodLimit // 根据判断所有参数toString()后的值是否相同限流
@@ -96,7 +96,7 @@ public Boolean update(UpdateDTO dto, Long userId) {
 
 ### 2. JSON字段加密/脱敏
 
-使用 [@JsonMask](src/main/java/io/github/bootystar/starter/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
+使用 [@JsonMask](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
 
 ```java
 @JsonMask(serialize = DateOut.class) // 序列化时使用DateOut类处理
@@ -139,7 +139,7 @@ private LocalDate date3;
 
 ## 配置属性
 
-完整的配置属性请参考 [BootystarProperties.java](src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java) 及其相关子属性类。
+完整的配置属性请参考 [BootystarProperties.java](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java) 及其相关子属性类。
 
 ## 许可证
 

@@ -1,0 +1,234 @@
+{
+  "properties": [
+    {
+      "name": "bootystar.time-format",
+      "type": "java.lang.String",
+      "defaultValue": "HH:mm:ss",
+      "description": "LocalTime 时间格式"
+    },
+    {
+      "name": "bootystar.date-format",
+      "type": "java.lang.String",
+      "defaultValue": "yyyy-MM-dd",
+      "description": "LocalDate 日期格式"
+    },
+    {
+      "name": "bootystar.date-time-format",
+      "type": "java.lang.String",
+      "defaultValue": "yyyy-MM-dd HH:mm:ss",
+      "description": "LocalDateTime 和 Date 日期时间格式"
+    },
+    {
+      "name": "bootystar.time-zone-id",
+      "type": "java.lang.String",
+      "defaultValue": "GMT+8",
+      "description": "Date 时区ID"
+    },
+    {
+      "name": "bootystar.aop.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 AOP 自动配置"
+    },
+    {
+      "name": "bootystar.converter.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用转换器自动配置"
+    },
+    {
+      "name": "bootystar.converter.string-to-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 Date 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-date-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 LocalDateTime 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 LocalDate 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-local-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 LocalTime 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-date",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 SQL Date 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-time",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 SQL Time 转换器"
+    },
+    {
+      "name": "bootystar.converter.string-to-sql-timestamp",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 String 到 SQL Timestamp 转换器"
+    },
+    {
+      "name": "bootystar.converter.date-format",
+      "type": "java.lang.String",
+      "description": "转换器日期格式，如果未设置则使用全局配置"
+    },
+    {
+      "name": "bootystar.converter.date-time-format",
+      "type": "java.lang.String",
+      "description": "转换器日期时间格式，如果未设置则使用全局配置"
+    },
+    {
+      "name": "bootystar.converter.time-format",
+      "type": "java.lang.String",
+      "description": "转换器时间格式，如果未设置则使用全局配置"
+    },
+    {
+      "name": "bootystar.converter.time-zone-id",
+      "type": "java.lang.String",
+      "description": "转换器时区ID，如果未设置则使用全局配置"
+    },
+    {
+      "name": "bootystar.jackson.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 Jackson 自动配置"
+    },
+    {
+      "name": "bootystar.jackson.long-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "Jackson 序列化时将 Long 值转换为字符串"
+    },
+    {
+      "name": "bootystar.jackson.double-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "Jackson 序列化时将 Double 值转换为字符串"
+    },
+    {
+      "name": "bootystar.jackson.big-integer-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "Jackson 序列化时将 BigInteger 值转换为字符串"
+    },
+    {
+      "name": "bootystar.jackson.big-decimal-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "Jackson 序列化时将 BigDecimal 值转换为字符串"
+    },
+    {
+      "name": "bootystar.mybatis-plus.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 MyBatis-Plus 自动配置"
+    },
+    {
+      "name": "bootystar.redis.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "启用 Redis 自动配置"
+    },
+    {
+      "name": "bootystar.excel.init-fast-excel-converter",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "为 FastExcel 添加额外的转换器"
+    },
+    {
+      "name": "bootystar.excel.init-easy-excel-converter",
+      "type": "java.lang.Boolean",
+      "defaultValue": "false",
+      "description": "为 EasyExcel 添加额外的转换器"
+    },
+    {
+      "name": "bootystar.excel.converter.big-decimal-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 BigDecimal 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.big-integer-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 BigInteger 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.long-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 Long 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.boolean-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 Boolean 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.float-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 Float 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.double-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 Double 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.sql-timestamp-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 SQL Timestamp 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.sql-date-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 SQL Date 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.sql-time-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 SQL Time 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.local-date-time-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 LocalDateTime 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.local-date-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 LocalDate 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.local-time-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 LocalTime 值写为字符串"
+    },
+    {
+      "name": "bootystar.excel.converter.date-to-string",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "将 Date 值写为字符串"
+    }
+  ]
+}
