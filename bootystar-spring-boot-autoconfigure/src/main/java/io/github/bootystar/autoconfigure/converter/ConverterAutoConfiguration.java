@@ -1,9 +1,10 @@
 package io.github.bootystar.autoconfigure.converter;
 
-import io.github.bootystar.autoconfigure.properties.BootystarProperties;
+import io.github.bootystar.autoconfigure.BootystarProperties;
 import io.github.bootystar.autoconfigure.converter.support.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,8 +16,9 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties({BootystarProperties.class})
 @ConditionalOnProperty(prefix = "bootystar.converter", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class ConverterConfiguration {
+public class ConverterAutoConfiguration {
 
     @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-date", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)

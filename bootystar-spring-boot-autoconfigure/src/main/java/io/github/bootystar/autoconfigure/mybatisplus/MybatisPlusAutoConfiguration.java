@@ -13,12 +13,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * mybatis plus配置
  * @author bootystar
+ * @see com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({BaseMapper.class, MybatisPlusInterceptor.class})
 @ConditionalOnProperty(prefix = "bootystar.mybatis-plus", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class MybatisPlusConfiguration {
+public class MybatisPlusAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(MybatisPlusInterceptor.class)

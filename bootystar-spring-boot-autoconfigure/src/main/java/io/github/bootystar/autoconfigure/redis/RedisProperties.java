@@ -1,4 +1,4 @@
-package io.github.bootystar.starter.prop.support;
+package io.github.bootystar.autoconfigure.redis;
 
 import lombok.Data;
 
