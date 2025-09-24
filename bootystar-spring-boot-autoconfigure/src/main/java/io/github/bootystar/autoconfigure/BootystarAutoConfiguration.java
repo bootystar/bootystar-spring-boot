@@ -1,14 +1,12 @@
 package io.github.bootystar.autoconfigure;
 
-import io.github.bootystar.autoconfigure.aop.AopConfiguration;
-import io.github.bootystar.autoconfigure.converter.ConverterConfiguration;
-import io.github.bootystar.autoconfigure.excel.ExcelConfiguration;
-import io.github.bootystar.autoconfigure.jackson.JacksonConfiguration;
-import io.github.bootystar.autoconfigure.mybatisplus.MybatisPlusConfiguration;
-import io.github.bootystar.autoconfigure.properties.BootystarProperties;
-import io.github.bootystar.autoconfigure.redis.RedisConfiguration;
+import io.github.bootystar.autoconfigure.aop.AopAutoConfiguration;
+import io.github.bootystar.autoconfigure.converter.ConverterAutoConfiguration;
+import io.github.bootystar.autoconfigure.excel.ExcelAutoConfiguration;
+import io.github.bootystar.autoconfigure.jackson.JacksonAutoConfiguration;
+import io.github.bootystar.autoconfigure.mybatisplus.MybatisPlusAutoConfiguration;
+import io.github.bootystar.autoconfigure.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -16,14 +14,13 @@ import org.springframework.context.annotation.Import;
  * @author bootystar
  */
 @AutoConfiguration
-@EnableConfigurationProperties(BootystarProperties.class)
 @Import({
-        AopConfiguration.class,
-        ConverterConfiguration.class,
-        JacksonConfiguration.class,
-        MybatisPlusConfiguration.class,
-        RedisConfiguration.class,
-        ExcelConfiguration.class
+        AopAutoConfiguration.class,
+        ConverterAutoConfiguration.class,
+        JacksonAutoConfiguration.class,
+        MybatisPlusAutoConfiguration.class,
+        RedisAutoConfiguration.class,
+        ExcelAutoConfiguration.class
 })
 public class BootystarAutoConfiguration {
 

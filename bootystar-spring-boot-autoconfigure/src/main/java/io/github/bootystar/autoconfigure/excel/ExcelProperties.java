@@ -1,6 +1,8 @@
-package io.github.bootystar.autoconfigure.properties.support;
+package io.github.bootystar.autoconfigure.excel;
 
+import io.github.bootystar.autoconfigure.BootystarProperties;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Excel配置属性类
@@ -9,6 +11,7 @@ import lombok.Data;
  * @author bootystar
  */
 @Data
+@ConfigurationProperties("bootystar.excel")
 public class ExcelProperties {
     /**
      * 是否初始化FastExcel转换器
