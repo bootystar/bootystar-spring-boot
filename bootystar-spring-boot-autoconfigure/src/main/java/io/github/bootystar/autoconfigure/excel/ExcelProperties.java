@@ -1,6 +1,5 @@
 package io.github.bootystar.autoconfigure.excel;
 
-import io.github.bootystar.autoconfigure.BootystarProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

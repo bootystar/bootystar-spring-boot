@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import io.github.bootystar.autoconfigure.BootystarProperties;
+import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -39,7 +39,7 @@ import java.util.TimeZone;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ObjectMapper.class)
 @ConditionalOnProperty(value = "bootystar.jackson.enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties({BootystarProperties.class,JacksonProperties.class})
+@EnableConfigurationProperties({DateTimeFormatProperties.class,JacksonProperties.class})
 public class JacksonAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)
@@ -48,13 +48,13 @@ public class JacksonAutoConfiguration {
 
         @Bean
         @Order(-1)// 使Jackson2ObjectMapperBuilder在获取Jackson2ObjectMapperBuilderCustomizer时, 获取该配置先于StandardJackson2ObjectMapperBuilderCustomizer
-        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(BootystarProperties bootystarProperties, JacksonProperties jacksonProperties) {
+        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(DateTimeFormatProperties dateTimeFormatProperties, JacksonProperties jacksonProperties) {
             log.debug("Jackson2ObjectMapperBuilderCustomizer Configured");
             return builder -> {
-                String dateTimeFormat = bootystarProperties.getDateTimeFormat();
-                String dateFormat = bootystarProperties.getDateFormat();
-                String timeFormat = bootystarProperties.getTimeFormat();
-                String timeZoneId = bootystarProperties.getTimeZoneId();
+                String dateTimeFormat = dateTimeFormatProperties.getDateTime();
+                String dateFormat = dateTimeFormatProperties.getDate();
+                String timeFormat = dateTimeFormatProperties.getTime();
+                String timeZoneId = dateTimeFormatProperties.getTimeZone();
 //                ZoneId zoneId = ZoneId.of(timeZoneId);
                 TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateTimeFormat);

@@ -7,22 +7,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author bootystar
  */
 @Data
-@ConfigurationProperties("bootystar")
-public class BootystarProperties {
+@ConfigurationProperties("bootystar.datetime.format")
+public class DateTimeFormatProperties {
     /**
      * 时间格式
      */
-    private String timeFormat = "HH:mm:ss";
+    private String time = "HH:mm:ss";
     /**
      * 日期格式
      */
-    private String dateFormat = "yyyy-MM-dd";
+    private String date = "yyyy-MM-dd";
     /**
      * 日期时间格式
      */
-    private String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+    private String dateTime = "yyyy-MM-dd HH:mm:ss";
     /**
      * 时区id
      */
-    private String timeZoneId = "GMT+8";
+    private String timeZone = "GMT+8";
 }

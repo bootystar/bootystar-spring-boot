@@ -6,7 +6,7 @@ import cn.idev.excel.converters.DefaultConverterLoader;
 import io.github.bootystar.autoconfigure.excel.ConverterRegister;
 import io.github.bootystar.autoconfigure.excel.ExcelProperties;
 import io.github.bootystar.autoconfigure.excel.fastexcel.converter.*;
-import io.github.bootystar.autoconfigure.BootystarProperties;
+import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public abstract class FastExcelConverterRegister {
 
 
-    public static void registerConverters(ExcelProperties excelProperties,BootystarProperties bootystarProperties) {
+    public static void registerConverters(ExcelProperties excelProperties, DateTimeFormatProperties dateTimeFormatProperties) {
         ExcelProperties.ConverterProperties converterProperties = excelProperties.getConverter();
         List<Converter> converters = new ArrayList<>();
         if (converterProperties.isBigDecimalToString()) {
@@ -46,27 +46,27 @@ public abstract class FastExcelConverterRegister {
         }
 
         if (converterProperties.isSqlTimestampToString()) {
-            converters.add(new SqlTimestampConverter(bootystarProperties.getDateTimeFormat()));
+            converters.add(new SqlTimestampConverter(dateTimeFormatProperties.getDateTime()));
         }
         if (converterProperties.isSqlDateToString()) {
-            converters.add(new SqlDateConverter(bootystarProperties.getDateFormat()));
+            converters.add(new SqlDateConverter(dateTimeFormatProperties.getDate()));
         }
         if (converterProperties.isSqlTimeToString()) {
-            converters.add(new SqlTimeConverter(bootystarProperties.getTimeFormat()));
+            converters.add(new SqlTimeConverter(dateTimeFormatProperties.getTime()));
         }
 
         if (converterProperties.isLocalDateTimeToString()) {
-            converters.add(new LocalDateTimeConverter(bootystarProperties.getDateTimeFormat()));
+            converters.add(new LocalDateTimeConverter(dateTimeFormatProperties.getDateTime()));
         }
         if (converterProperties.isLocalDateToString()) {
-            converters.add(new LocalDateConverter(bootystarProperties.getDateFormat()));
+            converters.add(new LocalDateConverter(dateTimeFormatProperties.getDate()));
         }
         if (converterProperties.isLocalTimeToString()) {
-            converters.add(new LocalTimeConverter(bootystarProperties.getTimeFormat()));
+            converters.add(new LocalTimeConverter(dateTimeFormatProperties.getTime()));
         }
 
         if (converterProperties.isDateToString()) {
-            converters.add(new DateConverter(bootystarProperties.getDateTimeFormat(), bootystarProperties.getTimeZoneId()));
+            converters.add(new DateConverter(dateTimeFormatProperties.getDateTime(), dateTimeFormatProperties.getTimeZone()));
         }
         ConverterRegister.addConverters(DefaultConverterLoader.class, Converter.class, converters);
     }
