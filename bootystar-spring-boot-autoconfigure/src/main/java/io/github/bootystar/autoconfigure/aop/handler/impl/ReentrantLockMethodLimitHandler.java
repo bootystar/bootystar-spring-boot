@@ -1,7 +1,6 @@
 package io.github.bootystar.autoconfigure.aop.handler.impl;
 
 import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
-import lombok.SneakyThrows;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,43 +9,22 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author bootystar
  */
 public class ReentrantLockMethodLimitHandler implements MethodLimitHandler {
-    private final ConcurrentHashMap<String, ReentrantLock> LOCK_MAP = new ConcurrentHashMap<>();
-    private final ReentrantLock LOCK = new ReentrantLock();
+    private final ConcurrentHashMap<String, ReentrantLock> lockMap = new ConcurrentHashMap<>();
 
     @Override
-    @SneakyThrows
     public boolean tryLock(String signature) {
-        LOCK.lock();
-        try {
-            return getLock(signature).tryLock();
-        } finally {
-            LOCK.unlock();
-        }
+        return getLock(signature).tryLock();
     }
 
     @Override
     public void unLock(String signature) {
-        LOCK.lock();
-        try {
-            ReentrantLock lock = getLock(signature);
+        ReentrantLock lock = lockMap.get(signature);
+        if (lock != null && lock.isHeldByCurrentThread()) {
             lock.unlock();
-            if (!lock.isLocked()) {
-                LOCK_MAP.remove(signature);
-            }
-        } finally {
-            LOCK.unlock();
         }
     }
 
     private ReentrantLock getLock(String signature) {
-        ReentrantLock lock = LOCK_MAP.get(signature);
-        if (lock != null) {
-            return lock;
-        }
-        lock = new ReentrantLock();
-        LOCK_MAP.putIfAbsent(signature, lock);
-        return LOCK_MAP.get(signature);
+        return lockMap.computeIfAbsent(signature, k -> new ReentrantLock());
     }
-
-
 }
