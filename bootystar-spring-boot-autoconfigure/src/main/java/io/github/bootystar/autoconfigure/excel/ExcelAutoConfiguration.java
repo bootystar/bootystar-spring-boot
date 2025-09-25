@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(prefix = "bootystar.excel", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "bootystar.excel.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({BootystarProperties.class, ExcelProperties.class})
 public class ExcelAutoConfiguration implements ApplicationContextAware {
 
@@ -48,7 +48,6 @@ public class ExcelAutoConfiguration implements ApplicationContextAware {
                 log.debug("EasyExcelConverterRegister init failed", e);
             }
         }
-
     }
 
 }

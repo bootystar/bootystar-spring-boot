@@ -1,6 +1,6 @@
-package io.github.bootystar.autoconfigure.web.filter;
+package io.github.bootystar.autoconfigure.servlet.request;
 
-import io.github.bootystar.autoconfigure.web.utils.html.EscapeUtil;
+import io.github.bootystar.autoconfigure.servlet.utils.html.EscapeUtil;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,11 +18,10 @@ import java.nio.charset.StandardCharsets;
  * XSS过滤处理
  *
  * @author ruoyi
+ * @author bootystar
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
-    /**
-     * @param request
-     */
+
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
     }
@@ -88,8 +87,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     /**
      * 是否是Json请求
-     *
-     * @param request
      */
     public boolean isJsonRequest() {
         String header = super.getHeader(HttpHeaders.CONTENT_TYPE);

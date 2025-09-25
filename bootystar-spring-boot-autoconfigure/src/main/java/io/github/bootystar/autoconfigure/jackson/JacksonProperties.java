@@ -10,9 +10,20 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties("bootystar.jackson")
 public class JacksonProperties {
-    private boolean enabled = true;
+    /**
+     * long序列化为字符串
+     */
     private boolean longToString = true;
+    /**
+     * double序列化为字符串
+     */
     private boolean doubleToString = true;
+    /**
+     * bigInteger序列化为字符串
+     */
     private boolean bigIntegerToString = true;
+    /**
+     * bigDecimal序列化为字符串
+     */
     private boolean bigDecimalToString = true;
 }

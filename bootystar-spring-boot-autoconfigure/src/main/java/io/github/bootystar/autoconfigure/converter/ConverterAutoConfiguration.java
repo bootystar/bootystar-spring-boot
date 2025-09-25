@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties({BootystarProperties.class})
-@ConditionalOnProperty(prefix = "bootystar.converter", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "bootystar.converter.enabled", havingValue = "true", matchIfMissing = true)
 public class ConverterAutoConfiguration {
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-date", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-date", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2DateConverterConfiguration {
         @Bean
@@ -30,7 +30,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-local-date-time", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-local-date-time", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2LocalDateTimeConverterConfiguration {
         @Bean
@@ -40,7 +40,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-local-date", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-local-date", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2LocalDateConverterConfiguration {
         @Bean
@@ -50,7 +50,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-local-time", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-local-time", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2LocalTimeConverterConfiguration {
         @Bean
@@ -60,7 +60,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-sql-date", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-sql-date", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2SqlDateConverterConfiguration {
         @Bean
@@ -70,7 +70,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-sql-time", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-sql-time", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2SqlTimeConverterConfiguration {
         @Bean
@@ -80,7 +80,7 @@ public class ConverterAutoConfiguration {
         }
     }
 
-    @ConditionalOnProperty(prefix = "bootystar.converter", name = "string-to-sql-timestamp", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "bootystar.converter.string-to-sql-timestamp", havingValue = "true", matchIfMissing = true)
     @Configuration(proxyBeanMethods = false)
     static class String2SqlTimestampConverterConfiguration {
         @Bean

@@ -38,7 +38,7 @@ import java.util.TimeZone;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ObjectMapper.class)
-@ConditionalOnProperty(prefix = "bootystar.jackson", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "bootystar.jackson.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({BootystarProperties.class,JacksonProperties.class})
 public class JacksonAutoConfiguration {
 
