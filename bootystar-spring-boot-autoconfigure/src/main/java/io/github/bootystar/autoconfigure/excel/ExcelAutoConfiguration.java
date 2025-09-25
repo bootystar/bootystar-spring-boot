@@ -1,6 +1,6 @@
 package io.github.bootystar.autoconfigure.excel;
 
-import io.github.bootystar.autoconfigure.BootystarProperties;
+import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import io.github.bootystar.autoconfigure.excel.easyexcel.EasyExcelConverterRegister;
 import io.github.bootystar.autoconfigure.excel.fastexcel.FastExcelConverterRegister;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +19,17 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "bootystar.excel.enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties({BootystarProperties.class, ExcelProperties.class})
+@EnableConfigurationProperties({DateTimeFormatProperties.class, ExcelProperties.class})
 public class ExcelAutoConfiguration implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         ExcelProperties excelProperties = applicationContext.getBean(ExcelProperties.class);
-        BootystarProperties bootystarProperties = applicationContext.getBean(BootystarProperties.class);
+        DateTimeFormatProperties dateTimeFormatProperties = applicationContext.getBean(DateTimeFormatProperties.class);
         if (excelProperties.isInitFastExcelConverter()) {
             try {
                 Class.forName("cn.idev.excel.FastExcel");
-                FastExcelConverterRegister.registerConverters(excelProperties, bootystarProperties);
+                FastExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
                 log.debug("FastExcelConverterRegister init success");
             } catch (ClassNotFoundException e) {
                 log.debug("not class found , FastExcelConverterRegister won't work");
@@ -40,7 +40,7 @@ public class ExcelAutoConfiguration implements ApplicationContextAware {
         if (excelProperties.isInitEasyExcelConverter()) {
             try {
                 Class.forName("com.alibaba.excel.EasyExcel");
-                EasyExcelConverterRegister.registerConverters(excelProperties, bootystarProperties);
+                EasyExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
                 log.debug("EasyExcelConverterRegister init success");
             } catch (ClassNotFoundException e) {
                 log.debug("not class found , EasyExcelConverterRegister won't work");

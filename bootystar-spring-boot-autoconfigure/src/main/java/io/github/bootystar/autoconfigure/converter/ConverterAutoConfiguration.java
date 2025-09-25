@@ -1,6 +1,6 @@
 package io.github.bootystar.autoconfigure.converter;
 
-import io.github.bootystar.autoconfigure.BootystarProperties;
+import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import io.github.bootystar.autoconfigure.converter.support.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties({BootystarProperties.class})
+@EnableConfigurationProperties({DateTimeFormatProperties.class})
 @ConditionalOnProperty(value = "bootystar.converter.enabled", havingValue = "true", matchIfMissing = true)
 public class ConverterAutoConfiguration {
 
@@ -24,9 +24,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2DateConverterConfiguration {
         @Bean
-        public String2DateConverter string2DateConverter(BootystarProperties properties) {
+        public String2DateConverter string2DateConverter(DateTimeFormatProperties properties) {
             log.debug("String2DateConverter Configured");
-            return new String2DateConverter(properties.getDateTimeFormat(), properties.getTimeZoneId());
+            return new String2DateConverter(properties.getDateTime(), properties.getTimeZone());
         }
     }
 
@@ -34,9 +34,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2LocalDateTimeConverterConfiguration {
         @Bean
-        public String2LocalDateTimeConverter string2LocalDateTimeConverter(BootystarProperties properties) {
+        public String2LocalDateTimeConverter string2LocalDateTimeConverter(DateTimeFormatProperties properties) {
             log.debug("String2LocalDateTimeConverter Configured");
-            return new String2LocalDateTimeConverter(properties.getDateTimeFormat());
+            return new String2LocalDateTimeConverter(properties.getDateTime());
         }
     }
 
@@ -44,9 +44,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2LocalDateConverterConfiguration {
         @Bean
-        public String2LocalDateConverter string2LocalDateConverter(BootystarProperties properties) {
+        public String2LocalDateConverter string2LocalDateConverter(DateTimeFormatProperties properties) {
             log.debug("String2LocalDateConverter configured");
-            return new String2LocalDateConverter(properties.getDateFormat());
+            return new String2LocalDateConverter(properties.getDate());
         }
     }
 
@@ -54,9 +54,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2LocalTimeConverterConfiguration {
         @Bean
-        public String2LocalTimeConverter string2LocalTimeConverter(BootystarProperties properties) {
+        public String2LocalTimeConverter string2LocalTimeConverter(DateTimeFormatProperties properties) {
             log.debug("String2LocalTimeConverter Configured");
-            return new String2LocalTimeConverter(properties.getTimeFormat());
+            return new String2LocalTimeConverter(properties.getTime());
         }
     }
 
@@ -64,9 +64,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2SqlDateConverterConfiguration {
         @Bean
-        public String2SqlDateConverter string2SqlDateConverter(BootystarProperties properties) {
+        public String2SqlDateConverter string2SqlDateConverter(DateTimeFormatProperties properties) {
             log.debug("String2SqlDateConverter Configured");
-            return new String2SqlDateConverter(properties.getDateFormat());
+            return new String2SqlDateConverter(properties.getDate());
         }
     }
 
@@ -74,9 +74,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2SqlTimeConverterConfiguration {
         @Bean
-        public String2SqlTimeConverter string2SqlTimeConverter(BootystarProperties properties) {
+        public String2SqlTimeConverter string2SqlTimeConverter(DateTimeFormatProperties properties) {
             log.debug("String2SqlTimeConverter Configured");
-            return new String2SqlTimeConverter(properties.getTimeFormat());
+            return new String2SqlTimeConverter(properties.getTime());
         }
     }
 
@@ -84,9 +84,9 @@ public class ConverterAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     static class String2SqlTimestampConverterConfiguration {
         @Bean
-        public String2SqlTimestampConverter string2SqlTimestampConverter(BootystarProperties properties) {
+        public String2SqlTimestampConverter string2SqlTimestampConverter(DateTimeFormatProperties properties) {
             log.debug("String2SqlTimestampConverter Configured");
-            return new String2SqlTimestampConverter(properties.getDateTimeFormat());
+            return new String2SqlTimestampConverter(properties.getDateTime());
         }
     }
 
