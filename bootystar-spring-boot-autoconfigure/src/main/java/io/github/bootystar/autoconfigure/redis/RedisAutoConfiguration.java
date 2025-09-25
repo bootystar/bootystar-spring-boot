@@ -25,7 +25,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({RedisOperations.class,Jackson2ObjectMapperBuilder.class})
-@ConditionalOnProperty(prefix = "bootystar.redis", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "bootystar.redis.enabled", havingValue = "true", matchIfMissing = true)
 public class RedisAutoConfiguration {
 
     @Bean
