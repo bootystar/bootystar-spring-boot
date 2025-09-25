@@ -1,4 +1,4 @@
-package io.github.bootystar.autoconfigure.aop.annocation;
+package io.github.bootystar.autoconfigure.aop.annotation;
 
 import io.github.bootystar.autoconfigure.aop.exception.MethodLimitException;
 import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
