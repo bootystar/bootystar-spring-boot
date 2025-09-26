@@ -5,6 +5,8 @@ import io.github.bootystar.autoconfigure.servlet.filter.RefererFilter;
 import io.github.bootystar.autoconfigure.servlet.filter.RepeatableFilter;
 import io.github.bootystar.autoconfigure.servlet.filter.XssFilter;
 import jakarta.servlet.DispatcherType;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -30,7 +32,10 @@ public class ServletAutoConfiguration {
     public FilterRegistrationBean<XssFilter> xssFilterRegistration(ServletFilterProperties servletFilterProperties) {
         FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        XssFilter xssFilter = new XssFilter(servletFilterProperties.getXssIncludes(), servletFilterProperties.getXssExcludes(), new AntPathMatcher());
+        XssFilter xssFilter = new XssFilter(servletFilterProperties.getXssIncludes(),
+                servletFilterProperties.getXssExcludes(), 
+                s -> Jsoup.clean(s, Safelist.relaxed())
+                );
         registration.setFilter(xssFilter);
         registration.setName("xssFilter");
         // 设置为拦截所有路径，由过滤器内部进行路径匹配

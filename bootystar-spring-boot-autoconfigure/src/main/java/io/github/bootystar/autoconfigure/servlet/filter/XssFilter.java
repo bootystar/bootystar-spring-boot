@@ -4,22 +4,43 @@ import io.github.bootystar.autoconfigure.servlet.request.CachedBodyRequestWrappe
 import io.github.bootystar.autoconfigure.servlet.request.XssRequestWrapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Setter;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
- *
+ * xss过滤器
  * @author bootystar
  */
-public class XssAndRepeatableFilter implements Filter {
-    @Setter
-    private Function<String, String> func = s -> s;
+@RequiredArgsConstructor
+public class XssFilter implements Filter {
+    /**
+     * 匹配器
+     */
+    protected final PathMatcher matcher = new AntPathMatcher();
+    /**
+     * 包含链接
+     */
+    @Getter
+    protected final List<String> includes;
+    /**
+     * 排除链接
+     */
+    @Getter
+    protected final List<String> excludes;
+    /**
+     * xss过滤方法
+     */
+    protected final Function<String, String> sanitizer;
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -44,12 +65,51 @@ public class XssAndRepeatableFilter implements Filter {
         HttpServletRequest wrapped =
                 bodyBytes != null
                         ? new CachedBodyRequestWrapper(request, bodyBytes)
-                        : new CachedBodyRequestWrapper(request); // 仅缓存，不修改
+//                        : new CachedBodyRequestWrapper(request) // 仅缓存，不修改
+                        : request // 节约内存
+                ;
 
-        XssRequestWrapper xssWrapper = new XssRequestWrapper(wrapped, func);
-
+        XssRequestWrapper xssWrapper = new XssRequestWrapper(wrapped, sanitizer);
         chain.doFilter(xssWrapper, res);
     }
+
+
+
+    public boolean isMatchedURL(HttpServletRequest request) {
+        return !this.isExcludeURL(request) && this.isIncludeURL(request);
+    }
+
+    public boolean isIncludeURL(HttpServletRequest request) {
+        String url = request.getServletPath();
+        // 如果没有包含规则，则默认不过滤
+        if (includes == null || includes.isEmpty()) {
+            return false;
+        }
+        // 检查是否匹配任意包含模式
+        for (String pattern : includes) {
+            if (matcher.match(pattern, url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isExcludeURL(HttpServletRequest request) {
+        String url = request.getServletPath();
+        if (url == null || url.isEmpty()) {
+            return false;
+        }
+        if (excludes == null || excludes.isEmpty()) {
+            return false;
+        }
+        for (String pattern : excludes) {
+            if (matcher.match(pattern, url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private static byte[] readAll(InputStream is) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -61,6 +121,7 @@ public class XssAndRepeatableFilter implements Filter {
 
     private String sanitizeBody(String body, String contentType) {
         // 注意：不要破坏 JSON 结构。可以仅转义字符串字段中的危险字符，或使用 JSON-aware 的转义。
-        return func.apply(body);
+        return sanitizer.apply(body);
     }
+
 }
