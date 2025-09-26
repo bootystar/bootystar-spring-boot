@@ -1,6 +1,6 @@
 package io.github.bootystar.autoconfigure.aop.aspectj;
 
-import io.github.bootystar.autoconfigure.aop.annocation.MethodLimit;
+import io.github.bootystar.autoconfigure.aop.annotation.MethodLimit;
 import io.github.bootystar.autoconfigure.aop.exception.MethodLimitException;
 import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
 import io.github.bootystar.autoconfigure.aop.handler.MethodSignatureHandler;
