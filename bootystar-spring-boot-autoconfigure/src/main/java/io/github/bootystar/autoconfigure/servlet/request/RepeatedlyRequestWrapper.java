@@ -1,35 +1,57 @@
 package io.github.bootystar.autoconfigure.servlet.request;
 
+
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.apache.commons.io.IOUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
  * 构建可重复读取inputStream的request
- * <p>
- * <b>警告:</b> 这个实现会将整个请求体读入内存。
- * 这可能导致应用程序在处理大型请求时出现内存溢出 (OutOfMemoryError) 错误。
- * 强烈建议在生产环境中配置请求体大小限制 (例如, spring.servlet.multipart.max-request-size)。
- * </p>
  *
  * @author ruoyi
  * @author bootystar
  */
+@Slf4j
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
     private final byte[] body;
 
-    public RepeatedlyRequestWrapper(HttpServletRequest request) throws IOException {
+    public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {
         super(request);
-        // 从输入流中读取请求体并存储在字节数组中
-        this.body = IOUtils.toByteArray(request.getInputStream());
+        request.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        body = getBodyString(request).getBytes(StandardCharsets.UTF_8);
+    }
+
+
+    public static String getBodyString(ServletRequest request) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = null;
+        try (InputStream inputStream = request.getInputStream()) {
+            reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            log.warn("getBodyString failed！", e);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    log.error(ExceptionUtils.getMessage(e));
+                }
+            }
+        }
+        return sb.toString();
     }
 
     @Override
@@ -39,26 +61,31 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() {
-        final ByteArrayInputStream bis = new ByteArrayInputStream(this.body);
+        final ByteArrayInputStream is = new ByteArrayInputStream(body);
         return new ServletInputStream() {
             @Override
+            public int read() {
+                return is.read();
+            }
+
+            @Override
+            public int available() {
+                return body.length;
+            }
+
+            @Override
             public boolean isFinished() {
-                return bis.available() == 0;
+                return false;
             }
 
             @Override
             public boolean isReady() {
-                return true;
+                return false;
             }
 
             @Override
             public void setReadListener(ReadListener readListener) {
-                // Not implemented
-            }
 
-            @Override
-            public int read() {
-                return bis.read();
             }
         };
     }
