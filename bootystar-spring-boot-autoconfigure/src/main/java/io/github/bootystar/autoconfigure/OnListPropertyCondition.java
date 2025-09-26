@@ -1,52 +1,75 @@
 package io.github.bootystar.autoconfigure;
 
+import org.springframework.boot.autoconfigure.condition.ConditionMessage;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
+import org.springframework.boot.context.properties.bind.BindResult;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.ConditionContext;
-import org.springframework.core.env.Environment;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
-/**
- * “在列表上” 属性条件
- *
- * @author bootystar
- */
 public class OnListPropertyCondition extends SpringBootCondition {
 
     @Override
     public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Environment env = context.getEnvironment();
-        // 获取注解中的属性
-        Map<String, Object> attributes = metadata.getAnnotationAttributes(ConditionalOnListProperty.class.getName());
-        if (attributes == null) {
-            return ConditionOutcome.noMatch("No ConditionalOnListProperty annotation found");
-        }
-        String propertyName = (String) attributes.get("value");
-        boolean matchIfEmpty = (boolean) attributes.get("matchIfEmpty");
-
-        // 检查属性是否存在
-        if (!env.containsProperty(propertyName)) {
-            if (matchIfEmpty) {
-                return ConditionOutcome.match("Property " + propertyName + " is missing and matchIfEmpty=true");
-            } else {
-                return ConditionOutcome.noMatch("Property " + propertyName + " is missing and matchIfEmpty=false");
-            }
+        AnnotationAttributes attrs = AnnotationAttributes.fromMap(
+                metadata.getAnnotationAttributes(ConditionalOnListProperty.class.getName())
+        );
+        if (attrs == null) {
+            return ConditionOutcome.noMatch("No @ConditionalOnListProperty found");
         }
 
-        // 尝试获取List配置
-        List<?> propertyList = env.getProperty(propertyName, List.class);
-
-        if (propertyList != null && !propertyList.isEmpty()) {
-            return ConditionOutcome.match("Property " + propertyName + " is a non-empty list");
+        String name = attrs.getString("value");
+        if (!StringUtils.hasText(name)) {
+            return ConditionOutcome.noMatch("@ConditionalOnListProperty 'value' must not be empty");
         }
 
-        if (matchIfEmpty) {
-            return ConditionOutcome.match("Property " + propertyName + " is a not a list or is empty and matchIfEmpty=true");
-        } else {
-            return ConditionOutcome.noMatch("Property " + propertyName + " not a list or is empty and matchIfEmpty=false");
+        boolean matchIfEmpty = attrs.getBoolean("matchIfEmpty");
+        boolean matchIfMissing = attrs.getBoolean("matchIfMissing");
+        Class<?> elementType = attrs.getClass("elementType");
+        boolean ignoreEmptyElements = attrs.getBoolean("ignoreEmptyElements");
+
+        ConditionMessage.Builder message = ConditionMessage.forCondition(ConditionalOnListProperty.class, name);
+
+        Binder binder = Binder.get(context.getEnvironment());
+        Bindable<? extends List<?>> listBindable = Bindable.listOf(elementType);
+        BindResult<? extends List<?>> result = binder.bind(name, listBindable);
+        if (!result.isBound()) {
+            return matchIfMissing
+                    ? ConditionOutcome.match(message.because("property is missing and matchIfMissing=true"))
+                    : ConditionOutcome.noMatch(message.because("property is missing"));
         }
+
+        List<?> list = result.get();
+        if (list == null) {
+            // 按空列表处理
+            return matchIfEmpty
+                    ? ConditionOutcome.match(message.because("list is null/empty and matchIfEmpty=true"))
+                    : ConditionOutcome.noMatch(message.because("list is null/empty"));
+        }
+
+        if (ignoreEmptyElements) {
+            list = list.stream()
+                    .filter(e -> {
+                        if (e == null) return false;
+                        if (e instanceof CharSequence) return StringUtils.hasText(e.toString());
+                        return true;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        if (list.isEmpty()) {
+            return matchIfEmpty
+                    ? ConditionOutcome.match(message.because("list is empty and matchIfEmpty=true"))
+                    : ConditionOutcome.noMatch(message.because("list is empty"));
+        }
+
+        return ConditionOutcome.match(message.because("non-empty list (" + list.size() + " element(s))"));
     }
 }
