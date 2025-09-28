@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -36,10 +37,10 @@ import java.util.TimeZone;
  * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
  */
 @Slf4j
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
-@ConditionalOnProperty(value = "bootystar.jackson.enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties({DateTimeFormatProperties.class,JacksonProperties.class})
+@ConditionalOnProperty(value = "bootystar.jackson.auto", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties({JacksonProperties.class, DateTimeFormatProperties.class})
 public class JacksonAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)

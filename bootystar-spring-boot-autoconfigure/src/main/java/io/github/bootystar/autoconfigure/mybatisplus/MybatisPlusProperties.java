@@ -4,23 +4,23 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * mybatis plus属性
+ser * MyBatis Plus properties
  *
  * @author bootystar
  */
-@ConfigurationProperties("bootystar.mybatis-plus")
 @Data
+@ConfigurationProperties("bootystar.mybatis-plus")
 public class MybatisPlusProperties {
     /**
-     * 是否添加乐观锁拦截器
+     * Whether to enable optimistic locker interceptor
      */
     private boolean optimisticLocker =  true;
     /**
-     * 是否添加分页拦截器
+     * Whether to enable pagination interceptor
      */
     private boolean pagination = true;
     /**
-     * 是否添加防全表更新拦截器
+     * Whether to enable block attack interceptor
      */
     private boolean blockAttack =  true;
 }
