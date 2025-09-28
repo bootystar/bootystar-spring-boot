@@ -33,6 +33,7 @@ public class ExcelAutoConfiguration {
         @Override
         public void afterPropertiesSet() throws Exception {
             FastExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
+            log.debug("FastExcelConverterRegister register Configured");
         }
     }
 
@@ -46,6 +47,7 @@ public class ExcelAutoConfiguration {
         @Override
         public void afterPropertiesSet() throws Exception {
             EasyExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
+            log.debug("EasyExcelConverterRegister register Configured");
         }
     }
 

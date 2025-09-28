@@ -1,11 +1,14 @@
 package io.github.bootystar.autoconfigure.redis;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,9 +38,10 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class RedisAutoConfiguration {
 
     @Bean
+    @ConditionalOnBean(Jackson2ObjectMapperBuilder.class) 
     public RedisSerializer<Object> redisSerializer(Jackson2ObjectMapperBuilder builder) {
         log.debug("RedisSerializer Configured");
-        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        ObjectMapper objectMapper = builder.build();
         //启用反序列化所需的类型信息,在属性中添加@class
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         //配置null值的序列化器
@@ -47,6 +51,7 @@ public class RedisAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(name = "redisTemplate")
+    @ConditionalOnBean(RedisConnectionFactory.class)
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory, RedisSerializer<Object> redisSerializer) {
         log.debug("RedisTemplate Configured");
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
