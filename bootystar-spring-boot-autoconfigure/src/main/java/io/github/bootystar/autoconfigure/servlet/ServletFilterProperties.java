@@ -15,24 +15,24 @@ import java.util.List;
 public class ServletFilterProperties {
 
     /**
-     * xss匹配的url(ant模式匹配)
+     * Comma-separated list of URL patterns to include for XSS filtering (Ant-style matching)
      */
     private List<String> xssIncludes;
     /**
-     * xss排除的url(ant模式匹配)
+     * Comma-separated list of URL patterns to exclude from XSS filtering (Ant-style matching)
      */
     private List<String> xssExcludes;
     /**
-     * xss防护等级
+     * XSS protection level
      */
     private SanitizerType xssSanitizer = SanitizerType.RELAXED;
     
     /**
-     * 防盗链允许访问的链接
+     * Comma-separated list of allowed domains for referer validation
      */
     private List<String> refererAllowDomains;
     /**
-     * 可重复读过滤器
+     * Whether to enable repeatable read filter
      */
     private Boolean repeatable = true;
 
@@ -40,23 +40,23 @@ public class ServletFilterProperties {
 
     public enum SanitizerType {
         /**
-         * 不允许任何标签
+         * Disallows any HTML tags
          */
         NONE,
         /**
-         * 仅允许设置b、em、i、strong、u的简单文本格式
+         * Allows only basic text formatting: b, em, i, strong, u
          */
         SIMPLE_TEXT,
         /**
-         * 允许更完整的文本节点范围: a，b，blockquote，br，cite，code，dd，dl，dt，em，i，li，ol，p，pre，q，small，span，strike，strong，sub，sup，u，ul和适当的属性
+         * Allows more complete text nodes: a, b, blockquote, br, cite, code, dd, dl, dt, em, i, li, ol, p, pre, q, small, span, strike, strong, sub, sup, u, ul with appropriate attributes
          */
         BASIC,
         /**
-         * 允许使用与basic相同的文本标记，还允许使用具有适当属性的img标记，其中src指向http或https
+         * Allows same text markup as basic plus img tags with appropriate attributes where src points to http or https
          */
         BASIC_WITH_IMAGES,
         /**
-         * 允许完整范围的文本和结构体HTML:a，b，块引用，br，标题，引用，代码，col，colgroup，dd，div，dl，dt，em，h1，h2，h3，h4，h5，h6，i，img，li，ol，p，pre，q，small，span，strike，strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, u, ul
+         * Allows full range of text and structural HTML: a, b, blockquote, br, caption, cite, code, col, colgroup, dd, div, dl, dt, em, h1, h2, h3, h4, h5, h6, i, img, li, ol, p, pre, q, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, u, ul
          */
         RELAXED,
     }

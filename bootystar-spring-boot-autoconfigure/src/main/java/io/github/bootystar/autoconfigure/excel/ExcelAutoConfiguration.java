@@ -3,12 +3,13 @@ package io.github.bootystar.autoconfigure.excel;
 import io.github.bootystar.autoconfigure.DateTimeFormatProperties;
 import io.github.bootystar.autoconfigure.excel.easyexcel.EasyExcelConverterRegister;
 import io.github.bootystar.autoconfigure.excel.fastexcel.FastExcelConverterRegister;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -17,36 +18,34 @@ import org.springframework.context.annotation.Configuration;
  * @author bootystar
  */
 @Slf4j
-@Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(value = "bootystar.excel.enabled", havingValue = "true", matchIfMissing = true)
-@EnableConfigurationProperties({DateTimeFormatProperties.class, ExcelProperties.class})
-public class ExcelAutoConfiguration implements ApplicationContextAware {
+@AutoConfiguration
+@ConditionalOnProperty(value = "bootystar.excel.auto", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties({ExcelProperties.class, DateTimeFormatProperties.class})
+public class ExcelAutoConfiguration {
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ExcelProperties excelProperties = applicationContext.getBean(ExcelProperties.class);
-        DateTimeFormatProperties dateTimeFormatProperties = applicationContext.getBean(DateTimeFormatProperties.class);
-        if (excelProperties.isInitFastExcelConverter()) {
-            try {
-                Class.forName("cn.idev.excel.FastExcel");
-                FastExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
-                log.debug("FastExcelConverterRegister init success");
-            } catch (ClassNotFoundException e) {
-                log.debug("not class found , FastExcelConverterRegister won't work");
-            } catch (Exception e) {
-                log.debug("FastExcelConverterRegister init failed", e);
-            }
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnClass(cn.idev.excel.converters.DefaultConverterLoader.class)
+    @RequiredArgsConstructor
+    static class FastExcelConfiguration implements InitializingBean {
+        private final DateTimeFormatProperties dateTimeFormatProperties;
+        private final ExcelProperties excelProperties;
+
+        @Override
+        public void afterPropertiesSet() throws Exception {
+            FastExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
         }
-        if (excelProperties.isInitEasyExcelConverter()) {
-            try {
-                Class.forName("com.alibaba.excel.EasyExcel");
-                EasyExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
-                log.debug("EasyExcelConverterRegister init success");
-            } catch (ClassNotFoundException e) {
-                log.debug("not class found , EasyExcelConverterRegister won't work");
-            } catch (Exception e) {
-                log.debug("EasyExcelConverterRegister init failed", e);
-            }
+    }
+
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnClass(com.alibaba.excel.converters.DefaultConverterLoader.class)
+    @RequiredArgsConstructor
+    static class EasyExcelConfiguration implements InitializingBean {
+        private final DateTimeFormatProperties dateTimeFormatProperties;
+        private final ExcelProperties excelProperties;
+
+        @Override
+        public void afterPropertiesSet() throws Exception {
+            EasyExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
         }
     }
 

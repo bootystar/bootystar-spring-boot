@@ -1,12 +1,15 @@
 package io.github.bootystar.autoconfigure.redis;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,14 +21,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
- * redis配置
+ * Redis自动配置类
+ * 
  * @author bootystar
  * @see org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
  */
 @Slf4j
-@Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({RedisOperations.class,Jackson2ObjectMapperBuilder.class})
-@ConditionalOnProperty(value = "bootystar.redis.enabled", havingValue = "true", matchIfMissing = true)
+@AutoConfiguration
+@ConditionalOnClass({RedisOperations.class, Jackson2ObjectMapperBuilder.class})
+@ConditionalOnProperty(value = "bootystar.redis.auto", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties(RedisProperties.class)
+@RequiredArgsConstructor
 public class RedisAutoConfiguration {
 
     @Bean
@@ -53,5 +59,4 @@ public class RedisAutoConfiguration {
         template.afterPropertiesSet();
         return template;
     }
-
 }

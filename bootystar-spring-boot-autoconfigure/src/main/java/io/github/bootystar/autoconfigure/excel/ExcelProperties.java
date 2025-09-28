@@ -4,93 +4,87 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Excel配置属性类
- * 用于配置Excel相关属性
- *
+ * Excel properties
  * @author bootystar
  */
 @Data
 @ConfigurationProperties("bootystar.excel")
 public class ExcelProperties {
-    /**
-     * 是否初始化FastExcel转换器
-     */
-    private boolean initFastExcelConverter = true;
     
     /**
-     * 是否初始化EasyExcel转换器
+     * Whether to enable excel autoconfiguration
      */
-    private boolean initEasyExcelConverter = true;
+    private boolean auto;
     
     /**
-     * Excel转换器配置
+     * Excel converter properties
      */
     private ConverterProperties converter = new ConverterProperties();
     
     @Data
     public static class ConverterProperties {
         /**
-         * BigDecimal转字符串
+         * Whether to enable BigDecimal to string conversion
          */
         private boolean bigDecimalToString = true;
         
         /**
-         * BigInteger转字符串
+         * Whether to enable BigInteger to string conversion
          */
         private boolean bigIntegerToString = true;
 
         /**
-         * Long转字符串
+         * Whether to enable Long to string conversion
          */
         private boolean longToString = true;
         
         /**
-         * Boolean转字符串
+         * Whether to enable Boolean to string conversion
          */
         private boolean booleanToString = true;
 
         /**
-         * Float转字符串
+         * Whether to enable Float to string conversion
          */
         private boolean floatToString = true;
         
         /**
-         * Double转字符串
+         * Whether to enable Double to string conversion
          */
         private boolean doubleToString = true;
 
         /**
-         * SQL时间戳转字符串
+         * Whether to enable SQL timestamp to string conversion
          */
         private boolean sqlTimestampToString = true;
         
         /**
-         * SQL日期转字符串
+         * Whether to enable SQL date to string conversion
          */
         private boolean sqlDateToString = true;
         
         /**
-         * SQL时间转字符串
+         * Whether to enable SQL time to string conversion
          */
         private boolean sqlTimeToString = true;
 
         /**
-         * LocalDateTime转字符串
+         * Whether to enable LocalDateTime to string conversion
          */
         private boolean localDateTimeToString = true;
         
         /**
-         * LocalDate转字符串
+         * Whether to enable LocalDate to string conversion
          */
         private boolean localDateToString = true;
         
         /**
-         * LocalTime转字符串
+         * Whether to enable LocalTime to string conversion
          */
         private boolean localTimeToString = true;
 
         /**
-         * Date转字符串
+         * Whether to enable Date to string conversion
          */
         private boolean dateToString = true;
     }

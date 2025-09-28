@@ -4,26 +4,26 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * jackson属性
+ * Jackson properties
  * @author bootystar
  */
 @Data
 @ConfigurationProperties("bootystar.jackson")
 public class JacksonProperties {
     /**
-     * long序列化为字符串
+     * Whether to enable Long to string serialization
      */
     private boolean longToString = true;
     /**
-     * double序列化为字符串
+     * Whether to enable Double to string serialization
      */
     private boolean doubleToString = true;
     /**
-     * bigInteger序列化为字符串
+     * Whether to enable BigInteger to string serialization
      */
     private boolean bigIntegerToString = true;
     /**
-     * bigDecimal序列化为字符串
+     * Whether to enable BigDecimal to string serialization
      */
     private boolean bigDecimalToString = true;
 }
