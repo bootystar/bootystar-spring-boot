@@ -4,25 +4,27 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * Configuration properties for date time format.
+ *
  * @author bootystar
  */
 @Data
 @ConfigurationProperties("bootystar.datetime.format")
 public class DateTimeFormatProperties {
     /**
-     * 时间格式
+     * Time format pattern
      */
     private String time = "HH:mm:ss";
     /**
-     * 日期格式
+     * Date format pattern
      */
     private String date = "yyyy-MM-dd";
     /**
-     * 日期时间格式
+     * Date time format pattern
      */
     private String dateTime = "yyyy-MM-dd HH:mm:ss";
     /**
-     * 时区id
+     * Time zone ID
      */
     private String timeZone = "GMT+8";
 }

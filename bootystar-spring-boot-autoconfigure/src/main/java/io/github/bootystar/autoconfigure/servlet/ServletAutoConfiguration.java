@@ -1,6 +1,5 @@
 package io.github.bootystar.autoconfigure.servlet;
 
-import io.github.bootystar.autoconfigure.BootystarProperties;
 import io.github.bootystar.autoconfigure.ConditionalOnListProperty;
 import io.github.bootystar.autoconfigure.servlet.filter.RefererFilter;
 import io.github.bootystar.autoconfigure.servlet.filter.RepeatableFilter;
@@ -14,6 +13,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +24,11 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author bootystar
  */
+@Slf4j
 @AutoConfiguration
+@EnableConfigurationProperties({ServletFilterProperties.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(value = "bootystar.servlet.auto", havingValue = "true", matchIfMissing = true)
-@Slf4j
 public class ServletAutoConfiguration {
     
     @ConditionalOnClass(Jsoup.class)
@@ -36,11 +37,10 @@ public class ServletAutoConfiguration {
         @Bean
         @ConditionalOnListProperty(value = "bootystar.servlet.filter.xss-includes")
         @ConditionalOnMissingBean(name = "xssFilterRegistration")
-        public FilterRegistrationBean<XssFilter> xssFilterRegistration(BootystarProperties properties) {
+        public FilterRegistrationBean<XssFilter> xssFilterRegistration(ServletFilterProperties filterProperties) {
             FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
             registration.setDispatcherTypes(DispatcherType.REQUEST);
             XssFilter xssFilter;
-            BootystarProperties.Servlet.Filter filterProperties = properties.getServlet().getFilter();
             switch (filterProperties.getXssSanitizer()) {
                 case NONE:
                     xssFilter = new XssFilter(filterProperties.getXssIncludes(),
@@ -87,6 +87,7 @@ public class ServletAutoConfiguration {
             // 设置为拦截所有路径，由过滤器内部进行路径匹配
             registration.addUrlPatterns("/*");
             registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+            log.debug("xssFilterRegistration Configured");
             return registration;
         }
     }
@@ -94,15 +95,16 @@ public class ServletAutoConfiguration {
     @Bean
     @ConditionalOnListProperty(value = "bootystar.servlet.filter.referer-allow-domains")
     @ConditionalOnMissingBean(name = "refererFilterRegistration")
-    public FilterRegistrationBean<RefererFilter> refererFilterRegistration(BootystarProperties properties) {
+    public FilterRegistrationBean<RefererFilter> refererFilterRegistration(ServletFilterProperties properties) {
         FilterRegistrationBean<RefererFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        RefererFilter refererFilter = new RefererFilter(properties.getServlet().getFilter().getRefererAllowDomains());
+        RefererFilter refererFilter = new RefererFilter(properties.getRefererAllowDomains());
         registration.setFilter(refererFilter);
         registration.setName("refererFilter");
         // 设置为拦截所有路径，由过滤器内部进行路径匹配
         registration.addUrlPatterns("/*");
         registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+        log.debug("refererFilterRegistration Configured");
         return registration;
     }
 
@@ -115,6 +117,7 @@ public class ServletAutoConfiguration {
         registration.addUrlPatterns("/*");
         registration.setName("repeatableFilter");
         registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
+        log.debug("repeatableFilterRegistration Configured");
         return registration;
     }
 
