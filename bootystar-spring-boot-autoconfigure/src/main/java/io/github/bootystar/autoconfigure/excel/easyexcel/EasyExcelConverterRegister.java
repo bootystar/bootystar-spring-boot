@@ -22,50 +22,49 @@ import java.util.List;
 public abstract class EasyExcelConverterRegister {
 
     public static void registerConverters(ExcelProperties excelProperties, DateTimeFormatProperties dateTimeFormatProperties) {
-        ExcelProperties.ConverterProperties converterProperties = excelProperties.getConverter();
         List<Converter> converters = new ArrayList<>();
-        if (converterProperties.isBigDecimalToString()) {
+        if (excelProperties.isBigDecimalToString()) {
             converters.add(new BigDecimalConverter());
         }
-        if (converterProperties.isBigIntegerToString()) {
+        if (excelProperties.isBigIntegerToString()) {
             converters.add(new BigIntergerConverter());
         }
 
-        if (converterProperties.isLongToString()) {
+        if (excelProperties.isLongToString()) {
             converters.add(new LongConverter());
         }
-        if (converterProperties.isBooleanToString()) {
+        if (excelProperties.isBooleanToString()) {
             converters.add(new BooleanConverter());
         }
 
-        if (converterProperties.isFloatToString()) {
+        if (excelProperties.isFloatToString()) {
             converters.add(new FloatConverter());
         }
-        if (converterProperties.isDoubleToString()) {
+        if (excelProperties.isDoubleToString()) {
             converters.add(new DoubleConverter());
         }
 
-        if (converterProperties.isSqlTimestampToString()) {
+        if (excelProperties.isSqlTimestampToString()) {
             converters.add(new SqlTimestampConverter(dateTimeFormatProperties.getDateTime()));
         }
-        if (converterProperties.isSqlDateToString()) {
+        if (excelProperties.isSqlDateToString()) {
             converters.add(new SqlDateConverter(dateTimeFormatProperties.getDate()));
         }
-        if (converterProperties.isSqlTimeToString()) {
+        if (excelProperties.isSqlTimeToString()) {
             converters.add(new SqlTimeConverter(dateTimeFormatProperties.getTime()));
         }
 
-        if (converterProperties.isLocalDateTimeToString()) {
+        if (excelProperties.isLocalDateTimeToString()) {
             converters.add(new LocalDateTimeConverter(dateTimeFormatProperties.getDateTime()));
         }
-        if (converterProperties.isLocalDateToString()) {
+        if (excelProperties.isLocalDateToString()) {
             converters.add(new LocalDateConverter(dateTimeFormatProperties.getDate()));
         }
-        if (converterProperties.isLocalTimeToString()) {
+        if (excelProperties.isLocalTimeToString()) {
             converters.add(new LocalTimeConverter(dateTimeFormatProperties.getTime()));
         }
 
-        if (converterProperties.isDateToString()) {
+        if (excelProperties.isDateToString()) {
             converters.add(new DateConverter(dateTimeFormatProperties.getDateTime(), dateTimeFormatProperties.getTimeZone()));
         }
         ConverterRegister.addConverters(DefaultConverterLoader.class, Converter.class, converters);
