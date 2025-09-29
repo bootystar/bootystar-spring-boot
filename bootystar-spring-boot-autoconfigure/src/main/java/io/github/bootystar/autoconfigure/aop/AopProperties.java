@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * AOP（面向切面编程）相关配置属性
  *
  * @author bootystar
  */
@@ -11,11 +12,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class AopProperties {
     /**
-     * weather to enable AopAutoConfiguration
+     * 是否启用AOP自动配置。默认为 true。
      */
-    private boolean auto = true;
+    private boolean enabled = true;
     /**
-     * method limit prefix
+     * 方法限流锁的键名前缀。默认为 "method_limit:"。
      */
     private String methodLimitPrefix = "method_limit:";
 }

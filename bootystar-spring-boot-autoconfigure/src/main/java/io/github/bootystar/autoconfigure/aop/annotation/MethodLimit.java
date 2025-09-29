@@ -6,9 +6,11 @@ import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
 import java.lang.annotation.*;
 
 /**
- * 注解限流
+ * 为方法启用访问限制（方法锁）。
  * <p>
- * 触发限流时抛出{@link MethodLimitException}
+ * 当限流被触发时，将会抛出一个 {@link MethodLimitException}。
+ * 此注解需要一个已配置的 {@link MethodLimitHandler} 实例来协同工作。
+ *
  * @author bootystar
  */
 @Target(ElementType.METHOD)
@@ -17,18 +19,20 @@ import java.lang.annotation.*;
 public @interface MethodLimit {
 
     /**
-     * 计算签名的表达式
-     * 默认使用SpEL表达式(#参数名, #参数.属性)
+     * 用于计算锁签名的 SpEL (Spring表达式语言) 表达式。
+     * <p>
+     * 表达式的计算上下文为方法的参数。例如: {@code "#userId"} 或 {@code "#request.getRemoteAddr()"}。
+     * 如果为空，将根据方法签名和所有参数生成一个默认的签名。
      *
-     * @return {@link String }
+     * @return SpEL 表达式
      */
     String value() default "";
 
     /**
-     * 触发限流时抛出的异常提示信息
+     * 当访问限制被触发时，抛出的异常中所包含的消息。
      *
-     * @return {@link String }
+     * @return 异常消息
      */
-    String message() default "processing, please try again later";
+    String message() default "处理中，请稍后重试";
 
 }

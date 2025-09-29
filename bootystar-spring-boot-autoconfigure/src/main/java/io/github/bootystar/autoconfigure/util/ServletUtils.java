@@ -4,21 +4,24 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.SneakyThrows;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UncheckedIOException;
 import java.util.Map;
 
 /**
- * Servlet工具类
+ * Servlet工具类。
  * <p>
- * 该工具类封装了常用的request和response操作，旨在隔离javax和jakarta的包名冲突，
+ * 该工具类封装了常用的 request 和 response 操作，旨在隔离 javax 和 jakarta 的包名冲突，
  * 以便当前项目在不同Servlet API版本间切换时，只需修改此类即可。
+ * <p>
+ * <b>注意：此类中的所有方法都必须在 Spring Web 的请求上下文中调用，否则会抛出 {@link IllegalStateException}。</b>
  * <p>
  * 提供了对Servlet API的便捷访问和封装，包括:
  * <ul>
@@ -29,29 +32,37 @@ import java.util.Map;
  *
  * @author bootystar
  */
-public class ServletUtils {
+public final class ServletUtils {
+
+    private ServletUtils() {
+        // 私有构造函数，防止实例化
+    }
 
     /**
-     * 获取当前请求的属性对象
+     * 获取当前请求的属性对象。
      *
      * @return ServletRequestAttributes对象
+     * @throws IllegalStateException 如果当前不在一个web请求上下文中
      */
     public static ServletRequestAttributes getServletRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            throw new IllegalStateException("无法获取请求属性。此方法必须在Spring Web请求上下文中调用。");
+        }
         return (ServletRequestAttributes) attributes;
     }
 
     /**
-     * 获取当前请求的ServletContext对象
+     * 获取当前请求的ServletContext对象。
      *
      * @return ServletContext对象
      */
     public static ServletContext getServletContext() {
-        return getServletRequestAttributes().getRequest().getServletContext();
+        return getRequest().getServletContext();
     }
 
     /**
-     * 获取Web应用程序的上下文路径
+     * 获取Web应用程序的上下文路径。
      *
      * @return 上下文路径
      */
@@ -60,25 +71,35 @@ public class ServletUtils {
     }
 
     /**
-     * 获取当前请求的HttpServletRequest对象
+     * 获取当前请求的HttpServletRequest对象。
      *
      * @return HttpServletRequest对象
+     * @throws IllegalStateException 如果当前请求对象不可用
      */
     public static HttpServletRequest getRequest() {
-        return getServletRequestAttributes().getRequest();
+        HttpServletRequest request = getServletRequestAttributes().getRequest();
+        if (request == null) {
+            throw new IllegalStateException("无法获取HttpServletRequest。当前上下文中请求对象不可用。");
+        }
+        return request;
     }
 
     /**
-     * 获取当前请求的HttpServletResponse对象
+     * 获取当前请求的HttpServletResponse对象。
      *
      * @return HttpServletResponse对象
+     * @throws IllegalStateException 如果当前响应对象不可用
      */
     public static HttpServletResponse getResponse() {
-        return getServletRequestAttributes().getResponse();
+        HttpServletResponse response = getServletRequestAttributes().getResponse();
+        if (response == null) {
+            throw new IllegalStateException("无法获取HttpServletResponse。当前上下文中响应对象不可用。");
+        }
+        return response;
     }
 
     /**
-     * 获取当前请求的HttpSession对象
+     * 获取当前请求的HttpSession对象。
      *
      * @return HttpSession对象
      */
@@ -87,71 +108,45 @@ public class ServletUtils {
     }
 
     /**
-     * 返回此请求的URL的URI路径部分，该部分在authority(如果有)之后开始，在查询字符串分隔符(？)(如果有)之前结束。
-     * web容器不会解码此字符串。
+     * 获取请求的URI路径部分。
+     * <p>
+     * 返回此请求的URL中从协议名称之后到查询字符串之前的部分。
      *
-     * <table>
-     * <caption>返回值示例</caption>
-     * <tr>
-     * <th>HTTP请求的第一行</th>
-     * <th>返回值</th>
-     * </tr>
-     * <tr>
-     * <td>POST /some/path.html HTTP/1.1</td>
-     * <td>/some/path.html</td>
-     * </tr>
-     * <tr>
-     * <td>GET http://foo.bar/a.html HTTP/1.0</td>
-     * <td>/a.html</td>
-     * </tr>
-     * <tr>
-     * <td>HEAD /xyz?a=b HTTP/1.1</td>
-     * <td>/xyz</td>
-     * </tr>
-     * </table>
-     *
-     * <p>要使用scheme和host重建URL，请使用{@link #getRequestUrl}。</p>
-     *
-     * @return 一个包含从authority之后到查询字符串之前的URL路径部分的字符串
-     * @see #getRequestUrl
+     * @return 请求的URI字符串
      */
     public static String getRequestURI() {
         return getRequest().getRequestURI();
     }
 
     /**
-     * 获取客户端用于发起请求的完整URL。返回的URL包含协议、服务器名、端口号和服务器路径，但不包含查询字符串参数。
-     * <p>
-     * 此方法返回一个字符串，可以方便地用于重定向消息和错误报告。
-     * <p>
-     * 注意：如果需要构建包含查询参数的完整URL，可以在返回结果后手动拼接查询字符串。
+     * 获取客户端用于发起请求的完整URL（不含查询参数）。
      *
-     * @return 包含重构URL的字符串对象
+     * @return 包含协议、服务器名、端口号和服务器路径的URL字符串
      */
     public static String getRequestUrl() {
         return getRequest().getRequestURL().toString();
     }
 
     /**
-     * 获取请求的HTTP方法名称
+     * 获取请求的HTTP方法名称 (GET, POST, etc.)。
      *
-     * @return 请求方法 (GET, POST, etc.)
+     * @return HTTP方法名
      */
     public static String getRequestMethod() {
         return getRequest().getMethod();
     }
 
     /**
-     * 获取请求的查询字符串
+     * 获取请求的查询字符串。
      *
-     * @return 查询字符串
+     * @return URL中 '?' 之后的部分，如果不存在则为 null
      */
     public static String getRequestQueryString() {
         return getRequest().getQueryString();
     }
 
     /**
-     * 获取请求的内容类型
+     * 获取请求的内容类型 (Content-Type)。
      *
      * @return 请求的内容类型
      */
@@ -160,7 +155,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取请求体的长度
+     * 获取请求体的长度（以字节为单位）。
      *
      * @return 请求体的长度
      */
@@ -169,7 +164,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取客户端真实IP地址
+     * 获取客户端真实IP地址。
      * <p>
      * 此方法会尝试从常见的HTTP代理头中获取真实的客户端IP地址，如 'x-forwarded-for', 'Proxy-Client-IP', 'WL-Proxy-Client-IP', 'X-Real-IP'等。
      * 如果无法从代理头中获取，则返回直接连接的客户端IP地址。
@@ -191,7 +186,7 @@ public class ServletUtils {
             ip = request.getRemoteAddr();
         }
 
-        // 转换localhost
+        // 转换localhost的IPv6地址为IPv4格式
         if ("0:0:0:0:0:0:0:1".equals(ip)) {
             ip = "127.0.0.1";
         }
@@ -211,7 +206,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取请求的协议 (http, https)
+     * 获取请求的协议 (http, https)。
      *
      * @return 请求的协议
      */
@@ -220,7 +215,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取服务器的主机名
+     * 获取服务器的主机名。
      *
      * @return 服务器的主机名
      */
@@ -229,7 +224,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取服务器的端口号
+     * 获取服务器的端口号。
      *
      * @return 服务器的端口号
      */
@@ -238,7 +233,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取请求头信息
+     * 获取指定的请求头信息。
      *
      * @param key 请求头的键
      * @return 对应键的请求头值
@@ -248,7 +243,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取请求参数值
+     * 获取指定的请求参数值。
      *
      * @param name 参数名称
      * @return 参数值
@@ -258,7 +253,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取所有请求参数
+     * 获取所有请求参数。
      *
      * @return 包含所有请求参数的Map
      */
@@ -270,14 +265,18 @@ public class ServletUtils {
      * 获取请求的输入流。
      *
      * @return 请求的输入流
+     * @throws UncheckedIOException 如果发生I/O错误
      */
-    @SneakyThrows
     public static InputStream getRequestInputStream() {
-        return getRequest().getInputStream();
+        try {
+            return getRequest().getInputStream();
+        } catch (IOException e) {
+            throw new UncheckedIOException("获取请求输入流失败", e);
+        }
     }
 
     /**
-     * 设置响应头
+     * 设置响应头。
      *
      * @param name  响应头的名称
      * @param value 响应头的值
@@ -287,7 +286,7 @@ public class ServletUtils {
     }
 
     /**
-     * 设置响应状态码
+     * 设置响应状态码。
      *
      * @param sc 状态码
      */
@@ -296,7 +295,7 @@ public class ServletUtils {
     }
 
     /**
-     * 设置响应的内容类型
+     * 设置响应的内容类型。
      *
      * @param type 内容类型
      */
@@ -309,10 +308,14 @@ public class ServletUtils {
      * <b>注意：</b>不应手动关闭此流，Servlet容器会负责管理它的生命周期。
      *
      * @return OutputStream
+     * @throws UncheckedIOException 如果发生I/O错误
      */
-    @SneakyThrows
     public static OutputStream getResponseOutputStream() {
-        return getResponse().getOutputStream();
+        try {
+            return getResponse().getOutputStream();
+        } catch (IOException e) {
+            throw new UncheckedIOException("获取响应输出流失败", e);
+        }
     }
 
     /**
@@ -320,10 +323,14 @@ public class ServletUtils {
      * <b>注意：</b>不应手动关闭此Writer，Servlet容器会负责管理它的生命周期。
      *
      * @return PrintWriter对象
+     * @throws UncheckedIOException 如果发生I/O错误
      */
-    @SneakyThrows
     public static PrintWriter getResponseWriter() {
-        return getResponse().getWriter();
+        try {
+            return getResponse().getWriter();
+        } catch (IOException e) {
+            throw new UncheckedIOException("获取响应PrintWriter失败", e);
+        }
     }
 
     /**
@@ -331,7 +338,6 @@ public class ServletUtils {
      *
      * @param jsonString 要写入的JSON字符串
      */
-    @SneakyThrows
     public static void writeResponseJson(String jsonString) {
         setResponseContentType("application/json;charset=UTF-8");
         getResponseWriter().write(jsonString);
@@ -342,7 +348,6 @@ public class ServletUtils {
      *
      * @param textString 要写入的文本字符串
      */
-    @SneakyThrows
     public static void writeResponseText(String textString) {
         setResponseContentType("text/plain;charset=UTF-8");
         getResponseWriter().write(textString);
@@ -353,7 +358,6 @@ public class ServletUtils {
      *
      * @param xmlString 要写入的XML字符串
      */
-    @SneakyThrows
     public static void writeResponseXml(String xmlString) {
         setResponseContentType("application/xml;charset=UTF-8");
         getResponseWriter().write(xmlString);
