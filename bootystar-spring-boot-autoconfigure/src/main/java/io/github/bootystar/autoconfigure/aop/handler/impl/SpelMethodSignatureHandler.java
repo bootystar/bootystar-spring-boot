@@ -1,6 +1,7 @@
 package io.github.bootystar.autoconfigure.aop.handler.impl;
 
 import io.github.bootystar.autoconfigure.aop.handler.MethodSignatureHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
@@ -12,8 +13,9 @@ import java.lang.reflect.Method;
 /**
  * @author bootystar
  */
+@RequiredArgsConstructor
 public class SpelMethodSignatureHandler implements MethodSignatureHandler {
-    private final String prefix = getClass().getSimpleName() + "-";
+    private final String prefix;
     private final ExpressionParser parser = new SpelExpressionParser();
     private final ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
 

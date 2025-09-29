@@ -14,4 +14,8 @@ public class AopProperties {
      * weather to enable AopAutoConfiguration
      */
     private boolean auto = true;
+    /**
+     * method limit prefix
+     */
+    private String methodLimitPrefix = "method_limit:";
 }
