@@ -28,8 +28,8 @@ public class AopAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(MethodLimitAspect.class)
     @ConditionalOnBean(MethodLimitHandler.class)
-    public MethodLimitAspect methodLimitAspect(MethodLimitHandler methodLimitHandler) {
-        MethodLimitAspect methodLimitAspect = new MethodLimitAspect(new SpelMethodSignatureHandler(), methodLimitHandler);
+    public MethodLimitAspect methodLimitAspect(MethodLimitHandler methodLimitHandler, AopProperties aopProperties) {
+        MethodLimitAspect methodLimitAspect = new MethodLimitAspect(new SpelMethodSignatureHandler(aopProperties.getMethodLimitPrefix()), methodLimitHandler);
         log.debug("MethodLimitAspect Configured");
         return methodLimitAspect;
     }
