@@ -6,6 +6,8 @@ import io.github.bootystar.autoconfigure.excel.fastexcel.FastExcelConverterRegis
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -26,12 +28,12 @@ public class ExcelAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(cn.idev.excel.converters.DefaultConverterLoader.class)
     @RequiredArgsConstructor
-    static class FastExcelConfiguration implements InitializingBean {
+    static class FastExcelConfiguration implements ApplicationRunner {
         private final DateTimeFormatProperties dateTimeFormatProperties;
         private final ExcelProperties excelProperties;
 
         @Override
-        public void afterPropertiesSet() throws Exception {
+        public void run(ApplicationArguments args) throws Exception {
             FastExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
             log.debug("FastExcelConverterRegister register Configured");
         }
@@ -40,12 +42,12 @@ public class ExcelAutoConfiguration {
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(com.alibaba.excel.converters.DefaultConverterLoader.class)
     @RequiredArgsConstructor
-    static class EasyExcelConfiguration implements InitializingBean {
+    static class EasyExcelConfiguration implements ApplicationRunner {
         private final DateTimeFormatProperties dateTimeFormatProperties;
         private final ExcelProperties excelProperties;
 
         @Override
-        public void afterPropertiesSet() throws Exception {
+        public void run(ApplicationArguments args) throws Exception {
             EasyExcelConverterRegister.registerConverters(excelProperties, dateTimeFormatProperties);
             log.debug("EasyExcelConverterRegister register Configured");
         }

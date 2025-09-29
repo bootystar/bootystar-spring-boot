@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <revision>3.0.0</revision>
+        <revision>3.0.0-SNAPSHOT</revision>
         
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
