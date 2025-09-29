@@ -31,11 +31,4 @@ public @interface MethodLimit {
      */
     String message() default "processing, please try again later";
 
-    /**
-     * 限流处理器
-     *
-     * @return {@link Class }
-     */
-    Class<? extends MethodLimitHandler> handler() default MethodLimitHandler.class;
-
 }
