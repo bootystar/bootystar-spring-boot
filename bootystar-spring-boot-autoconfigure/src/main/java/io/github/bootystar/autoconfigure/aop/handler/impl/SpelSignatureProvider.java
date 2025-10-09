@@ -1,6 +1,6 @@
 package io.github.bootystar.autoconfigure.aop.handler.impl;
 
-import io.github.bootystar.autoconfigure.aop.handler.MethodSignatureHandler;
+import io.github.bootystar.autoconfigure.aop.handler.SignatureProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
  * @author bootystar
  */
 @RequiredArgsConstructor
-public class SpelMethodSignatureHandler implements MethodSignatureHandler {
+public class SpelSignatureProvider implements SignatureProvider {
 
     /**
      * SpEL表达式解析器。这是一个重量级且线程安全的对象，因此声明为静态常量以供重用。

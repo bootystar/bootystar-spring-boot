@@ -2,10 +2,10 @@ package io.github.bootystar.autoconfigure.aop;
 
 import io.github.bootystar.autoconfigure.aop.aspectj.MethodLimitAspect;
 import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
-import io.github.bootystar.autoconfigure.aop.handler.MethodSignatureHandler;
+import io.github.bootystar.autoconfigure.aop.handler.SignatureProvider;
 import io.github.bootystar.autoconfigure.aop.handler.impl.RedissonMethodLimitHandler;
 import io.github.bootystar.autoconfigure.aop.handler.impl.ReentrantLockMethodLimitHandler;
-import io.github.bootystar.autoconfigure.aop.handler.impl.SpelMethodSignatureHandler;
+import io.github.bootystar.autoconfigure.aop.handler.impl.SpelSignatureProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Advice;
 import org.redisson.api.RedissonClient;
@@ -33,15 +33,15 @@ public class AopAutoConfiguration {
      * <p>
      * 仅当容器中存在 MethodLimitHandler 的 Bean 时，此切面才会生效。
      *
-     * @param methodSignatureHandler 方法签名处理器
+     * @param signatureProvider 方法签名处理器
      * @param methodLimitHandler     方法限流处理器
      * @return 方法限流切面
      */
     @Bean
     @ConditionalOnMissingBean(MethodLimitAspect.class)
-    @ConditionalOnBean({MethodSignatureHandler.class, MethodLimitHandler.class})
-    public MethodLimitAspect methodLimitAspect(MethodSignatureHandler methodSignatureHandler, MethodLimitHandler methodLimitHandler) {
-        MethodLimitAspect methodLimitAspect = new MethodLimitAspect(methodSignatureHandler, methodLimitHandler);
+    @ConditionalOnBean({SignatureProvider.class, MethodLimitHandler.class})
+    public MethodLimitAspect methodLimitAspect(SignatureProvider signatureProvider, MethodLimitHandler methodLimitHandler) {
+        MethodLimitAspect methodLimitAspect = new MethodLimitAspect(signatureProvider, methodLimitHandler);
         log.debug("方法限流切面(MethodLimitAspect)已装配");
         return methodLimitAspect;
     }
@@ -49,15 +49,15 @@ public class AopAutoConfiguration {
     /**
      * 注入方法签名处理器，默认使用SpEL表达式处理器。
      * <p>
-     * 允许用户通过定义自己的 MethodSignatureHandler Bean 来覆盖此默认实现。
+     * 允许用户通过定义自己的 SignatureProvider Bean 来覆盖此默认实现。
      *
      * @param aopProperties AOP配置属性
      * @return SpEL方法签名处理器
      */
     @Bean
-    @ConditionalOnMissingBean(MethodSignatureHandler.class)
-    public MethodSignatureHandler spelMethodSignatureHandler(AopProperties aopProperties) {
-        return new SpelMethodSignatureHandler(aopProperties.getMethodLimitPrefix());
+    @ConditionalOnMissingBean(SignatureProvider.class)
+    public SignatureProvider spelMethodSignatureHandler(AopProperties aopProperties) {
+        return new SpelSignatureProvider(aopProperties.getMethodLimitPrefix());
     }
 
     @Configuration(proxyBeanMethods = false)
