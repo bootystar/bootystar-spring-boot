@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  *
  * @author bootystar
  */
-public interface MethodSignatureHandler {
+public interface SignatureProvider {
 
     /**
      * 根据方法调用信息生成一个唯一的签名字符串。

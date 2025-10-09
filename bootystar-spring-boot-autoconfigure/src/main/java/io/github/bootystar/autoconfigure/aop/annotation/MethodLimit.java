@@ -1,15 +1,10 @@
 package io.github.bootystar.autoconfigure.aop.annotation;
 
-import io.github.bootystar.autoconfigure.aop.exception.MethodLimitException;
-import io.github.bootystar.autoconfigure.aop.handler.MethodLimitHandler;
 
 import java.lang.annotation.*;
 
 /**
- * 为方法启用访问限制（方法锁）。
- * <p>
- * 当限流被触发时，将会抛出一个 {@link MethodLimitException}。
- * 此注解需要一个已配置的 {@link MethodLimitHandler} 实例来协同工作。
+ * 方法限流
  *
  * @author bootystar
  */
@@ -29,10 +24,13 @@ public @interface MethodLimit {
     String value() default "";
 
     /**
-     * 当访问限制被触发时，抛出的异常中所包含的消息。
-     *
-     * @return 异常消息
+     * 限流周期,默认单位秒
      */
-    String message() default "处理中，请稍后重试";
+    int seconds() default 1;
+
+    /**
+     * 周期内的访问次数
+     */
+    int count() default 100;
 
 }

@@ -1,5 +1,7 @@
 package io.github.bootystar.autoconfigure.aop.handler;
 
+import io.github.bootystar.autoconfigure.aop.annotation.MethodLimit;
+
 /**
  * 方法限流处理器接口。
  * <p>
@@ -10,18 +12,12 @@ package io.github.bootystar.autoconfigure.aop.handler;
 public interface MethodLimitHandler {
 
     /**
-     * 尝试获取锁。
+     * 是否限流
      *
-     * @param signature 锁的唯一签名
-     * @return 如果成功获取锁，则返回 {@code true}；否则返回 {@code false}
+     * @param signature 唯一签名
+     * @param methodLimit 方法限流注解
+     * @return 是否限流
      */
-    boolean tryLock(String signature);
-
-    /**
-     * 释放锁。
-     *
-     * @param signature 锁的唯一签名
-     */
-    void unLock(String signature);
+    boolean doLimit(String signature, MethodLimit methodLimit);
 
 }
