@@ -46,6 +46,10 @@ public class XssFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
+        if (!isMatchedURL(request)){
+            chain.doFilter(request, res);
+            return;
+        }
 
         String ct = Optional.ofNullable(request.getContentType()).orElse("");
         boolean bodyRewritable = ct.contains("application/json")
