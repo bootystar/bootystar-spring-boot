@@ -1,5 +1,7 @@
 package io.github.bootystar.autoconfigure.servlet;
 
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 import io.github.bootystar.autoconfigure.ConditionalOnListProperty;
 import io.github.bootystar.autoconfigure.servlet.filter.RefererFilter;
 import io.github.bootystar.autoconfigure.servlet.filter.RepeatableFilter;
@@ -17,6 +19,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.function.Function;
 
 
 /**
@@ -40,48 +44,34 @@ public class ServletAutoConfiguration {
         public FilterRegistrationBean<XssFilter> xssFilterRegistration(ServletFilterProperties filterProperties) {
             FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
             registration.setDispatcherTypes(DispatcherType.REQUEST);
-            XssFilter xssFilter;
+            Function<String, String> sanitizer;
             switch (filterProperties.getXssSanitizer()) {
                 case NONE:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.none())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.none());
                     break;
                 case SIMPLE_TEXT:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.simpleText())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.simpleText());
                     break;
                 case BASIC:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.basic())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.basic());
                     break;
                 case BASIC_WITH_IMAGES:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.basicWithImages())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.basicWithImages());
                     break;
                 case RELAXED:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.relaxed())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.relaxed());
                     break;
                 default:
-                    xssFilter = new XssFilter(filterProperties.getXssIncludes(),
-                            filterProperties.getXssExcludes(),
-                            s -> Jsoup.clean(s, Safelist.relaxed())
-                    );
+                    sanitizer = s -> Jsoup.clean(s, Safelist.relaxed());
                     log.warn("Unsupported value '{}' for property 'bootystar.servlet.filter.xss-sanitizer', " +
                                     "using 'RELAXED' instead. Supported values: [NONE, SIMPLE_TEXT, BASIC, BASIC_WITH_IMAGES, RELAXED]",
                             filterProperties.getXssSanitizer());
-
+                    
             }
+            XssFilter xssFilter = new XssFilter(filterProperties.getXssIncludes(),
+                    filterProperties.getXssExcludes(),
+                    sanitizer
+            );
             registration.setFilter(xssFilter);
             registration.setName("xssFilter");
             // 设置为拦截所有路径，由过滤器内部进行路径匹配
