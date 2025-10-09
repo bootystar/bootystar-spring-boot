@@ -1,7 +1,5 @@
 package io.github.bootystar.autoconfigure.servlet;
 
-import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
-import com.baomidou.mybatisplus.core.conditions.interfaces.Func;
 import io.github.bootystar.autoconfigure.ConditionalOnListProperty;
 import io.github.bootystar.autoconfigure.servlet.filter.RefererFilter;
 import io.github.bootystar.autoconfigure.servlet.filter.RepeatableFilter;
