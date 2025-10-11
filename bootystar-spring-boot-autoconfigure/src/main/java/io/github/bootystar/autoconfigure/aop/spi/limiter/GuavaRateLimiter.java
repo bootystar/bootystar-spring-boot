@@ -11,12 +11,12 @@ import java.util.concurrent.ConcurrentMap;
  * <p><b>注意:</b> 使用此实现需要添加 Guava 依赖 (com.google.guava:guava)。
  * @author bootystar
  */
+@SuppressWarnings("UnstableApiUsage")
 public class GuavaRateLimiter implements RateLimiter {
 
     private final ConcurrentMap<String, com.google.common.util.concurrent.RateLimiter> limiters = new ConcurrentHashMap<>();
 
     @Override
-    @SuppressWarnings("UnstableApiUsage")
     public boolean doLimit(String signature, RateLimit rateLimit) {
         double permitsPerSecond = (double) rateLimit.count() / rateLimit.seconds();
 
