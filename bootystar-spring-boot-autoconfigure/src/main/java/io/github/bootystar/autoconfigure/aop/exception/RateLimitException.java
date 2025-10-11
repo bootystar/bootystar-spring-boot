@@ -1,13 +1,11 @@
 package io.github.bootystar.autoconfigure.aop.exception;
 
-import java.io.Serializable;
-
 /**
  * 方法限流触发时抛出的自定义运行时异常。
  *
  * @author bootystar
  */
-public class MethodLimitException extends RuntimeException  {
+public class RateLimitException extends RuntimeException  {
 
     /**
      * 使用格式化字符串构造一个新的限流异常。
@@ -15,7 +13,7 @@ public class MethodLimitException extends RuntimeException  {
      * @param message 格式化字符串 (e.g., "操作过于频繁, 请稍后重试: %s")
      * @param args    格式化参数
      */
-    public MethodLimitException(String message, Object... args) {
+    public RateLimitException(String message, Object... args) {
         super(String.format(message, args));
     }
 
@@ -24,7 +22,7 @@ public class MethodLimitException extends RuntimeException  {
      *
      * @param message 异常消息
      */
-    public MethodLimitException(String message) {
+    public RateLimitException(String message) {
         super(message);
     }
 
@@ -34,7 +32,7 @@ public class MethodLimitException extends RuntimeException  {
      * @param message 异常消息
      * @param cause   根本原因 (用于异常链)
      */
-    public MethodLimitException(String message, Throwable cause) {
+    public RateLimitException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -43,7 +41,7 @@ public class MethodLimitException extends RuntimeException  {
      *
      * @param cause 根本原因 (用于异常链)
      */
-    public MethodLimitException(Throwable cause) {
+    public RateLimitException(Throwable cause) {
         super(cause);
     }
 }
