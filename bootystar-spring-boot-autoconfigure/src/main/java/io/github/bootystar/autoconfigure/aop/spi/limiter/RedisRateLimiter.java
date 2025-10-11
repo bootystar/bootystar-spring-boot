@@ -1,7 +1,7 @@
-package io.github.bootystar.autoconfigure.aop.handler.impl;
+package io.github.bootystar.autoconfigure.aop.spi.limiter;
 
 import io.github.bootystar.autoconfigure.aop.annotation.RateLimit;
-import io.github.bootystar.autoconfigure.aop.handler.RateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * RedisRateLimiter
+ * 需要引入redis依赖
  * 实现参考自RuoYi
  *
  * @author bootystar

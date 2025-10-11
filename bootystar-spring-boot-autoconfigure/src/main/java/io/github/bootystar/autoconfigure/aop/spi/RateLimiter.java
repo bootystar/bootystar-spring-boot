@@ -1,4 +1,4 @@
-package io.github.bootystar.autoconfigure.aop.handler;
+package io.github.bootystar.autoconfigure.aop.spi;
 
 import io.github.bootystar.autoconfigure.aop.annotation.RateLimit;
 
