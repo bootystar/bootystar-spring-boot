@@ -53,7 +53,6 @@ public class AopAutoConfiguration {
     }
 
     @Bean
-    @Primary
     @ConditionalOnMissingBean(RateLimiter.class)
     public RateLimiter redisRateLimiter() {
         log.debug("ConcurrentHashMapRateLimiter Configured");
