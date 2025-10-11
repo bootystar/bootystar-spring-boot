@@ -1,7 +1,7 @@
 package io.github.bootystar.autoconfigure.aop.annotation;
 
-import io.github.bootystar.autoconfigure.aop.handler.RateLimiter;
-import io.github.bootystar.autoconfigure.aop.handler.SignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.RateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.SignatureProvider;
 
 import java.lang.annotation.*;
 

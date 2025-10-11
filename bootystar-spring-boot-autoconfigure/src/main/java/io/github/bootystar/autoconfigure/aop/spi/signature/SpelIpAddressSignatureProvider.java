@@ -1,4 +1,4 @@
-package io.github.bootystar.autoconfigure.aop.handler.impl;
+package io.github.bootystar.autoconfigure.aop.spi.signature;
 
 import io.github.bootystar.autoconfigure.util.ServletUtils;
 

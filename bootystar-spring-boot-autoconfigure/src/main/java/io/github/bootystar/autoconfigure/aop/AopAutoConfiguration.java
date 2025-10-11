@@ -1,10 +1,14 @@
 package io.github.bootystar.autoconfigure.aop;
 
 import io.github.bootystar.autoconfigure.aop.aspectj.RateLimitAspect;
-import io.github.bootystar.autoconfigure.aop.handler.RateLimiter;
-import io.github.bootystar.autoconfigure.aop.handler.SignatureProvider;
-import io.github.bootystar.autoconfigure.aop.handler.impl.RedisRateLimiter;
-import io.github.bootystar.autoconfigure.aop.handler.impl.SpelSignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.RateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.SignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.limiter.ConcurrentHashMapRateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.limiter.GuavaRateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.limiter.RedisRateLimiter;
+import io.github.bootystar.autoconfigure.aop.spi.signature.SpelAllArgsSignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.signature.SpelIpAddressSignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.signature.SpelSignatureProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Advice;
 import org.springframework.beans.factory.BeanFactory;
@@ -16,6 +20,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -42,21 +47,17 @@ public class AopAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(SignatureProvider.class)
-    public SignatureProvider spelMethodSignatureHandler(AopProperties aopProperties) {
+    public SignatureProvider spelSignatureProvider(AopProperties aopProperties) {
         log.debug("SpelSignatureProvider Configured");
         return new SpelSignatureProvider(aopProperties.getMethodLimitPrefix());
     }
 
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass(RedisTemplate.class)
-    @ConditionalOnBean(RedisTemplate.class)
-    static class RedisAopAutoConfiguration {
-        @Bean
-        @ConditionalOnMissingBean(RateLimiter.class)
-        public RateLimiter redisRateLimiter(RedisTemplate<Object, Object> redisTemplate) {
-            log.debug("RedisRateLimiter Configured");
-            return new RedisRateLimiter(redisTemplate);
-        }
+    @Bean
+    @Primary
+    @ConditionalOnMissingBean(RateLimiter.class)
+    public RateLimiter redisRateLimiter() {
+        log.debug("ConcurrentHashMapRateLimiter Configured");
+        return new ConcurrentHashMapRateLimiter();
     }
 
 }

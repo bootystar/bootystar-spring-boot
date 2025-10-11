@@ -1,6 +1,6 @@
-package io.github.bootystar.autoconfigure.aop.handler.impl;
+package io.github.bootystar.autoconfigure.aop.spi.signature;
 
-import io.github.bootystar.autoconfigure.aop.handler.SignatureProvider;
+import io.github.bootystar.autoconfigure.aop.spi.SignatureProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
