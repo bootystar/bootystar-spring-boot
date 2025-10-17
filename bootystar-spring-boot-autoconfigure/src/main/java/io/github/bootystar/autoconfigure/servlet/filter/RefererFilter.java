@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * 防盗链过滤器
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class RefererFilter implements Filter {
-    private final List<String> allowDomains;
+    private final Collection<String> allowDomains;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

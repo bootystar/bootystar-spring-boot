@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * servlet属性
@@ -17,11 +18,11 @@ public class ServletFilterProperties {
     /**
      * Comma-separated list of URL patterns to include for XSS filtering (Ant-style matching)
      */
-    private List<String> xssIncludes;
+    private Set<String> xssIncludes;
     /**
      * Comma-separated list of URL patterns to exclude from XSS filtering (Ant-style matching)
      */
-    private List<String> xssExcludes;
+    private Set<String> xssExcludes;
     /**
      * XSS protection level
      */
@@ -30,7 +31,7 @@ public class ServletFilterProperties {
     /**
      * Comma-separated list of allowed domains for referer validation
      */
-    private List<String> refererAllowDomains;
+    private Set<String> refererAllowDomains;
     /**
      * Whether to enable repeatable read filter
      */

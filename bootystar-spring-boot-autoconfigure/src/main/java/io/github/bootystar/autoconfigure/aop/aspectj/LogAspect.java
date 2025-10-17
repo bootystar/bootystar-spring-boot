@@ -1,9 +1,15 @@
 package io.github.bootystar.autoconfigure.aop.aspectj;
 
-import io.github.bootystar.autoconfigure.aop.annotation.Log;
+import io.github.bootystar.autoconfigure.aop.spi.LogWriter;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.util.StopWatch;
+
+import java.util.Collection;
 
 
 /**
@@ -11,13 +17,35 @@ import org.aspectj.lang.annotation.Aspect;
  * @author bootystar
  */
 @Aspect
+@RequiredArgsConstructor
 public class LogAspect {
+    private final Collection<String> logExcludeProperties;
+    private final LogWriter logWriter;
 
-    @Around("@annotation(log)")
-    public Object around(ProceedingJoinPoint joinPoint, Log log) throws Throwable {
+    @Pointcut("@annotation(io.github.bootystar.autoconfigure.aop.annotation.Log)")
+    public void logPointcut() {
+    }
 
-        Object proceed = joinPoint.proceed();
-        return proceed;
+    @Around("logPointcut()")
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
+        StopWatch stopWatch = new StopWatch();
+        MethodSignature signature = (MethodSignature) pjp.getSignature();
+        Object[] args = pjp.getArgs();
+        Object target = pjp.getTarget();
+        logWriter.before(target, signature, args);
+        stopWatch.start();
+        try {
+            Object result = pjp.proceed(args);
+            stopWatch.stop();
+            logWriter.after(target, signature, args, result, stopWatch.getTotalTimeMillis());
+            return result;
+        } catch (Throwable e) {
+            if (stopWatch.isRunning()) {
+                stopWatch.stop();
+            }
+            logWriter.error(target, signature, args, e, stopWatch.getTotalTimeMillis());
+            throw e;
+        }
     }
 
 }
