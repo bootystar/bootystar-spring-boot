@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -31,12 +32,12 @@ public class XssFilter implements Filter {
      * 包含链接
      */
     @Getter
-    protected final List<String> includes;
+    protected final Collection<String> includes;
     /**
      * 排除链接
      */
     @Getter
-    protected final List<String> excludes;
+    protected final Collection<String> excludes;
     /**
      * xss过滤方法
      */
