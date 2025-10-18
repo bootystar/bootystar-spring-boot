@@ -1,4 +1,4 @@
-package io.github.bootystar.autoconfigure.aop.spi.writer;
+package io.github.bootystar.autoconfigure.log;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
