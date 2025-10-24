@@ -1,4 +1,4 @@
-# bootystar-spring-boot-starter
+# luxmixus-spring-boot
 
 
 一个Spring Boot starter，为常见的开发场景提供开箱即用的配置，包括类型转换、JSON序列化/反序列化、方法限流、Excel处理等。
@@ -18,9 +18,9 @@
 
 ```xml
 <dependency>
-    <groupId>io.github.bootystar</groupId>
-    <artifactId>bootystar-spring-boot-starter</artifactId>
-    <version>1.1.0</version>
+    <groupId>io.github.luxmixus</groupId>
+    <artifactId>luxmixus-spring-boot-starter</artifactId>
+    <version>latest</version>
 </dependency>
 ```
 
@@ -29,7 +29,7 @@
 添加依赖后，所有功能将自动配置并启用。您可以通过在`application.yml`中配置属性来定制行为：
 
 ```yaml
-bootystar:
+luxmixus:
   # 日期时间格式配置
   date-format: yyyy-MM-dd
   date-time-format: yyyy-MM-dd HH:mm:ss
@@ -75,7 +75,7 @@ bootystar:
 
 ### 1. 方法限流
 
-通过 [@MethodLimit](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
+通过 [@MethodLimit](luxmixus-spring-boot-autoconfigure/src/main/java/io/github/luxmixus/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
 
 ```java
 @MethodLimit // 根据判断所有参数toString()后的值是否相同限流
@@ -96,7 +96,7 @@ public Boolean update(UpdateDTO dto, Long userId) {
 
 ### 2. JSON字段加密/脱敏
 
-使用 [@JsonMask](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
+使用 [@JsonMask](luxmixus-spring-boot-autoconfigure/src/main/java/io/github/luxmixus/autoconfigure/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
 
 ```java
 @JsonMask(serialize = DateOut.class) // 序列化时使用DateOut类处理
@@ -137,10 +137,3 @@ private LocalDate date3;
 - LocalTime ↔ String
 - Date ↔ String
 
-## 配置属性
-
-完整的配置属性请参考 [BootystarProperties.java](bootystar-spring-boot-autoconfigure/src/main/java/io/github/bootystar/starter/prop/BootystarProperties.java) 及其相关子属性类。
-
-## 许可证
-
-本项目采用 [Apache License 2.0](LICENSE) 许可证。
