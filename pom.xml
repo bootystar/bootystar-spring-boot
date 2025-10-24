@@ -3,16 +3,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>io.github.luxmixus</groupId>
-        <artifactId>framework</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
+    <groupId>io.github.luxmixus</groupId>
+    <artifactId>luxmixus-spring-boot-parent</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <artifactId>luxmixus-spring-boot-parent</artifactId>
-    <version>${revision}</version>
+    <description>A Spring Boot Toolkit designed to simplify development by providing out-of-the-box configurations for common scenarios.</description>
+    <url>https://github.com/luxmixus</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>luxmixus</name>
+            <email>604647004@qq.com</email>
+            <organization>luxmixus</organization>
+            <organizationUrl>https://github.com/luxmixus</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/luxmixus/luxmixus-spring-boot.git</connection>
+        <developerConnection>scm:git:ssh://github.com:luxmixus/luxmixus-spring-boot.git</developerConnection>
+        <url>https://github.com/luxmixus/luxmixus-spring-boot/tree/master</url>
+    </scm>
 
     <modules>
         <module>luxmixus-spring-boot-autoconfigure</module>
@@ -21,14 +41,14 @@
 
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-        
+
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+
         <spring.boot.version>3.5.6</spring.boot.version>
         <mybatis.plus.version>3.5.14</mybatis.plus.version>
         <redisson.version>3.51.0</redisson.version>
@@ -115,6 +135,75 @@
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.10.0</version>
+                <configuration>
+                    <additionalJOptions>
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.7</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.9.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>validated</waitUntil>
                 </configuration>
             </plugin>
         </plugins>
