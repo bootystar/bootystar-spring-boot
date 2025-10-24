@@ -1,6 +1,0 @@
-io.github.bootystar.autoconfigure.aop.AopAutoConfiguration
-io.github.bootystar.autoconfigure.converter.ConverterAutoConfiguration
-io.github.bootystar.autoconfigure.excel.ExcelAutoConfiguration
-io.github.bootystar.autoconfigure.jackson.JacksonAutoConfiguration
-io.github.bootystar.autoconfigure.mybatisplus.MybatisPlusAutoConfiguration
-io.github.bootystar.autoconfigure.servlet.ServletAutoConfiguration
