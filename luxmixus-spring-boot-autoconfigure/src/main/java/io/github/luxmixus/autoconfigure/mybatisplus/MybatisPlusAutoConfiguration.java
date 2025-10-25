@@ -3,18 +3,18 @@ package io.github.luxmixus.autoconfigure.mybatisplus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
-import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * mybatis plus配置
@@ -24,85 +24,65 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @AutoConfiguration
-@ConditionalOnClass({BaseMapper.class})
+@ConditionalOnClass({BaseMapper.class, MybatisPlusInterceptor.class})
 @ConditionalOnProperty(value = "luxmixus.mybatis-plus.auto", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({MybatisPlusProperties.class})
 public class MybatisPlusAutoConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean
+    public MybatisPlusInterceptor mybatisPlusInterceptor(ObjectProvider<List<InnerInterceptor>> innerInterceptorsProvider) {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        List<InnerInterceptor> interceptors = innerInterceptorsProvider.getIfAvailable();
+        if (interceptors != null) {
+            interceptors.forEach(interceptor::addInnerInterceptor);
+        }
+        log.debug("MybatisPlusInterceptor Configured with {} InnerInterceptors.", interceptors != null ? interceptors.size() : 0);
+        return interceptor;
+    }
+
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass(MybatisPlusInterceptor.class)
-    static class mybatisPlusInterceptorConfiguration {
+    @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor")
+    @ConditionalOnProperty(value = "luxmixus.mybatis-plus.pagination", havingValue = "true", matchIfMissing = true)
+    static class PaginationInnerInterceptorConfiguration {
         @Bean
-        @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-        public MybatisPlusInterceptor mybatisPlusInterceptor() {
-            MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-            log.debug("MybatisPlusInterceptor Configured");
+        @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor")
+        @SneakyThrows
+        public InnerInterceptor paginationInnerInterceptor() {
+            Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor");
+            InnerInterceptor interceptor = (InnerInterceptor) clazz.getConstructor().newInstance();
+            log.debug("PaginationInnerInterceptor created");
             return interceptor;
         }
     }
 
-    @RequiredArgsConstructor
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor")
-    @ConditionalOnProperty(value = "luxmixus.mybatis-plus.pagination", havingValue = "true", matchIfMissing = true)
-    @ConditionalOnBean(MybatisPlusInterceptor.class)
-    static class PaginationInnerInterceptorConfiguration implements ApplicationRunner {
-        private final MybatisPlusInterceptor interceptor;
-
-        @Override
-        public void run(ApplicationArguments args) throws Exception {
-            try {
-                Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor");
-                Object instance = clazz.getConstructor().newInstance();
-                interceptor.addInnerInterceptor((InnerInterceptor) instance);
-                log.debug("PaginationInnerInterceptor Configured");
-            } catch (Exception e) {
-                log.debug("PaginationInnerInterceptor not found, skipped");
-            }
-        }
-    }
-
-    @RequiredArgsConstructor
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor")
     @ConditionalOnProperty(value = "luxmixus.mybatis-plus.optimistic-locker", havingValue = "true", matchIfMissing = true)
-    @ConditionalOnBean(MybatisPlusInterceptor.class)
-    static class OptimisticLockerInnerInterceptorConfiguration implements ApplicationRunner {
-        private final MybatisPlusInterceptor interceptor;
-
-        @Override
-        public void run(ApplicationArguments args) throws Exception {
-            try {
-                Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor");
-                Object instance = clazz.getConstructor().newInstance();
-                interceptor.addInnerInterceptor((InnerInterceptor) instance);
-                log.debug("OptimisticLockerInnerInterceptor Configured");
-            } catch (Exception e) {
-                log.debug("OptimisticLockerInnerInterceptor not found, skipped");
-            }
+    static class OptimisticLockerInnerInterceptorConfiguration {
+        @Bean
+        @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor")
+        @SneakyThrows
+        public InnerInterceptor optimisticLockerInnerInterceptor() {
+            Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor");
+            InnerInterceptor interceptor = (InnerInterceptor) clazz.getConstructor().newInstance();
+            log.debug("OptimisticLockerInnerInterceptor created");
+            return interceptor;
         }
     }
 
-    @RequiredArgsConstructor
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor")
     @ConditionalOnProperty(value = "luxmixus.mybatis-plus.block-attack", havingValue = "true", matchIfMissing = true)
-    @ConditionalOnBean(MybatisPlusInterceptor.class)
-    static class BlockAttackInnerInterceptorConfiguration implements ApplicationRunner {
-        private final MybatisPlusInterceptor interceptor;
-
-        @Override
-        public void run(ApplicationArguments args) throws Exception {
-            try {
-                Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor");
-                Object instance = clazz.getConstructor().newInstance();
-                interceptor.addInnerInterceptor((InnerInterceptor) instance);
-                log.debug("BlockAttackInnerInterceptor Configured");
-            } catch (Exception e) {
-                log.debug("BlockAttackInnerInterceptor not found, skipped");
-            }
+    static class BlockAttackInnerInterceptorConfiguration {
+        @Bean
+        @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor")
+        @SneakyThrows
+        public InnerInterceptor blockAttackInnerInterceptor() {
+            Class<?> clazz = Class.forName("com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor");
+            InnerInterceptor interceptor = (InnerInterceptor) clazz.getConstructor().newInstance();
+            log.debug("BlockAttackInnerInterceptor created");
+            return interceptor;
         }
     }
-
-
 }
