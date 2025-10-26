@@ -1,0 +1,5 @@
+io.github.luminsyn.autoconfigure.aop.AopAutoConfiguration
+io.github.luminsyn.autoconfigure.converter.ConverterAutoConfiguration
+io.github.luminsyn.autoconfigure.jackson.JacksonAutoConfiguration
+io.github.luminsyn.autoconfigure.mybatisplus.MybatisPlusAutoConfiguration
+io.github.luminsyn.autoconfigure.servlet.ServletAutoConfiguration

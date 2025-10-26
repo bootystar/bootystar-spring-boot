@@ -1,0 +1,10 @@
+# only work in springboot 2.x
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  io.github.luminsyn.autoconfigure.luminsynAutoConfiguration,\
+#  aop.io.github.luminsyn.autoconfigure.AopAutoConfiguration,\
+#  converter.io.github.luminsyn.autoconfigure.ConverterAutoConfiguration,\
+#  excel.io.github.luminsyn.autoconfigure.ExcelAutoConfiguration,\
+#  jackson.io.github.luminsyn.autoconfigure.JacksonAutoConfiguration,\
+#  mybatisplus.io.github.luminsyn.autoconfigure.MybatisPlusAutoConfiguration,\
+#  redis.io.github.luminsyn.autoconfigure.RedisAutoConfiguration,\
+#  servlet.io.github.luminsyn.autoconfigure.ServletAutoConfiguration

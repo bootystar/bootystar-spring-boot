@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.luxmixus</groupId>
-    <artifactId>luxmixus-spring-boot-parent</artifactId>
+    <groupId>io.github.luminsyn</groupId>
+    <artifactId>spring-boot-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A Spring Boot Toolkit designed to simplify development by providing out-of-the-box configurations for common scenarios.</description>
-    <url>https://github.com/luxmixus</url>
+    <url>https://github.com/luminsyn</url>
 
     <licenses>
         <license>
@@ -21,22 +21,22 @@
 
     <developers>
         <developer>
-            <name>luxmixus</name>
+            <name>luminsyn</name>
             <email>604647004@qq.com</email>
-            <organization>luxmixus</organization>
-            <organizationUrl>https://github.com/luxmixus</organizationUrl>
+            <organization>luminsyn</organization>
+            <organizationUrl>https://github.com/luminsyn</organizationUrl>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/luxmixus/luxmixus-spring-boot.git</connection>
-        <developerConnection>scm:git:ssh://github.com:luxmixus/luxmixus-spring-boot.git</developerConnection>
-        <url>https://github.com/luxmixus/luxmixus-spring-boot/tree/master</url>
+        <connection>scm:git:git://github.com/luminsyn/spring-boot.git</connection>
+        <developerConnection>scm:git:ssh://github.com:luminsyn/spring-boot.git</developerConnection>
+        <url>https://github.com/luminsyn/spring-boot/tree/master</url>
     </scm>
 
     <modules>
-        <module>luxmixus-spring-boot-autoconfigure</module>
-        <module>luxmixus-spring-boot-starter</module>
+        <module>spring-boot-autoconfigure</module>
+        <module>spring-boot-starter</module>
     </modules>
 
     <properties>

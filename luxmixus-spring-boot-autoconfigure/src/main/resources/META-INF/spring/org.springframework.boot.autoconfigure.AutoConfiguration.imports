@@ -1,5 +1,0 @@
-io.github.luxmixus.autoconfigure.aop.AopAutoConfiguration
-io.github.luxmixus.autoconfigure.converter.ConverterAutoConfiguration
-io.github.luxmixus.autoconfigure.jackson.JacksonAutoConfiguration
-io.github.luxmixus.autoconfigure.mybatisplus.MybatisPlusAutoConfiguration
-io.github.luxmixus.autoconfigure.servlet.ServletAutoConfiguration
