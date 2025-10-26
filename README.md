@@ -1,7 +1,7 @@
-# luminsyn-spring-boot
+# spring-boot
 
 
-一个Spring Boot starter，为常见的开发场景提供开箱即用的配置，包括类型转换、JSON序列化/反序列化、方法限流、Excel处理等。
+一个Spring Boot 工具箱，为常见的开发场景提供开箱即用的配置，包括类型转换、JSON序列化/反序列化、方法限流、Excel处理等。
 
 ## 功能特性
 
@@ -18,8 +18,8 @@
 
 ```xml
 <dependency>
-    <groupId>io.github.luminsyn</groupId>
-    <artifactId>luminsyn-spring-boot-starter</artifactId>
+    <groupId>io.github.luminion</groupId>
+    <artifactId>luminion-spring-boot-starter</artifactId>
     <version>latest</version>
 </dependency>
 ```
@@ -29,7 +29,7 @@
 添加依赖后，所有功能将自动配置并启用。您可以通过在`application.yml`中配置属性来定制行为：
 
 ```yaml
-luminsyn:
+luminion:
   # 日期时间格式配置
   date-format: yyyy-MM-dd
   date-time-format: yyyy-MM-dd HH:mm:ss
@@ -75,7 +75,7 @@ luminsyn:
 
 ### 1. 方法限流
 
-通过 [@MethodLimit](luminsyn-spring-boot-autoconfigure/src/main/java/io/github/luminsyn/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
+通过 [@MethodLimit](luminion-spring-boot-autoconfigure/src/main/java/io/github/luminion/starter/spring/annotation/MethodLimit.java) 注解实现方法级别的限流控制。
 
 ```java
 @MethodLimit // 根据判断所有参数toString()后的值是否相同限流
@@ -96,7 +96,7 @@ public Boolean update(UpdateDTO dto, Long userId) {
 
 ### 2. JSON字段加密/脱敏
 
-使用 [@JsonMask](luminsyn-spring-boot-autoconfigure/src/main/java/io/github/luminsyn/autoconfigure/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
+使用 [@JsonMask](luminion-spring-boot-autoconfigure/src/main/java/io/github/luminion/autoconfigure/jackson/annotation/JsonMask.java) 注解实现JSON字段的序列化和反序列化处理。
 
 ```java
 @JsonMask(serialize = DateOut.class) // 序列化时使用DateOut类处理

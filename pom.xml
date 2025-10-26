@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.luminsyn</groupId>
+    <groupId>io.github.luminion</groupId>
     <artifactId>spring-boot-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A Spring Boot Toolkit designed to simplify development by providing out-of-the-box configurations for common scenarios.</description>
-    <url>https://github.com/luminsyn</url>
+    <url>https://github.com/luminion</url>
 
     <licenses>
         <license>
@@ -21,17 +21,17 @@
 
     <developers>
         <developer>
-            <name>luminsyn</name>
+            <name>luminion</name>
             <email>604647004@qq.com</email>
-            <organization>luminsyn</organization>
-            <organizationUrl>https://github.com/luminsyn</organizationUrl>
+            <organization>luminion</organization>
+            <organizationUrl>https://github.com/luminion</organizationUrl>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/luminsyn/spring-boot.git</connection>
-        <developerConnection>scm:git:ssh://github.com:luminsyn/spring-boot.git</developerConnection>
-        <url>https://github.com/luminsyn/spring-boot/tree/master</url>
+        <connection>scm:git:git://github.com/luminion/spring-boot.git</connection>
+        <developerConnection>scm:git:ssh://github.com:luminion/spring-boot.git</developerConnection>
+        <url>https://github.com/luminion/spring-boot/tree/master</url>
     </scm>
 
     <modules>
