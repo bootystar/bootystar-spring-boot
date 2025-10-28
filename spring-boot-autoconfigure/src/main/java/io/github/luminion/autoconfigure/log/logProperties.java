@@ -9,4 +9,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties("luminion.log")
 public class logProperties {
+    private final Email email = new Email();
+    @Data
+    public static class Email {
+        private String[] to;
+    }
+    
 }

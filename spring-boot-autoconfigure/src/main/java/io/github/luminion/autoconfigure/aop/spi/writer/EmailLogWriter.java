@@ -115,36 +115,5 @@ public class EmailLogWriter extends RequestLogWriter {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost("smtp.163.com");
-        javaMailSender.setUsername("luminion@163.com");
-        javaMailSender.setPassword(System.getProperty("163_MAIL_PWD")); 
-
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        helper.setFrom("luminion@163.com");
-        helper.setTo("luminion@qq.com"); // 收件人
-
-        // --- 用于邮件正文的示例数据 ---
-        String appName = "order-service";
-        String port = "8081";
-        String requestInfo = "192.168.1.100 POST /api/orders";
-        String methodName = "placeOrder";
-        String methodArgs = "customer=123, items=[7, 8]";
-        long duration = 250;
-        String stackTrace = "java.lang.IllegalStateException: Insufficient stock for item 7\n" +
-                            "\tat com.example.service.OrderService.createOrder(OrderService.java:115)\n" +
-                            "\tat com.example.controller.OrderController.placeOrder(OrderController.java:52)\n" +
-                            "\t... (full stack trace)";
-
-        helper.setSubject(String.format("⚠️ Exception in %s: %s", appName, methodName));
-
-        String body = new EmailLogWriter(null, null, null, null)
-                .buildHtmlEmailBody(appName, port, requestInfo, methodName, methodArgs, duration, stackTrace);
-
-        helper.setText(body, true);
-        javaMailSender.send(mimeMessage);
-        System.out.println("Test email sent successfully!");
-    }
+ 
 }
