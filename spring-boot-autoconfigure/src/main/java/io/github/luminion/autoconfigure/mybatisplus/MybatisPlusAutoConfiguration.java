@@ -25,20 +25,17 @@ import java.util.List;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass({BaseMapper.class, MybatisPlusInterceptor.class})
-@ConditionalOnProperty(value = "luminion.mybatis-plus.auto", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "luminion.mybatis-plus.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({MybatisPlusProperties.class})
 public class MybatisPlusAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public MybatisPlusInterceptor mybatisPlusInterceptor(ObjectProvider<List<InnerInterceptor>> innerInterceptorsProvider) {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        List<InnerInterceptor> interceptors = innerInterceptorsProvider.getIfAvailable();
-        if (interceptors != null) {
-            interceptors.forEach(interceptor::addInnerInterceptor);
-        }
+    public MybatisPlusInterceptor mybatisPlusInterceptor(List<InnerInterceptor> interceptors) {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        mybatisPlusInterceptor.setInterceptors(interceptors);
         log.debug("MybatisPlusInterceptor Configured with {} InnerInterceptors.", interceptors != null ? interceptors.size() : 0);
-        return interceptor;
+        return mybatisPlusInterceptor;
     }
 
     @Configuration(proxyBeanMethods = false)

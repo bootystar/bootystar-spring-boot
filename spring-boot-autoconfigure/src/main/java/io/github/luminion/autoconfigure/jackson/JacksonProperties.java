@@ -11,6 +11,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("luminion.jackson")
 public class JacksonProperties {
     /**
+     * Whether to enable Jackson autoconfiguration
+     */
+    private boolean enabled = true;
+    /**
      * Whether to enable Long to string serialization
      */
     private boolean longToString = true;

@@ -30,7 +30,7 @@ import java.util.function.Function;
 @AutoConfiguration
 @EnableConfigurationProperties({ServletFilterProperties.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnProperty(value = "luminion.servlet.auto", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "luminion.servlet.enabled", havingValue = "true", matchIfMissing = true)
 public class ServletAutoConfiguration {
     
     @ConditionalOnClass(Jsoup.class)

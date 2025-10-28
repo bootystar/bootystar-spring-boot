@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
  */
 @Slf4j
 @AutoConfiguration
-@ConditionalOnProperty(value = "luminion.converter.auto", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "luminion.converter.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({ConverterProperties.class, DateTimeFormatProperties.class})
 public class ConverterAutoConfiguration {
 

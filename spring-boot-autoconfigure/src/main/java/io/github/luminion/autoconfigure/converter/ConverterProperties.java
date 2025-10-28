@@ -13,7 +13,7 @@ public class ConverterProperties {
     /**
      * Whether to enable converter autoconfiguration
      */
-    private boolean auto = true;
+    private boolean enabled = true;
     /**
      * Whether to enable string to date conversion
      */

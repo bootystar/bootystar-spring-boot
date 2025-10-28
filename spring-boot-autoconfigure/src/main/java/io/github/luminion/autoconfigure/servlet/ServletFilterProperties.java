@@ -14,6 +14,11 @@ import java.util.Set;
 @ConfigurationProperties("luminion.servlet.filter")
 @Data
 public class ServletFilterProperties {
+    
+    /**
+     * Whether to enable servlet autoconfiguration
+     */
+    private boolean enabled = true;
 
     /**
      * Comma-separated list of URL patterns to include for XSS filtering (Ant-style matching)

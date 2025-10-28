@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass({Advice.class})
-@ConditionalOnProperty(prefix = "luminion.aop", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "luminion.aop.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({AopProperties.class})
 public class AopAutoConfiguration {
 

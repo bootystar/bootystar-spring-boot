@@ -12,6 +12,10 @@ ser * MyBatis Plus properties
 @ConfigurationProperties("luminion.mybatis-plus")
 public class MybatisPlusProperties {
     /**
+     * Whether to enable interceptor
+     */
+    private boolean enabled = true;
+    /**
      * Whether to enable optimistic locker interceptor
      */
     private boolean optimisticLocker =  true;
