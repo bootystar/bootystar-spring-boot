@@ -1,4 +1,4 @@
-package io.github.luminion.autoconfigure.util;
+package io.github.luminion.autoconfigure.utils;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,9 +32,9 @@ import java.util.Map;
  *
  * @author luminion
  */
-public final class ServletUtils {
+public final class ServletKit {
 
-    private ServletUtils() {
+    private ServletKit() {
         // 私有构造函数，防止实例化
     }
 
