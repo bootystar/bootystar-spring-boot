@@ -29,9 +29,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/luminion/spring-boot.git</connection>
-        <developerConnection>scm:git:ssh://github.com:luminion/spring-boot.git</developerConnection>
-        <url>https://github.com/luminion/spring-boot/tree/master</url>
+        <connection>scm:git:git://github.com/luminion/turbo-boot.git</connection>
+        <developerConnection>scm:git:ssh://github.com:luminion/turbo-boot.git</developerConnection>
+        <url>https://github.com/luminion/turbo-boot/tree/master</url>
     </scm>
 
     <modules>
@@ -41,19 +41,12 @@
 
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
-
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <spring.boot.version>3.5.6</spring.boot.version>
-        <mybatis.plus.version>3.5.14</mybatis.plus.version>
-        <jsoup.version>1.21.1</jsoup.version>
-        <guava.version>33.2.1-jre</guava.version>
-        <caffeine.version>3.1.8</caffeine.version>
     </properties>
 
     <dependencyManagement>
