@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.redis")
+@ConfigurationProperties("turbo.redis")
 public class RedisProperties {
     /**
      * 是否启用redis自动配置，默认true

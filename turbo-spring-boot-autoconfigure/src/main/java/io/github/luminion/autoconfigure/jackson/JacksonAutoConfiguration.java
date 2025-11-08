@@ -39,7 +39,7 @@ import java.util.TimeZone;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
-@ConditionalOnProperty(value = "luminion.jackson.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "turbo.jackson.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({JacksonProperties.class, DateTimeFormatProperties.class})
 public class JacksonAutoConfiguration {
 

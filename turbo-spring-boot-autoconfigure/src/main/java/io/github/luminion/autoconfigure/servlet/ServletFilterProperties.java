@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author luminion
  */
-@ConfigurationProperties("luminion.servlet.filter")
+@ConfigurationProperties("turbo.servlet.filter")
 @Data
 public class ServletFilterProperties {
     

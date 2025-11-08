@@ -29,7 +29,7 @@
 添加依赖后，所有功能将自动配置并启用。您可以通过在`application.yml`中配置属性来定制行为：
 
 ```yaml
-luminion:
+turbo:
   # 日期时间格式配置
   date-format: yyyy-MM-dd
   date-time-format: yyyy-MM-dd HH:mm:ss

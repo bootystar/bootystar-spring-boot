@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.log")
+@ConfigurationProperties("turbo.log")
 public class logProperties {
     private final Email email = new Email();
     @Data

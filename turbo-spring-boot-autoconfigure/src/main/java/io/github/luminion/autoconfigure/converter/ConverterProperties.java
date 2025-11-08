@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.converter")
+@ConfigurationProperties("turbo.converter")
 public class ConverterProperties {
     /**
      * Whether to enable converter autoconfiguration

@@ -9,7 +9,7 @@ ser * MyBatis Plus properties
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.mybatis-plus")
+@ConfigurationProperties("turbo.mybatis-plus")
 public class MybatisPlusProperties {
     /**
      * Whether to enable interceptor

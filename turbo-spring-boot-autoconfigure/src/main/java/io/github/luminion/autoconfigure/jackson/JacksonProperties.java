@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.jackson")
+@ConfigurationProperties("turbo.jackson")
 public class JacksonProperties {
     /**
      * Whether to enable Jackson autoconfiguration

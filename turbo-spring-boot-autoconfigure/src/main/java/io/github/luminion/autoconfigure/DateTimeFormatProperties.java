@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author luminion
  */
 @Data
-@ConfigurationProperties("luminion.datetime.format")
+@ConfigurationProperties("turbo.datetime.format")
 public class DateTimeFormatProperties {
     /**
      * Time format pattern

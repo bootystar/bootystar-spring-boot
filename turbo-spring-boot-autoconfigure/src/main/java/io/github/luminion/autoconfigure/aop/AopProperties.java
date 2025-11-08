@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * @author luminion
  */
-@ConfigurationProperties("luminion.aop")
+@ConfigurationProperties("turbo.aop")
 @Data
 public class AopProperties {
     /**

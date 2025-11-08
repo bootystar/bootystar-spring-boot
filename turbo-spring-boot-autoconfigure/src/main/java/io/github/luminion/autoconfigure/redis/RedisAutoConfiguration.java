@@ -32,7 +32,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass({RedisOperations.class, Jackson2ObjectMapperBuilder.class})
-@ConditionalOnProperty(value = "luminion.redis.auto", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "turbo.redis.auto", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(RedisProperties.class)
 @RequiredArgsConstructor
 public class RedisAutoConfiguration {

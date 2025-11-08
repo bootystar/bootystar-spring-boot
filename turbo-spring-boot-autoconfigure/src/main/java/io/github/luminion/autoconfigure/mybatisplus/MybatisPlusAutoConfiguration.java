@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 @AutoConfiguration
 @ConditionalOnClass({BaseMapper.class, MybatisPlusInterceptor.class})
-@ConditionalOnProperty(value = "luminion.mybatis-plus.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "turbo.mybatis-plus.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({MybatisPlusProperties.class})
 public class MybatisPlusAutoConfiguration {
 
@@ -40,7 +40,7 @@ public class MybatisPlusAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor")
-    @ConditionalOnProperty(value = "luminion.mybatis-plus.pagination", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "turbo.mybatis-plus.pagination", havingValue = "true", matchIfMissing = true)
     static class PaginationInnerInterceptorConfiguration {
         @Bean
         @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor")
@@ -55,7 +55,7 @@ public class MybatisPlusAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor")
-    @ConditionalOnProperty(value = "luminion.mybatis-plus.optimistic-locker", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "turbo.mybatis-plus.optimistic-locker", havingValue = "true", matchIfMissing = true)
     static class OptimisticLockerInnerInterceptorConfiguration {
         @Bean
         @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor")
@@ -70,7 +70,7 @@ public class MybatisPlusAutoConfiguration {
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnClass(name = "com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor")
-    @ConditionalOnProperty(value = "luminion.mybatis-plus.block-attack", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(value = "turbo.mybatis-plus.block-attack", havingValue = "true", matchIfMissing = true)
     static class BlockAttackInnerInterceptorConfiguration {
         @Bean
         @ConditionalOnMissingBean(type = "com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor")
