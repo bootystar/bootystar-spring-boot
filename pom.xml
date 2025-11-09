@@ -36,6 +36,9 @@
 
     <modules>
         <module>turbo-spring-boot-autoconfigure</module>
+        <module>turbo-spring-boot2-starter</module>
+        <module>turbo-spring-boot2-parent</module>
+        <module>turbo-spring-boot3-parent</module>
         <module>turbo-spring-boot-starter</module>
     </modules>
 
